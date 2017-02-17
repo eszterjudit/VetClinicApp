@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="login_backgrounds">
+        <item>@drawable/login_bg1</item>
+        <item>@drawable/login_bg2</item>
+        <item>@drawable/login_bg3</item>
+        <item>@drawable/login_bg4</item>
+        <item>@drawable/login_bg5</item>
+    </array>
+</resources>

@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">VetClinic</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="auth0_domain">eszterjudit.eu.auth0.com</string>
+    <string name="auth0_client_id">7gIGe5F7x6pVI5pmb5ySogEhSIozG5zs</string>
+
+    <!-- Login & Sign up-->
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="password_again">Password again</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign up</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="show_password">Show</string>
+    <string name="hide_password">Hide</string>
+    <string name="not_a_member">Not a member yet?</string>
+    <string name="already_a_member">Already a member?</string>
+    <string name="are_you_a_doctor">Are you a doctor?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="invalid_email">This is not a valid email</string>
+    <string name="empty_password">Password cannot be empty</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
+
+</resources>

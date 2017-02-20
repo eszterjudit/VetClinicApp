@@ -9,7 +9,7 @@ import android.widget.EditText;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.utils.FormValidator;
 
-public class LoginTextWatcher implements TextWatcher {
+public class LoginAndSignUpTextWatcher implements TextWatcher {
 
     private EditText editText;
     private TextInputLayout textInputLayout;
@@ -17,7 +17,7 @@ public class LoginTextWatcher implements TextWatcher {
 
     private String chosenPassword;
 
-    public LoginTextWatcher(EditText editText, TextInputLayout textInputLayout, Context context) {
+    public LoginAndSignUpTextWatcher(EditText editText, TextInputLayout textInputLayout, Context context) {
         this.editText = editText;
         this.textInputLayout = textInputLayout;
         this.context = context;

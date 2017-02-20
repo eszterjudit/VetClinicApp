@@ -1,5 +1,6 @@
 package com.me.esztertoth.vetclinicapp.loginAndSignUp;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.me.esztertoth.vetclinicapp.R;
+import com.me.esztertoth.vetclinicapp.StartPageActivity;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
@@ -38,8 +40,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private void initUI() {
         setDefaultFontForPasswordField();
         loginButton.setOnClickListener(this);
-        emailEditText.addTextChangedListener(new LoginTextWatcher(emailEditText, emailInputLayout, getActivity()));
-        passwordEditText.addTextChangedListener(new LoginTextWatcher(passwordEditText, passwordInputLayout, getActivity()));
+        emailEditText.addTextChangedListener(new LoginAndSignUpTextWatcher(emailEditText, emailInputLayout, getActivity()));
+        passwordEditText.addTextChangedListener(new LoginAndSignUpTextWatcher(passwordEditText, passwordInputLayout, getActivity()));
     }
 
     private void setDefaultFontForPasswordField() {
@@ -48,7 +50,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     private void login() {
-        Toast.makeText(getActivity(), getString(R.string.login), Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(getActivity(), StartPageActivity.class);
+        startActivity(i);
+        //Toast.makeText(getActivity(), getString(R.string.login), Toast.LENGTH_SHORT).show();
     }
 
     @Override

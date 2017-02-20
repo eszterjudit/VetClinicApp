@@ -42,9 +42,9 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     private void initUI() {
         setDefaultFontForPasswordField();
         signUpButton.setOnClickListener(this);
-        emailEditText.addTextChangedListener(new LoginTextWatcher(emailEditText, emailInputLayout, getActivity()));
-        passwordEditText.addTextChangedListener(new LoginTextWatcher(passwordEditText, passwordInputLayout, getActivity()));
-        passwordAgainEditText.addTextChangedListener(new LoginTextWatcher(passwordAgainEditText, passwordAgainInputLayout, getActivity()));
+        emailEditText.addTextChangedListener(new LoginAndSignUpTextWatcher(emailEditText, emailInputLayout, getActivity()));
+        passwordEditText.addTextChangedListener(new LoginAndSignUpTextWatcher(passwordEditText, passwordInputLayout, getActivity()));
+        passwordAgainEditText.addTextChangedListener(new LoginAndSignUpTextWatcher(passwordAgainEditText, passwordAgainInputLayout, getActivity()));
     }
 
     private void setDefaultFontForPasswordField() {

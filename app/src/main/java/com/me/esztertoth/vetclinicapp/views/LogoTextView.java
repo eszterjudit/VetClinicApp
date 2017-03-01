@@ -1,4 +1,4 @@
-package com.me.esztertoth.vetclinicapp.custom;
+package com.me.esztertoth.vetclinicapp.views;
 
 import android.content.Context;
 import android.graphics.Typeface;

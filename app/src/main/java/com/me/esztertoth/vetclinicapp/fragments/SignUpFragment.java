@@ -1,4 +1,4 @@
-package com.me.esztertoth.vetclinicapp.loginAndSignUp;
+package com.me.esztertoth.vetclinicapp.fragments;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -13,35 +13,37 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.me.esztertoth.vetclinicapp.R;
+import com.me.esztertoth.vetclinicapp.utils.LoginAndSignUpTextWatcher;
 
-public class SignUpFragment extends Fragment implements View.OnClickListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-    private TextInputLayout emailInputLayout, passwordInputLayout, passwordAgainInputLayout;
-    private EditText emailEditText, passwordEditText, passwordAgainEditText;
-    private Button signUpButton;
+public class SignUpFragment extends Fragment {
+
+    @BindView(R.id.email_textInput_layout) TextInputLayout emailInputLayout;
+    @BindView(R.id.password_textInput_layout) TextInputLayout passwordInputLayout;
+    @BindView(R.id.password_again_textInput_layout) TextInputLayout passwordAgainInputLayout;
+    @BindView(R.id.email) EditText emailEditText;
+    @BindView(R.id.password) EditText passwordEditText;
+    @BindView(R.id.password_again) EditText passwordAgainEditText;
+    @BindView(R.id.signup_button) Button signUpButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
-
-        emailInputLayout = (TextInputLayout) view.findViewById(R.id.email_textInput_layout);
-        passwordInputLayout = (TextInputLayout) view.findViewById(R.id.password_textInput_layout);
-        passwordAgainInputLayout = (TextInputLayout) view.findViewById(R.id.password_again_textInput_layout);
-
-        emailEditText = (EditText) view.findViewById(R.id.email);
-        passwordEditText = (EditText) view.findViewById(R.id.password);
-        passwordAgainEditText = (EditText) view.findViewById(R.id.password_again);
-
-        signUpButton = (Button) view.findViewById(R.id.signup_button);
-
+        ButterKnife.bind(this, view);
         initUI();
-
         return view;
+    }
+
+    @OnClick(R.id.signup_button)
+    public void signUp() {
+        Toast.makeText(getActivity(), getString(R.string.signup), Toast.LENGTH_SHORT).show();
     }
 
     private void initUI() {
         setDefaultFontForPasswordField();
-        signUpButton.setOnClickListener(this);
         emailEditText.addTextChangedListener(new LoginAndSignUpTextWatcher(emailEditText, emailInputLayout, getActivity()));
         passwordEditText.addTextChangedListener(new LoginAndSignUpTextWatcher(passwordEditText, passwordInputLayout, getActivity()));
         passwordAgainEditText.addTextChangedListener(new LoginAndSignUpTextWatcher(passwordAgainEditText, passwordAgainInputLayout, getActivity()));
@@ -54,18 +56,4 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         passwordAgainEditText.setTransformationMethod(new PasswordTransformationMethod());
     }
 
-    private void signUp() {
-        Toast.makeText(getActivity(), getString(R.string.signup), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.signup_button:
-                signUp();
-                break;
-            default:
-                break;
-        }
-    }
 }

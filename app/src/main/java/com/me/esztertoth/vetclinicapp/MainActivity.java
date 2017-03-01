@@ -4,41 +4,40 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.me.esztertoth.vetclinicapp.loginAndSignUp.LoginFragment;
-import com.me.esztertoth.vetclinicapp.loginAndSignUp.SignUpFragment;
+import com.me.esztertoth.vetclinicapp.fragments.LoginFragment;
+import com.me.esztertoth.vetclinicapp.fragments.SignUpFragment;
 import com.vansuita.gaussianblur.GaussianBlur;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-    private ImageView backgroundImageView;
-    private TextView loginOrSignUpButton;
-    private TextView loginOrSignUpQuestion;
+public class MainActivity extends AppCompatActivity {
+
+    @BindView(R.id.background) ImageView backgroundImageView;
+    @BindView(R.id.login_or_signUp_link) TextView loginOrSignUpButton;
+    @BindView(R.id.login_or_signUp_question) TextView loginOrSignUpQuestion;
+
     private boolean isOnLoginScreen = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setFullscreenMode();
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+        openLoginFragment();
+        GaussianBlur.with(this).radius(5).put(getRandomBackgroundPicture(), backgroundImageView);
+    }
 
+    private void setFullscreenMode() {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        setContentView(R.layout.activity_main);
-
-        backgroundImageView = (ImageView) findViewById(R.id.background);
-        loginOrSignUpButton = (TextView) findViewById(R.id.login_or_signUp_link);
-        loginOrSignUpQuestion = (TextView) findViewById(R.id.login_or_signUp_question);
-
-        openLoginFragment();
-
-        loginOrSignUpButton.setOnClickListener(this);
-
-        GaussianBlur.with(this).radius(5).put(getRandomBackgroundPicture(), backgroundImageView);
     }
 
     private int getRandomBackgroundPicture() {
@@ -77,8 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ft.commit();
     }
 
-    @Override
-    public void onClick(View v) {
+    @OnClick(R.id.login_or_signUp_link)
+    public void switchForm() {
         if (isOnLoginScreen) {
             openSignupFragment();
             changeTextForLoginOrSignupButton();
@@ -87,4 +86,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             changeTextForLoginOrSignupButton();
         }
     }
+
 }

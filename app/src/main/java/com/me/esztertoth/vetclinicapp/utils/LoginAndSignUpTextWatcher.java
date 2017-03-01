@@ -1,4 +1,4 @@
-package com.me.esztertoth.vetclinicapp.loginAndSignUp;
+package com.me.esztertoth.vetclinicapp.utils;
 
 import android.content.Context;
 import android.support.design.widget.TextInputLayout;

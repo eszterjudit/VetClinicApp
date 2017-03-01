@@ -1,4 +1,4 @@
-package com.me.esztertoth.vetclinicapp.map;
+package com.me.esztertoth.vetclinicapp.fragments;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -13,25 +13,27 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.me.esztertoth.vetclinicapp.R;
+import com.me.esztertoth.vetclinicapp.map.LocationCallback;
+import com.me.esztertoth.vetclinicapp.map.LocationProvider;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, LocationCallback {
 
-    private MapView mapView;
-    private GoogleMap map;
+    @BindView(R.id.mapView) MapView mapView;
 
+    private GoogleMap map;
     private double latitude;
     private double longitude;
-
     private LocationProvider locationProvider;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
-
-        mapView = (MapView) view.findViewById(R.id.mapView);
+        ButterKnife.bind(this, view);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 

@@ -15,47 +15,37 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.me.esztertoth.vetclinicapp.map.MapFragment;
-import com.me.esztertoth.vetclinicapp.settings.SettingsFragment;
+import com.me.esztertoth.vetclinicapp.fragments.MapFragment;
+import com.me.esztertoth.vetclinicapp.fragments.SettingsFragment;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class StartPageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private final static int ACCESS_COARSE_LOCATION = 1;
-    private final static int ACCESS_FINE_LOCATION = 2;
+    private final static int ACCESS_FINE_LOCATION = 1;
+
+    @BindView(R.id.nav_view) NavigationView navigationView;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.drawer_layout) DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_start_page);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, ACCESS_FINE_LOCATION);
         }
-
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
 
     @Override
     public void onBackPressed() {
@@ -90,7 +80,6 @@ public class StartPageActivity extends AppCompatActivity implements NavigationVi
         ft.addToBackStack(fragmentToOpen.getTag());
         ft.commit();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

@@ -1,4 +1,4 @@
-package com.me.esztertoth.vetclinicapp.settings;
+package com.me.esztertoth.vetclinicapp.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

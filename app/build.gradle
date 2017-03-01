@@ -40,5 +40,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:10.2.0'
     compile 'com.auth0.android:auth0:1.0.0'
     compile 'com.github.jrvansuita:GaussianBlur:v1.0.2'
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     testCompile 'junit:junit:4.12'
 }

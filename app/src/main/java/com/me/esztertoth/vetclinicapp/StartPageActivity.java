@@ -42,9 +42,17 @@ public class StartPageActivity extends AppCompatActivity implements NavigationVi
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, ACCESS_FINE_LOCATION);
+        if (!isLocationPermissionGranted()) {
+            RequestLocationPermission();
         }
+    }
+
+    private void RequestLocationPermission() {
+        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, ACCESS_FINE_LOCATION);
+    }
+
+    private boolean isLocationPermissionGranted() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override

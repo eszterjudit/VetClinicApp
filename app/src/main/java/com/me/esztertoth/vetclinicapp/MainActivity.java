@@ -19,6 +19,8 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int BACKGROUND_BLUR_RADIUS = 5;
+
     @BindView(R.id.background) ImageView backgroundImageView;
     @BindView(R.id.login_or_signUp_link) TextView loginOrSignUpButton;
     @BindView(R.id.login_or_signUp_question) TextView loginOrSignUpQuestion;
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         openLoginFragment();
-        GaussianBlur.with(this).radius(5).put(getRandomBackgroundPicture(), backgroundImageView);
+        GaussianBlur.with(this).radius(BACKGROUND_BLUR_RADIUS).put(getRandomBackgroundPicture(), backgroundImageView);
     }
 
     private void setFullscreenMode() {

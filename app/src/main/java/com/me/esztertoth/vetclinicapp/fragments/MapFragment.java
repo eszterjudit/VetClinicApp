@@ -13,6 +13,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.map.LocationCallback;
@@ -28,6 +29,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     private GoogleMap map;
     private double latitude;
     private double longitude;
+    private Marker currentLocationMarker;
     private LocationProvider locationProvider;
 
     @Override
@@ -69,7 +71,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     }
 
     private void updateMapWithCurrentLocation() {
-        map.addMarker(new MarkerOptions().flat(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)).position(new LatLng(latitude,longitude)));
+        currentLocationMarker = map.addMarker(new MarkerOptions().flat(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)).position(new LatLng(latitude,longitude)));
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 15));
     }
 
@@ -77,6 +79,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     public void handleNewLocation(Location location) {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
+        removePreviousLocation();
         updateMapWithCurrentLocation();
+    }
+
+    private void removePreviousLocation() {
+        if(currentLocationMarker != null)
+            currentLocationMarker.remove();
     }
 }

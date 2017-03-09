@@ -49,4 +49,41 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:id="@+id/adress_icon"
+            style="@style/ProfileItemIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_adress" />
+
+        <TextView
+            android:id="@+id/adress_line_1"
+            style="@style/ProfileItemText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/adress_icon"
+            android:layout_toRightOf="@id/adress_icon"
+            android:text="Németvölgyi út 20" />
+
+        <TextView
+            android:id="@+id/adress_line_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/adress_line_1"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@id/adress_icon"
+            android:layout_toRightOf="@id/adress_icon"
+            android:text="1126, Budapest"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/colorPrimaryDark" />
+
+    </RelativeLayout>
+
 </LinearLayout>

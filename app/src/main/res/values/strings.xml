@@ -26,8 +26,13 @@
     <string name="passwords_do_not_match">Passwords do not match</string>
 
     <!-- Profile -->
+    <string name="firstName">First name</string>
+    <string name="lastName">Last name</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="phone">Phone</string>
+    <string name="adress_line_1">Adress line 1</string>
+    <string name="adress_line_2">Zip code, City</string>
 
     <!-- Navigation -->
     <string name="navigation_drawer_open">Open navigation drawer</string>

@@ -1,6 +1,7 @@
 package com.me.esztertoth.vetclinicapp;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -74,6 +75,10 @@ public class StartPageActivity extends AppCompatActivity implements NavigationVi
         Fragment fragmentToOpen = null;
 
         switch (id) {
+            case R.id.nav_profile:
+                Intent i = new Intent(this, ProfileActivity.class);
+                startActivity(i);
+                break;
             case R.id.nav_settings:
                 fragmentToOpen = new SettingsFragment();
                 break;
@@ -84,11 +89,13 @@ public class StartPageActivity extends AppCompatActivity implements NavigationVi
                 break;
         }
 
-        ft.replace(R.id.content_start_page,fragmentToOpen);
-        ft.addToBackStack(fragmentToOpen.getTag());
-        ft.commit();
+        if(fragmentToOpen != null) {
+            ft.replace(R.id.content_start_page, fragmentToOpen);
+            ft.addToBackStack(fragmentToOpen.getTag());
+            ft.commit();
+            drawer.closeDrawer(GravityCompat.START);
+        }
 
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 

@@ -42,6 +42,44 @@
         <item name="android:layout_marginRight">5dp</item>
     </style>
 
+    <!-- Profile -->
+
+    <style name="ProfileImage">
+        <item name="android:src">@drawable/login_bg4</item>
+        <item name="android:alpha">0.6</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="EditButton" parent="Widget.Design.FloatingActionButton">
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:src">@drawable/ic_edit</item>
+    </style>
+
+    <style name="ProfileContentContainer">
+        <item name="android:padding">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginTop">@dimen/activity_horizontal_margin</item>
+    </style>
+
+    <style name="EditProfileButtonContainer">
+        <item name="android:weightSum">2</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="ProfileItemIcon">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginEnd">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
+    </style>
+
+    <style name="ProfileItemText">
+        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginStart">@dimen/activity_horizontal_margin</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+    </style>
+
     <!-- Common views -->
 
     <style name="EditText">

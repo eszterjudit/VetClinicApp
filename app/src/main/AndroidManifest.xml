@@ -27,6 +27,11 @@
             android:name=".StartPageActivity"
             android:label="@string/title_activity_start_page"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:parentActivityName=".StartPageActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

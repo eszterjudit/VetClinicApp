@@ -2,6 +2,7 @@ package com.me.esztertoth.vetclinicapp.fragments;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +22,12 @@ import com.me.esztertoth.vetclinicapp.map.LocationProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, LocationCallback {
 
     @BindView(R.id.mapView) MapView mapView;
+    @BindView(R.id.fab) FloatingActionButton fab;
 
     private GoogleMap map;
     private double latitude;
@@ -66,13 +69,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        map.getUiSettings().setZoomControlsEnabled(true);
+        map.getUiSettings().setZoomControlsEnabled(false);
         updateMapWithCurrentLocation();
     }
 
     private void updateMapWithCurrentLocation() {
         currentLocationMarker = map.addMarker(new MarkerOptions().flat(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)).position(new LatLng(latitude,longitude)));
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 15));
+        zoomToCurrentLocation();
     }
 
     @Override
@@ -87,4 +90,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         if(currentLocationMarker != null)
             currentLocationMarker.remove();
     }
+
+    @OnClick(R.id.fab)
+    public void zoomToCurrentLocation() {
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 15));
+    }
+
 }

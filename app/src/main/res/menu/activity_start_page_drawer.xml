@@ -7,6 +7,10 @@
             android:icon="@drawable/ic_profile"
             android:title="@string/profile" />
         <item
+            android:id="@+id/nav_pets_list"
+            android:icon="@drawable/ic_pets"
+            android:title="@string/pets_list" />
+        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings"
             android:title="@string/settings" />

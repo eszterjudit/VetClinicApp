@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.me.esztertoth.vetclinicapp.fragments.MapFragment;
+import com.me.esztertoth.vetclinicapp.fragments.PetsListFragment;
 import com.me.esztertoth.vetclinicapp.fragments.SettingsFragment;
 
 import butterknife.BindView;
@@ -78,6 +79,9 @@ public class StartPageActivity extends AppCompatActivity implements NavigationVi
             case R.id.nav_profile:
                 Intent i = new Intent(this, ProfileActivity.class);
                 startActivity(i);
+                break;
+            case R.id.nav_pets_list:
+                fragmentToOpen = new PetsListFragment();
                 break;
             case R.id.nav_settings:
                 fragmentToOpen = new SettingsFragment();

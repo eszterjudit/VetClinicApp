@@ -49,7 +49,7 @@
         <item name="android:layout_marginRight">40dp</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_alignParentRight">true</item>
-        <item name="android:src">@drawable/ic_location</item>
+        <item name="android:src">@drawable/ic_my_location</item>
     </style>
 
     <!-- Profile -->
@@ -89,6 +89,17 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
         <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
+
+    <!-- Pets list -->
+
+    <style name="AddNewPetButton" parent="Widget.Design.FloatingActionButton">
+        <item name="android:layout_marginBottom">40dp</item>
+        <item name="android:layout_marginRight">40dp</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:src">@drawable/ic_add_new</item>
+    </style>
+
 
     <!-- Common views -->
 

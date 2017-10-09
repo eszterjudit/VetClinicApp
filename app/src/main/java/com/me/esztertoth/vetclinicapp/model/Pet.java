@@ -1,16 +1,22 @@
 package com.me.esztertoth.vetclinicapp.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Pet {
 
+    @SerializedName("id")
+    @Expose
+    private Long id;
+    @SerializedName("name")
+    @Expose
     private String name;
-    private int age;
+    @SerializedName("type")
+    @Expose
     private PetType type;
-
-    public Pet(String name, int age, PetType type) {
-        this.name = name;
-        this.age = age;
-        this.type = type;
-    }
+    @SerializedName("weight")
+    @Expose
+    private double weight;
 
     public String getName() {
         return name;
@@ -18,14 +24,6 @@ public class Pet {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public PetType getType() {

@@ -3,6 +3,7 @@ package com.me.esztertoth.vetclinicapp.fragments;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,22 +13,34 @@ import android.view.ViewGroup;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.adapters.PetsListAdapter;
 import com.me.esztertoth.vetclinicapp.model.Pet;
-import com.me.esztertoth.vetclinicapp.model.PetType;
+import com.me.esztertoth.vetclinicapp.model.PetOwner;
+import com.me.esztertoth.vetclinicapp.rest.ApiClient;
+import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class PetsListFragment extends Fragment {
 
     @BindView(R.id.pets_list_recyclerview)
     RecyclerView petsListRecyclerView;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
+    @BindView(R.id.addNewPetButton)
+    FloatingActionButton addNewPetButton;
     private List<Pet> pets;
+    private Subscription subscription;
     private PetsListAdapter petsListAdapter;
+
+    ApiInterface apiService;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,7 +48,8 @@ public class PetsListFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         pets = new ArrayList();
-        addDummyPets();
+
+        apiService = ApiClient.provideApiClient();
 
         petsListAdapter = new PetsListAdapter(getContext(), pets);
         petsListRecyclerView.setAdapter(petsListAdapter);
@@ -46,13 +60,32 @@ public class PetsListFragment extends Fragment {
         return view;
     }
 
-    private void addDummyPets() {
-        pets.add(new Pet("Simon", 10, PetType.CAT));
-        pets.add(new Pet("Cat", 3, PetType.CAT));
-        pets.add(new Pet("Kutya", 4, PetType.DOG));
-        pets.add(new Pet("Reptile", 1, PetType.REPTILE));
-        pets.add(new Pet("Reptile2", 100, PetType.REPTILE));
-        pets.add(new Pet("Rodent", 2, PetType.RODENT));
-        pets.add(new Pet("Bird", 1, PetType.BIRD));
+    @Override
+    public void onResume() {
+        super.onResume();
+        subscription = apiService.getPetOwnerAllPets((long) 1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(petList -> {
+                    for (Pet pet: petList) {
+                        pets.add(pet);
+                    }
+                });
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        subscription.unsubscribe();
+    }
+
+    @OnClick(R.id.addNewPetButton)
+    public void openAddNewPetFragment() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        Fragment addNewPetFragment = new AddNewPetFragment();
+        ft.replace(R.id.pets_list_container, addNewPetFragment);
+        ft.addToBackStack(addNewPetFragment.getTag());
+        ft.commit();
+    }
+
 }

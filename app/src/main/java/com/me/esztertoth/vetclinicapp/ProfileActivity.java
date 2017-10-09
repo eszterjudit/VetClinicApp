@@ -1,12 +1,10 @@
 package com.me.esztertoth.vetclinicapp;
 
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.me.esztertoth.vetclinicapp.fragments.EditProfileFragment;
 import com.me.esztertoth.vetclinicapp.fragments.ProfileContentFragment;

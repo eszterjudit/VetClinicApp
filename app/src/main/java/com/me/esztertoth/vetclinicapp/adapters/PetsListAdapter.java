@@ -34,7 +34,6 @@ public class PetsListAdapter extends RecyclerView.Adapter<PetViewHolder> {
     public void onBindViewHolder(PetViewHolder holder, int position) {
         holder.setPetIcon(getPetIconByType(petsList.get(position).getType()));
         holder.setName(petsList.get(position).getName());
-        holder.setAge(String.valueOf(petsList.get(position).getAge()));
         holder.setType(petsList.get(position).getType().toString());
     }
 

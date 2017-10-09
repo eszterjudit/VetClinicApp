@@ -14,11 +14,12 @@
         android:padding="16dp" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/addNewPetButton"
         style="@style/AddNewPetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_anchor="@id/pets_list_recyclerview"
+        app:elevation="0dp"
         app:theme="@style/ThemeOverlay.AppCompat.Light" />
 
 </RelativeLayout>

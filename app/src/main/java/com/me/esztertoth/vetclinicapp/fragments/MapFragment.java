@@ -126,6 +126,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         map.getUiSettings().setZoomControlsEnabled(false);
+        map.setOnInfoWindowClickListener(this);
         updateMapWithCurrentLocation();
         getAllClinics();
     }
@@ -161,7 +162,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         Bundle bundle = new Bundle();
         bundle.putSerializable("clinic", clinicToOpen);
         clinicDetailsFragment.setArguments(bundle);
-        ft.replace(R.id.mapView, clinicDetailsFragment);
+        ft.replace(R.id.map_container, clinicDetailsFragment);
         ft.addToBackStack(clinicDetailsFragment.getTag());
         ft.commit();
     }

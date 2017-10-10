@@ -26,6 +26,7 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -66,9 +67,20 @@ public class PetsListFragment extends Fragment {
         subscription = apiService.getPetOwnerAllPets((long) 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(petList -> {
-                    for (Pet pet: petList) {
-                        pets.add(pet);
+                .subscribe(new Subscriber<List<Pet>>() {
+                    @Override
+                    public final void onCompleted() {
+                    }
+
+                    @Override
+                    public final void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public final void onNext(List<Pet> response) {
+                        for(Pet pet : response) {
+                            petsListAdapter.addData(pet);
+                        }
                     }
                 });
     }

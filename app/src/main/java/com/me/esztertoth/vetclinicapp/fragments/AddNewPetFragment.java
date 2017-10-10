@@ -30,7 +30,6 @@ public class AddNewPetFragment extends Fragment {
 
     private Pet newPet;
     private String name;
-    private int age;
     private PetType type;
 
     @Override
@@ -46,7 +45,7 @@ public class AddNewPetFragment extends Fragment {
     @OnClick(R.id.save_pet_button)
     public void savePetAndClose() {
         name = petNameEditText.getText().toString();
-        age = Integer.parseInt(petAgeEditText.getText().toString());
+        type = (PetType) typeSpinnerView.getItemAtPosition(typeSpinnerView.getSelectedItemPosition());
 
     }
 

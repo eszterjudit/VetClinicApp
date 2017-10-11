@@ -3,6 +3,7 @@ package com.me.esztertoth.vetclinicapp.rest;
 import com.me.esztertoth.vetclinicapp.model.Clinic;
 import com.me.esztertoth.vetclinicapp.model.Pet;
 import com.me.esztertoth.vetclinicapp.model.PetOwner;
+import com.me.esztertoth.vetclinicapp.model.Vet;
 
 import java.util.List;
 
@@ -23,5 +24,8 @@ public interface ApiInterface {
 
     @GET("clinic/")
     Observable<List<Clinic>> getAllClinics();
+
+    @GET("clinic/{clinicId}/vets")
+    Observable<List<Vet>> getClinicAllVets(@Path("clinicId") Long clinicId);
 
 }

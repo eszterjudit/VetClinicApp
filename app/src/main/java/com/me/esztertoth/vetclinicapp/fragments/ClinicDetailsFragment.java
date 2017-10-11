@@ -11,6 +11,11 @@ import android.widget.TextView;
 
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.model.Clinic;
+import com.me.esztertoth.vetclinicapp.model.PetType;
+import com.me.esztertoth.vetclinicapp.model.Vet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,14 +28,8 @@ public class ClinicDetailsFragment extends Fragment {
     TextView openingHoursTextView;
     @BindView(R.id.clinic_speciality_tv)
     TextView specialitiesTextView;
-    @BindView(R.id.clinic_doctors_tv)
+    @BindView(R.id.clinic_vets_tv)
     TextView doctorsTextView;
-
-    @BindView(R.id.clinic_name)
-    TextView clinicNameTextView;
-
-    @BindView(R.id.clinic_address)
-    TextView clinicAddressTextView;
 
     private Clinic clinic;
 
@@ -48,18 +47,8 @@ public class ClinicDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_location_details, container, false);
         ButterKnife.bind(this, view);
 
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            clinic = (Clinic) bundle.getSerializable("clinic");
-        }
-
         setNameOnToolbar();
         setDetails();
-
-        if(clinic != null) {
-            clinicNameTextView.setText(clinic.getName());
-            clinicAddressTextView.setText(clinic.getAddress().toString());
-        }
 
         return view;
     }
@@ -67,6 +56,30 @@ public class ClinicDetailsFragment extends Fragment {
     private void setDetails() {
         addressTextView.setText(clinic.getAddress().toString());
         openingHoursTextView.setText(clinic.getOpeningHour() + " - " + clinic.getClosingHour());
+        specialitiesTextView.setText(createListOfSpecialities());
+        doctorsTextView.setText(createListOfVetNames());
+    }
+
+    private String createListOfVetNames() {
+        StringBuilder builder = new StringBuilder();
+        for (Vet vet : clinic.getVetList()) {
+            builder.append(vet.getFirstName() + " " + vet.getLastName() + "\n");
+        }
+        return builder.toString();
+    }
+
+    private String createListOfSpecialities() {
+        List<PetType> specialities = new ArrayList<>();
+        StringBuilder builder = new StringBuilder();
+        for (Vet vet : clinic.getVetList()) {
+            for(PetType petType : vet.getSpeciality()) {
+                if(!specialities.contains(petType)) {
+                    specialities.add(petType);
+                    builder.append(petType + "\n");
+                }
+            }
+        }
+        return builder.toString();
     }
 
     private void setNameOnToolbar() {

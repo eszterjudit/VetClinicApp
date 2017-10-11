@@ -13,9 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:drawableLeft="@drawable/ic_location"
-        android:drawablePadding="5dp"
+        android:drawablePadding="10dp"
         android:gravity="center_vertical"
-        android:text="Location details" />
+        android:text="No available address" />
 
     <TextView
         android:id="@+id/clinic_opening_hours_tv"
@@ -24,9 +24,9 @@
         android:layout_below="@id/clinic_address_tv"
         android:layout_margin="10dp"
         android:drawableLeft="@drawable/ic_opening_hours"
-        android:drawablePadding="5dp"
+        android:drawablePadding="10dp"
         android:gravity="center_vertical"
-        android:text="Opening hours" />
+        android:text="No opening hours are available" />
 
     <TextView
         android:id="@+id/clinic_speciality_tv"
@@ -35,32 +35,19 @@
         android:layout_below="@id/clinic_opening_hours_tv"
         android:layout_margin="10dp"
         android:drawableLeft="@drawable/ic_speciality"
-        android:drawablePadding="5dp"
+        android:drawablePadding="10dp"
         android:gravity="center_vertical"
-        android:text="Specialities" />
+        android:text="No specialities are available" />
 
     <TextView
-        android:id="@+id/clinic_doctors_tv"
-        android:layout_width="wrap_content"
+        android:id="@+id/clinic_vets_tv"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/clinic_speciality_tv"
         android:layout_margin="10dp"
         android:drawableLeft="@drawable/ic_vet"
-        android:drawablePadding="5dp"
+        android:drawablePadding="10dp"
         android:gravity="center_vertical"
-        android:text="Our doctors" />
-
-    <TextView
-        android:id="@+id/clinic_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"/>
-
-    <TextView
-        android:id="@+id/clinic_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/clinic_name"
-        android:layout_margin="5dp"/>
+        android:text="No vets are available" />
 
 </RelativeLayout>

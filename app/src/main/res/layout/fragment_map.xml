@@ -15,6 +15,7 @@
         style="@style/CurrentLocationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:elevation="0dp"
         app:layout_anchor="@id/mapView"
         app:theme="@style/ThemeOverlay.AppCompat.Light" />
 

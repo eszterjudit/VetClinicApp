@@ -1,53 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/clinic_details_container"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/clinic_details_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLight"
     android:orientation="vertical"
     android:padding="20dp">
 
-    <TextView
-        android:id="@+id/clinic_address_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:drawableLeft="@drawable/ic_location"
-        android:drawablePadding="10dp"
-        android:gravity="center_vertical"
-        android:text="No available address" />
-
-    <TextView
-        android:id="@+id/clinic_opening_hours_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/clinic_address_tv"
-        android:layout_margin="10dp"
-        android:drawableLeft="@drawable/ic_opening_hours"
-        android:drawablePadding="10dp"
-        android:gravity="center_vertical"
-        android:text="No opening hours are available" />
-
-    <TextView
-        android:id="@+id/clinic_speciality_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/clinic_opening_hours_tv"
-        android:layout_margin="10dp"
-        android:drawableLeft="@drawable/ic_speciality"
-        android:drawablePadding="10dp"
-        android:gravity="center_vertical"
-        android:text="No specialities are available" />
-
-    <TextView
-        android:id="@+id/clinic_vets_tv"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/clinic_speciality_tv"
-        android:layout_margin="10dp"
-        android:drawableLeft="@drawable/ic_vet"
-        android:drawablePadding="10dp"
-        android:gravity="center_vertical"
-        android:text="No vets are available" />
+        android:padding="@dimen/activity_horizontal_margin">
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/clinic_address_icon"
+            style="@style/ProfileItemIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_location" />
+
+        <TextView
+            android:id="@+id/clinic_address_tv"
+            style="@style/ProfileItemText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/clinic_address_icon"
+            android:text="No address available" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:id="@+id/clinic_openinghours_icon"
+            style="@style/ProfileItemIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_opening_hours" />
+
+        <TextView
+            android:id="@+id/clinic_opening_hours_tv"
+            style="@style/ProfileItemText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/clinic_openinghours_icon"
+            android:text="No open hours available" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:id="@+id/clinic_speciality_icon"
+            style="@style/ProfileItemIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_speciality" />
+
+        <TextView
+            android:id="@+id/clinic_speciality_tv"
+            style="@style/ProfileItemText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/clinic_speciality_icon"
+            android:text="No specialities available" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:id="@+id/clinic_vets_icon"
+            style="@style/ProfileItemIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_vet" />
+
+        <TextView
+            android:id="@+id/clinic_vets_tv"
+            style="@style/ProfileItemText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/clinic_vets_icon"
+            android:text="No vets available" />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,5 +1,6 @@
 package com.me.esztertoth.vetclinicapp.fragments;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.me.esztertoth.vetclinicapp.ClinicDetailsActivity;
+import com.me.esztertoth.vetclinicapp.ProfileActivity;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.map.LocationCallback;
 import com.me.esztertoth.vetclinicapp.map.LocationConverter;
@@ -157,14 +160,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     @Override
     public void onInfoWindowClick(Marker marker) {
         Clinic clinicToOpen = markers.get(marker.getId());
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        Fragment clinicDetailsFragment = new ClinicDetailsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("clinic", clinicToOpen);
-        clinicDetailsFragment.setArguments(bundle);
-        ft.replace(R.id.map_container, clinicDetailsFragment);
-        ft.addToBackStack(clinicDetailsFragment.getTag());
-        ft.commit();
+        Intent i = new Intent(getActivity(), ClinicDetailsActivity.class);
+        i.putExtra("clinic", clinicToOpen);
+
+        startActivity(i);
     }
 
 }

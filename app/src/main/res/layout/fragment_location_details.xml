@@ -1,9 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Location details"/>
-</LinearLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/clinic_details_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/clinic_address_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:drawableLeft="@drawable/ic_location"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:text="Location details" />
+
+    <TextView
+        android:id="@+id/clinic_opening_hours_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/clinic_address_tv"
+        android:layout_margin="10dp"
+        android:drawableLeft="@drawable/ic_opening_hours"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:text="Opening hours" />
+
+    <TextView
+        android:id="@+id/clinic_speciality_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/clinic_opening_hours_tv"
+        android:layout_margin="10dp"
+        android:drawableLeft="@drawable/ic_speciality"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:text="Specialities" />
+
+    <TextView
+        android:id="@+id/clinic_doctors_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/clinic_speciality_tv"
+        android:layout_margin="10dp"
+        android:drawableLeft="@drawable/ic_vet"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:text="Our doctors" />
+
+</RelativeLayout>

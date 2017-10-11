@@ -16,6 +16,10 @@ public class Clinic implements Serializable {
     @SerializedName("address")
     @Expose
     private Address address;
+    @SerializedName("openingHour")
+    private Time openingHour;
+    @SerializedName("closingHour")
+    private Time closingHour;
 
     public Long getId() {
         return id;
@@ -39,5 +43,21 @@ public class Clinic implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Time getOpeningHour() {
+        return openingHour;
+    }
+
+    public void setOpeningHour(Time openingHour) {
+        this.openingHour = openingHour;
+    }
+
+    public Time getClosingHour() {
+        return closingHour;
+    }
+
+    public void setClosingHour(Time closingHour) {
+        this.closingHour = closingHour;
     }
 }

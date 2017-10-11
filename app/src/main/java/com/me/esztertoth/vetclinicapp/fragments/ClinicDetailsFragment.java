@@ -1,8 +1,8 @@
 package com.me.esztertoth.vetclinicapp.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +26,22 @@ public class ClinicDetailsFragment extends Fragment {
     @BindView(R.id.clinic_doctors_tv)
     TextView doctorsTextView;
 
+    @BindView(R.id.clinic_name)
+    TextView clinicNameTextView;
+
+    @BindView(R.id.clinic_address)
+    TextView clinicAddressTextView;
+
     private Clinic clinic;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+           clinic = (Clinic) bundle.getSerializable("clinic");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,6 +55,11 @@ public class ClinicDetailsFragment extends Fragment {
 
         setNameOnToolbar();
         setDetails();
+
+        if(clinic != null) {
+            clinicNameTextView.setText(clinic.getName());
+            clinicAddressTextView.setText(clinic.getAddress().toString());
+        }
 
         return view;
     }

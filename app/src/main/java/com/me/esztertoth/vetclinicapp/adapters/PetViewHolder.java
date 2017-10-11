@@ -9,21 +9,21 @@ import android.widget.TextView;
 
 import com.me.esztertoth.vetclinicapp.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class PetViewHolder extends RecyclerView.ViewHolder {
 
-    private CardView cardView;
-    private ImageView petIconView;
-    private TextView nameView;
-    private TextView ageView;
-    private TextView typeView;
+    @BindView(R.id.cardView) CardView cardView;
+    @BindView(R.id.pet_icon) ImageView petIconView;
+    @BindView(R.id.name) TextView nameView;
+    @BindView(R.id.age) TextView ageView;
+    @BindView(R.id.type) TextView typeView;
+    @BindView(R.id.weight) TextView weightView;
 
     public PetViewHolder(View itemView) {
         super(itemView);
-        cardView = (CardView) itemView.findViewById(R.id.cardView);
-        petIconView = (ImageView) itemView.findViewById(R.id.pet_icon);
-        nameView = (TextView) itemView.findViewById(R.id.name);
-        ageView = (TextView) itemView.findViewById(R.id.age);
-        typeView = (TextView) itemView.findViewById(R.id.type);
+        ButterKnife.bind(this, itemView);
     }
 
     public void setPetIcon(Drawable icon) {
@@ -34,8 +34,12 @@ public class PetViewHolder extends RecyclerView.ViewHolder {
         nameView.setText(name);
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         ageView.setText(age + " years old");
+    }
+
+    public void setWeight(double weight) {
+        weightView.setText(weight + " kg");
     }
 
     public void setType(String type) {

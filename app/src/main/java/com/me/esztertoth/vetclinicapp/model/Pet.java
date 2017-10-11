@@ -17,6 +17,8 @@ public class Pet {
     @SerializedName("weight")
     @Expose
     private double weight;
+    @SerializedName("dateOfBirth")
+    private BirthDate dateOfBirth;
 
     public String getName() {
         return name;
@@ -34,4 +36,19 @@ public class Pet {
         this.type = type;
     }
 
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public BirthDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(BirthDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 }

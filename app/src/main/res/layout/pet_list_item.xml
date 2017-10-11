@@ -39,10 +39,19 @@
                 />
 
             <TextView
-                android:id="@+id/type"
+                android:id="@+id/weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/age"
+                android:layout_toRightOf="@id/pet_icon"
+                android:text="weight"
+                />
+
+            <TextView
+                android:id="@+id/type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/weight"
                 android:layout_toRightOf="@id/pet_icon"
                 android:text="type"
                 />

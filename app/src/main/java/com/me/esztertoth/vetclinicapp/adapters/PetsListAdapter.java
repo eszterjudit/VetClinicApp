@@ -11,6 +11,11 @@ import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.model.Pet;
 import com.me.esztertoth.vetclinicapp.model.PetType;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
+
+import java.util.Date;
 import java.util.List;
 
 public class PetsListAdapter extends RecyclerView.Adapter<PetViewHolder> {
@@ -40,11 +45,20 @@ public class PetsListAdapter extends RecyclerView.Adapter<PetViewHolder> {
         holder.setPetIcon(getPetIconByType(petsList.get(position).getType()));
         holder.setName(petsList.get(position).getName());
         holder.setType(petsList.get(position).getType().toString());
+        holder.setAge(calculateBirthDate(petsList.get(position)));
+        holder.setWeight(petsList.get(position).getWeight());
     }
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    private int calculateBirthDate(Pet pet) {
+        DateTime dateOfBirth = new DateTime(pet.getDateOfBirth().getYear(),pet.getDateOfBirth().getDayOfMonth(),pet.getDateOfBirth().getDayOfMonth(), 0, 0, 0, 0);
+        DateTime today = DateTime.now();
+
+        return Years.yearsBetween(dateOfBirth, today).getYears();
     }
 
     @Override

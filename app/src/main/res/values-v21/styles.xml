@@ -90,7 +90,7 @@
     <!-- Clinic details -->
 
     <style name="ClinicDetailsBg">
-        <item name="android:src">@drawable/login_bg1</item>
+        <item name="android:src">@drawable/clinic_bg</item>
         <item name="android:alpha">0.6</item>
         <item name="android:fitsSystemWindows">true</item>
         <item name="android:scaleType">centerCrop</item>

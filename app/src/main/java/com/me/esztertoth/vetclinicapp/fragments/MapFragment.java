@@ -1,6 +1,7 @@
 package com.me.esztertoth.vetclinicapp.fragments;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +16,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -42,7 +44,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback, LocationCallback, GoogleMap.OnInfoWindowClickListener {
+public class MapFragment extends Fragment implements OnMapReadyCallback, LocationCallback, GoogleMap.OnInfoWindowClickListener, GoogleMap.CancelableCallback, GoogleMap.SnapshotReadyCallback {
 
     @BindView(R.id.mapView) MapView mapView;
     @BindView(R.id.fab) FloatingActionButton fab;
@@ -59,6 +61,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
     ApiInterface apiService;
     Subscription subscription;
+
+    private Clinic clinicToOpen;
 
     private void addClinicToMap(Clinic clinic) {
         LatLng locationOfClinic = locationConverter.getLocationFromAddress(clinic.getAddress().toString());
@@ -159,11 +163,32 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Clinic clinicToOpen = markers.get(marker.getId());
-        Intent i = new Intent(getActivity(), ClinicDetailsActivity.class);
-        i.putExtra("clinic", clinicToOpen);
-
-        startActivity(i);
+        clinicToOpen = markers.get(marker.getId());
+        marker.hideInfoWindow();
+        adjustCameraAndTakeSnapshot(marker.getPosition(), 1000);
     }
 
+    private void adjustCameraAndTakeSnapshot(final LatLng mapPosition, final float zoomLevel) {
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(mapPosition).zoom(zoomLevel).build();
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), this);
+    }
+
+
+    @Override
+    public void onFinish() {
+        map.snapshot(this);
+    }
+
+    @Override
+    public void onCancel() {
+
+    }
+
+    @Override
+    public void onSnapshotReady(Bitmap snapshot) {
+        Intent i = new Intent(getActivity(), ClinicDetailsActivity.class);
+        i.putExtra("clinic", clinicToOpen);
+        i.putExtra("snapshot", snapshot);
+        startActivity(i);
+    }
 }

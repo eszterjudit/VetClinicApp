@@ -55,7 +55,7 @@
     <!-- Profile -->
 
     <style name="ProfileImage">
-        <item name="android:src">@drawable/login_bg4</item>
+        <item name="android:src">@drawable/login_bg1</item>
         <item name="android:alpha">0.6</item>
         <item name="android:fitsSystemWindows">true</item>
         <item name="android:scaleType">centerCrop</item>

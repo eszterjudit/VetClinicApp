@@ -1,10 +1,12 @@
 package com.me.esztertoth.vetclinicapp;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.me.esztertoth.vetclinicapp.fragments.ClinicDetailsFragment;
 import com.me.esztertoth.vetclinicapp.model.Clinic;
@@ -15,7 +17,10 @@ import butterknife.ButterKnife;
 public class ClinicDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.clinic_details_bg) ImageView mapIv;
     private Clinic clinic;
+
+    private Bitmap mapImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,9 @@ public class ClinicDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         clinic = (Clinic) getIntent().getSerializableExtra("clinic");
+        mapImage = (Bitmap) getIntent().getParcelableExtra("snapshot");
+
+        mapIv.setImageBitmap(mapImage);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

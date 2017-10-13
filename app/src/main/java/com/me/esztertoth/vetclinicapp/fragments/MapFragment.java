@@ -6,7 +6,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.me.esztertoth.vetclinicapp.ClinicDetailsActivity;
-import com.me.esztertoth.vetclinicapp.ProfileActivity;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.map.LocationCallback;
 import com.me.esztertoth.vetclinicapp.map.LocationConverter;
@@ -30,11 +28,11 @@ import com.me.esztertoth.vetclinicapp.model.Clinic;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -165,7 +163,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     public void onInfoWindowClick(Marker marker) {
         clinicToOpen = markers.get(marker.getId());
         marker.hideInfoWindow();
-        adjustCameraAndTakeSnapshot(marker.getPosition(), 1000);
+        adjustCameraAndTakeSnapshot(marker.getPosition(), 15);
     }
 
     private void adjustCameraAndTakeSnapshot(final LatLng mapPosition, final float zoomLevel) {
@@ -188,7 +186,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     public void onSnapshotReady(Bitmap snapshot) {
         Intent i = new Intent(getActivity(), ClinicDetailsActivity.class);
         i.putExtra("clinic", clinicToOpen);
-        i.putExtra("snapshot", snapshot);
+        i.putExtra("snapshot", convertBitmapToByteArray(snapshot));
         startActivity(i);
+    }
+
+    private byte[] convertBitmapToByteArray(Bitmap snapshot) {
+        ByteArrayOutputStream outpuStream = new ByteArrayOutputStream();
+        snapshot.compress(Bitmap.CompressFormat.PNG, 100, outpuStream);
+        return outpuStream.toByteArray();
     }
 }

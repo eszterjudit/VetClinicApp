@@ -1,6 +1,7 @@
 package com.me.esztertoth.vetclinicapp;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -29,7 +30,10 @@ public class ClinicDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         clinic = (Clinic) getIntent().getSerializableExtra("clinic");
-        mapImage = (Bitmap) getIntent().getParcelableExtra("snapshot");
+
+        byte[] b = getIntent().getExtras().getByteArray("snapshot");
+
+        mapImage = BitmapFactory.decodeByteArray(b, 0, b.length);
 
         mapIv.setImageBitmap(mapImage);
 

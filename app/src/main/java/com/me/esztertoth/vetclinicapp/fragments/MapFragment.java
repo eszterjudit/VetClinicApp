@@ -10,6 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -75,7 +80,26 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
+        initPlacesAutocomplete();
+
         return view;
+    }
+
+    private void initPlacesAutocomplete() {
+        PlaceAutocompleteFragment places = (PlaceAutocompleteFragment) getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES)
+                .build();
+        places.setFilter(typeFilter);
+        places.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+            }
+
+            @Override
+            public void onError(Status status) {
+            }
+        });
     }
 
     @Override

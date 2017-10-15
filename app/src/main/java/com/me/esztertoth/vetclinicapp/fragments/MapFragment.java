@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
@@ -30,6 +32,7 @@ import com.me.esztertoth.vetclinicapp.map.LocationCallback;
 import com.me.esztertoth.vetclinicapp.map.LocationConverter;
 import com.me.esztertoth.vetclinicapp.map.LocationProvider;
 import com.me.esztertoth.vetclinicapp.model.Clinic;
+import com.me.esztertoth.vetclinicapp.model.PetType;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
 
@@ -51,6 +54,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
     @BindView(R.id.mapView) MapView mapView;
     @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.type_spinner)
+    Spinner typeSpinner;
 
     private GoogleMap map;
     private double latitude;
@@ -81,8 +86,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         mapView.getMapAsync(this);
 
         initPlacesAutocomplete();
+        initTypeSpinner();
 
         return view;
+    }
+
+    private void initTypeSpinner() {
+        typeSpinner.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, PetType.values()));
     }
 
     private void initPlacesAutocomplete() {
@@ -91,6 +101,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES)
                 .build();
         places.setFilter(typeFilter);
+        places.setHint("City");
         places.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {

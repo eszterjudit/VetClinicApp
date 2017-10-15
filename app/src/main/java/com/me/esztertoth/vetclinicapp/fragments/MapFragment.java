@@ -211,5 +211,5 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         }
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
-    
+
 }

@@ -51,7 +51,6 @@ public class ClinicDetailsActivity extends AppCompatActivity {
         bundle.putSerializable("clinic", clinic);
         clinicDetailsFragment.setArguments(bundle);
         ft.replace(R.id.clinic_details_container, clinicDetailsFragment);
-        ft.addToBackStack(clinicDetailsFragment.getTag());
         ft.commit();
     }
 

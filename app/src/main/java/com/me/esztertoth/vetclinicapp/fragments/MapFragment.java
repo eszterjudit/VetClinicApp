@@ -186,6 +186,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     public void onSnapshotReady(Bitmap snapshot) {
         Intent i = new Intent(getActivity(), ClinicDetailsActivity.class);
         i.putExtra("clinic", clinicToOpen);
+        snapshot = resizeBitmap(snapshot, 800);
         i.putExtra("snapshot", convertBitmapToByteArray(snapshot));
         startActivity(i);
     }
@@ -195,4 +196,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         snapshot.compress(Bitmap.CompressFormat.PNG, 100, outpuStream);
         return outpuStream.toByteArray();
     }
+
+    public Bitmap resizeBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
+    }
+    
 }

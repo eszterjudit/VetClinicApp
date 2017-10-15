@@ -44,7 +44,6 @@ public class ProfileActivity extends AppCompatActivity {
         EditProfileFragment editProfileFragment = new EditProfileFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.profile_container, editProfileFragment);
-        ft.addToBackStack(editProfileFragment.getTag());
         ft.commit();
     }
 

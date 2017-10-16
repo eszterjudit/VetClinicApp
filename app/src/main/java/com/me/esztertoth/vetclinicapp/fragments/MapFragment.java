@@ -10,13 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -56,6 +57,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     @BindView(R.id.fab) FloatingActionButton fab;
     @BindView(R.id.type_spinner)
     Spinner typeSpinner;
+    @BindView(R.id.place_autocomplete_search_button)
+    View searchButton;
+    @BindView(R.id.place_autocomplete_search_input)
+    EditText searcInput;
 
     private GoogleMap map;
     private double latitude;
@@ -92,16 +97,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     }
 
     private void initTypeSpinner() {
-        typeSpinner.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, PetType.values()));
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getContext(), R.layout.spinner_item, PetType.values());
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        typeSpinner.setAdapter(adapter);
     }
 
     private void initPlacesAutocomplete() {
-        PlaceAutocompleteFragment places = (PlaceAutocompleteFragment) getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+        SupportPlaceAutocompleteFragment places = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
                 .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES)
                 .build();
         places.setFilter(typeFilter);
         places.setHint("City");
+        searcInput.setTextSize(20);
+        searcInput.setTextColor(getActivity().getColor(R.color.colorPrimary));
+        searchButton.setVisibility(View.GONE);
         places.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {

@@ -9,24 +9,22 @@
     <fragment
         android:id="@+id/place_autocomplete_fragment"
         android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment"
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp" />
+        android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:id="@+id/place_autocomplete_fragment_container"
+        android:id="@+id/pet_type_spinner_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/place_autocomplete_fragment"
-        android:layout_marginLeft="11dp"
-        android:layout_marginRight="20dp"
-        android:orientation="vertical">
+        style="@style/PetTypeSpinnerContainer" >
 
         <Spinner
-            android:id="@+id/type_spinner"
+            android:id="@+id/pet_type_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/place_autocomplete_fragment_container"
+            android:layout_below="@id/pet_type_spinner_container"
             android:spinnerMode="dropdown" />
 
     </LinearLayout>
@@ -35,7 +33,7 @@
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/place_autocomplete_fragment_container" />
+        android:layout_below="@id/pet_type_spinner_container" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

@@ -36,8 +36,8 @@ import com.me.esztertoth.vetclinicapp.model.Clinic;
 import com.me.esztertoth.vetclinicapp.model.PetType;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
+import com.me.esztertoth.vetclinicapp.utils.BitmapUtils;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,12 +55,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
     @BindView(R.id.mapView) MapView mapView;
     @BindView(R.id.fab) FloatingActionButton fab;
-    @BindView(R.id.type_spinner)
-    Spinner typeSpinner;
-    @BindView(R.id.place_autocomplete_search_button)
-    View searchButton;
-    @BindView(R.id.place_autocomplete_search_input)
-    EditText searcInput;
+    @BindView(R.id.pet_type_spinner) Spinner typeSpinner;
+    @BindView(R.id.place_autocomplete_search_button) View searchButton;
+    @BindView(R.id.place_autocomplete_search_input) EditText PlaceAutocompleteSearchInput;
+
+    private static int MAP_ZOOM_LEVEL = 15;
+    private static int DESIRED_SNAPSHOT_SIZE = 800;
+    private static String CLINIC_NAME = "clinic";
+    private static String SNAPSHOT_NAME = "snapshot";
+
+    private Map<String, Clinic> markers;
+    private List<Clinic> clinics;
+    private Clinic clinicToOpen;
+
+    private ApiInterface apiService;
+    private Subscription subscription;
 
     private GoogleMap map;
     private double latitude;
@@ -69,26 +78,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     private LocationProvider locationProvider;
     private LocationConverter locationConverter;
 
-    private List<Clinic> clinics;
-    Map<String, Clinic> markers = new HashMap<>();
-
-    ApiInterface apiService;
-    Subscription subscription;
-
-    private Clinic clinicToOpen;
-
-    private void addClinicToMap(Clinic clinic) {
-        LatLng locationOfClinic = locationConverter.getLocationFromAddress(clinic.getAddress().toString());
-        Marker marker = map.addMarker(new MarkerOptions().position(locationOfClinic).title(clinic.getName()).snippet(clinic.getAddress().toString()));
-        markers.put(marker.getId(), clinic);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         ButterKnife.bind(this, view);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
+        markers = new HashMap<>();
 
         initPlacesAutocomplete();
         initTypeSpinner();
@@ -103,16 +100,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     }
 
     private void initPlacesAutocomplete() {
-        SupportPlaceAutocompleteFragment places = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+        SupportPlaceAutocompleteFragment placeAutocompleteFragment = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
                 .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES)
                 .build();
-        places.setFilter(typeFilter);
-        places.setHint("City");
-        searcInput.setTextSize(20);
-        searcInput.setTextColor(getActivity().getColor(R.color.colorPrimary));
+        placeAutocompleteFragment.setFilter(typeFilter);
+        placeAutocompleteFragment.setHint(getString(R.string.map_autocomplete_city_hint));
+        PlaceAutocompleteSearchInput.setTextSize(20);
+        PlaceAutocompleteSearchInput.setTextColor(getActivity().getColor(R.color.colorPrimary));
         searchButton.setVisibility(View.GONE);
-        places.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+        placeAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
             }
@@ -133,6 +130,29 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         locationConverter = new LocationConverter(getActivity());
         apiService = ApiClient.provideApiClient();
         clinics = new ArrayList<>();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+        subscription.unsubscribe();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        locationProvider.disconnect();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        map.getUiSettings().setZoomControlsEnabled(false);
+        map.setOnInfoWindowClickListener(this);
+        updateMapWithCurrentLocation();
+        getAllClinics();
     }
 
     private void getAllClinics() {
@@ -159,26 +179,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 });
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        mapView.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        locationProvider.disconnect();
-        mapView.onDestroy();
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
-        map.getUiSettings().setZoomControlsEnabled(false);
-        map.setOnInfoWindowClickListener(this);
-        updateMapWithCurrentLocation();
-        getAllClinics();
+    private void addClinicToMap(Clinic clinic) {
+        LatLng locationOfClinic = locationConverter.getLocationFromAddress(clinic.getAddress().toString());
+        Marker marker = map.addMarker(new MarkerOptions().position(locationOfClinic).title(clinic.getName()).snippet(clinic.getAddress().toString()));
+        markers.put(marker.getId(), clinic);
     }
 
     private void updateMapWithCurrentLocation() {
@@ -201,21 +205,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
     @OnClick(R.id.fab)
     public void zoomToCurrentLocation() {
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 15));
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), MAP_ZOOM_LEVEL));
     }
 
     @Override
     public void onInfoWindowClick(Marker marker) {
         clinicToOpen = markers.get(marker.getId());
         marker.hideInfoWindow();
-        adjustCameraAndTakeSnapshot(marker.getPosition(), 15);
+        adjustCameraAndTakeSnapshot(marker.getPosition(), MAP_ZOOM_LEVEL);
     }
 
     private void adjustCameraAndTakeSnapshot(final LatLng mapPosition, final float zoomLevel) {
         CameraPosition cameraPosition = new CameraPosition.Builder().target(mapPosition).zoom(zoomLevel).build();
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), this);
     }
-
 
     @Override
     public void onFinish() {
@@ -230,31 +233,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     @Override
     public void onSnapshotReady(Bitmap snapshot) {
         Intent i = new Intent(getActivity(), ClinicDetailsActivity.class);
-        i.putExtra("clinic", clinicToOpen);
-        snapshot = resizeBitmap(snapshot, 800);
-        i.putExtra("snapshot", convertBitmapToByteArray(snapshot));
+        i.putExtra(CLINIC_NAME, clinicToOpen);
+        snapshot = BitmapUtils.resizeBitmap(snapshot, DESIRED_SNAPSHOT_SIZE);
+        i.putExtra(SNAPSHOT_NAME, BitmapUtils.convertBitmapToByteArray(snapshot));
         startActivity(i);
-    }
-
-    private byte[] convertBitmapToByteArray(Bitmap snapshot) {
-        ByteArrayOutputStream outpuStream = new ByteArrayOutputStream();
-        snapshot.compress(Bitmap.CompressFormat.PNG, 100, outpuStream);
-        return outpuStream.toByteArray();
-    }
-
-    public Bitmap resizeBitmap(Bitmap image, int maxSize) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-
-        float bitmapRatio = (float)width / (float) height;
-        if (bitmapRatio > 1) {
-            width = maxSize;
-            height = (int) (width / bitmapRatio);
-        } else {
-            height = maxSize;
-            width = (int) (height * bitmapRatio);
-        }
-        return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
 }

@@ -14,6 +14,7 @@ import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 public class MapPerimeterPickerDialog extends DialogFragment {
 
     private NumberPicker numberPicker;
+    private static int KILOMETERS = 1000;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -26,14 +27,14 @@ public class MapPerimeterPickerDialog extends DialogFragment {
         initPicker();
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-        alertDialogBuilder.setTitle("Map perimeter");
+        alertDialogBuilder.setTitle(R.string.map_perimeter_dialog_title);
         alertDialogBuilder.setView(numberPickerDialogView);
-        alertDialogBuilder.setMessage("Set the perimeter for map search.");
-        alertDialogBuilder.setPositiveButton("OK", (dialog, which) -> {
+        alertDialogBuilder.setMessage(R.string.map_perimeter_dialog_description);
+        alertDialogBuilder.setPositiveButton(R.string.map_perimeter_dialog_positive_button, (dialog, which) -> {
             int chosenPerimeter = getChosenPerimeterForDisplayedValue(numberPicker.getValue());
-            VetClinicPreferences.setPerimeter(getActivity(), chosenPerimeter * 1000);
+            VetClinicPreferences.setPerimeter(getActivity(), chosenPerimeter * KILOMETERS);
         });
-        alertDialogBuilder.setNegativeButton("Cancel", (dialog, which) -> {
+        alertDialogBuilder.setNegativeButton(R.string.map_perimeter_dialog_negative_button, (dialog, which) -> {
             if (dialog != null) {
                 dialog.dismiss();
             }

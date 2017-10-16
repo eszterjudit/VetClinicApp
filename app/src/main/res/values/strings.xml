@@ -42,7 +42,12 @@
     <string name="pets_list">My pets</string>
     <string name="settings">Settings</string>
     <string name="map">Map</string>
-    <string name="map_autocomplete_city_hint">City</string>
 
+    <!-- Map -->
+    <string name="map_autocomplete_city_hint">City</string>
+    <string name="map_perimeter_dialog_title">Map perimeter</string>
+    <string name="map_perimeter_dialog_description">Set the perimeter for map search.</string>
+    <string name="map_perimeter_dialog_positive_button">OK</string>
+    <string name="map_perimeter_dialog_negative_button">Cancel</string>
 
 </resources>

@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.adapters.PetsListAdapter;
 import com.me.esztertoth.vetclinicapp.model.Pet;
-import com.me.esztertoth.vetclinicapp.model.PetOwner;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
 
@@ -23,9 +22,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -33,15 +29,13 @@ import rx.schedulers.Schedulers;
 
 public class PetsListFragment extends Fragment {
 
-    @BindView(R.id.pets_list_recyclerview)
-    RecyclerView petsListRecyclerView;
-    @BindView(R.id.addNewPetButton)
-    FloatingActionButton addNewPetButton;
+    @BindView(R.id.pets_list_recyclerview) RecyclerView petsListRecyclerView;
+    @BindView(R.id.addNewPetButton) FloatingActionButton addNewPetButton;
+
     private List<Pet> pets;
     private Subscription subscription;
     private PetsListAdapter petsListAdapter;
-
-    ApiInterface apiService;
+    private ApiInterface apiService;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

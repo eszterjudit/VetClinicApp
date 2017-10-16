@@ -58,12 +58,17 @@ public class PetsListFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         petsListRecyclerView.setLayoutManager(llm);
 
+        getOwnerAllPets();
+
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    private void getOwnerAllPets() {
         subscription = apiService.getPetOwnerAllPets((long) 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

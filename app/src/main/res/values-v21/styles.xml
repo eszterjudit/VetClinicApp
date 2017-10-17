@@ -101,6 +101,12 @@
         <item name="android:scaleType">centerCrop</item>
     </style>
 
+    <style name="FavoriteButton" parent="Widget.Design.FloatingActionButton">
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:src">@drawable/ic_favorite_border</item>
+    </style>
+
     <!-- Common views -->
 
     <style name="ProfileItemIcon">

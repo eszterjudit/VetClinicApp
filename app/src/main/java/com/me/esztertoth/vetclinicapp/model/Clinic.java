@@ -71,4 +71,13 @@ public class Clinic implements Serializable {
     public void setVetList(List<Vet> vetList) {
         this.vetList = vetList;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof Clinic))return false;
+        Clinic clinic = (Clinic)obj;
+        return clinic.getId() == ((Clinic) obj).getId();
+    }
 }

@@ -20,9 +20,9 @@ public class SettingsViewHolder extends RecyclerView.ViewHolder implements View.
     @BindView(R.id.settings_item_desc)
     TextView settingsItemDescription;
 
-    private SettingsClickListener settingsClickListener;
+    private RecyclerViewClickListener settingsClickListener;
 
-    public SettingsViewHolder(View itemView, SettingsClickListener settingsClickListener) {
+    public SettingsViewHolder(View itemView, RecyclerViewClickListener settingsClickListener) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         itemView.setOnClickListener(this);

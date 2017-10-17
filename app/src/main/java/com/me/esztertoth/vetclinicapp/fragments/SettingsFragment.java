@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.me.esztertoth.vetclinicapp.R;
-import com.me.esztertoth.vetclinicapp.adapters.SettingsClickListener;
+import com.me.esztertoth.vetclinicapp.adapters.RecyclerViewClickListener;
 import com.me.esztertoth.vetclinicapp.adapters.SettingsListAdapter;
 import com.me.esztertoth.vetclinicapp.dialog.MapPerimeterPickerDialog;
 import com.me.esztertoth.vetclinicapp.model.SettingsItem;
@@ -44,7 +44,7 @@ public class SettingsFragment extends Fragment {
 
         initSettingsItems();
 
-        SettingsClickListener settingsClickListener = (view1, position) -> {
+        RecyclerViewClickListener settingsClickListener = (view1, position) -> {
             openSettingsDialogForPosition(position);
         };
 

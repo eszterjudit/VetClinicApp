@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/pets_list_container"
+    android:id="@+id/favorites_list_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLight"
@@ -9,27 +8,18 @@
     android:padding="5dp">
 
     <TextView
-        android:id="@+id/no_pets_message"
+        android:id="@+id/no_favorites_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center_horizontal"
-        android:text="You have no pets yet"
+        android:text="You have no favorites yet"
         android:visibility="visible" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/pets_list_recyclerview"
+        android:id="@+id/favorites_list_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addNewPetButton"
-        style="@style/AddNewPetButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:elevation="0dp"
-        app:layout_anchor="@id/pets_list_recyclerview"
-        app:theme="@style/ThemeOverlay.AppCompat.Light" />
 
 </RelativeLayout>

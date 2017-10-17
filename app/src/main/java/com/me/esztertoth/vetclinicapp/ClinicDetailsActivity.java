@@ -40,7 +40,11 @@ public class ClinicDetailsActivity extends AppCompatActivity {
 
         byte[] b = getIntent().getExtras().getByteArray(SNAPSHOT_NAME);
 
-        mapImage = BitmapFactory.decodeByteArray(b, 0, b.length);
+        if(b != null) {
+            mapImage = BitmapFactory.decodeByteArray(b, 0, b.length);
+        } else {
+            mapImage = BitmapFactory.decodeResource(getResources(), R.drawable.clinic_bg);
+        }
 
         mapIv.setImageBitmap(mapImage);
 

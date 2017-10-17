@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.adapters.PetsListAdapter;
@@ -31,6 +32,7 @@ public class PetsListFragment extends Fragment {
 
     @BindView(R.id.pets_list_recyclerview) RecyclerView petsListRecyclerView;
     @BindView(R.id.addNewPetButton) FloatingActionButton addNewPetButton;
+    @BindView(R.id.no_pets_message) TextView noPetsMessage;
 
     private List<Pet> pets;
     private Subscription subscription;
@@ -57,9 +59,24 @@ public class PetsListFragment extends Fragment {
         return view;
     }
 
+    private void showView(View view, boolean show) {
+        if(show) {
+            view.setVisibility(View.VISIBLE);
+        } else {
+            view.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
+        if(pets.isEmpty()) {
+            showView(noPetsMessage, true);
+            showView(petsListRecyclerView, false);
+        } else {
+            showView(noPetsMessage, false);
+            showView(petsListRecyclerView, true);
+        }
     }
 
     private void getOwnerAllPets() {
@@ -79,6 +96,7 @@ public class PetsListFragment extends Fragment {
                     public final void onNext(List<Pet> response) {
                         for(Pet pet : response) {
                             petsListAdapter.addData(pet);
+                            pets.add(pet);
                         }
                     }
                 });

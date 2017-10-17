@@ -12,10 +12,8 @@ import com.me.esztertoth.vetclinicapp.model.Pet;
 import com.me.esztertoth.vetclinicapp.model.PetType;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.joda.time.Years;
 
-import java.util.Date;
 import java.util.List;
 
 public class PetsListAdapter extends RecyclerView.Adapter<PetViewHolder> {

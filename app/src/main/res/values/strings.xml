@@ -40,6 +40,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="profile">Profile</string>
     <string name="pets_list">My pets</string>
+    <string name="favorites">My favorites</string>
     <string name="settings">Settings</string>
     <string name="map">Map</string>
 

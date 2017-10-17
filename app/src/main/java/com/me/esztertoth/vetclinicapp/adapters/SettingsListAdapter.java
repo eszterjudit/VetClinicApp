@@ -13,9 +13,9 @@ import java.util.List;
 public class SettingsListAdapter extends RecyclerView.Adapter<SettingsViewHolder> {
 
     private List<SettingsItem> settingsItemList;
-    private SettingsClickListener settingsClickListener;
+    private RecyclerViewClickListener settingsClickListener;
 
-    public SettingsListAdapter(List<SettingsItem> settingsItemList, SettingsClickListener settingsClickListener) {
+    public SettingsListAdapter(List<SettingsItem> settingsItemList, RecyclerViewClickListener settingsClickListener) {
         this.settingsItemList = settingsItemList;
         this.settingsClickListener = settingsClickListener;
     }

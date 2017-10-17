@@ -76,7 +76,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     private double longitude;
     private Marker currentLocationMarker;
     private LocationProvider locationProvider;
-    private LocationConverter locationConverter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -127,7 +126,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         locationProvider.connect();
         mapView.onResume();
 
-        locationConverter = new LocationConverter(getActivity());
         apiService = ApiClient.provideApiClient();
         clinics = new ArrayList<>();
     }
@@ -180,7 +178,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     }
 
     private void addClinicToMap(Clinic clinic) {
-        LatLng locationOfClinic = locationConverter.getLocationFromAddress(clinic.getAddress().toString());
+        LatLng locationOfClinic = LocationConverter.getLocationFromAddress(clinic.getAddress().toString(), getContext());
         Marker marker = map.addMarker(new MarkerOptions().position(locationOfClinic).title(clinic.getName()).snippet(clinic.getAddress().toString()));
         markers.put(marker.getId(), clinic);
     }

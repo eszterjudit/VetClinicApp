@@ -8,18 +8,13 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 public class LocationConverter {
 
-    private Context context;
+    public static LatLng getLocationFromAddress(String input, Context context) {
 
-    public LocationConverter(Context context) {
-        this.context = context;
-    }
-
-    public LatLng getLocationFromAddress(String input) {
-
-        Geocoder coder = new Geocoder(context);
+        Geocoder coder = new Geocoder(context, Locale.ENGLISH);
         List<Address> address;
         LatLng resLatLng = null;
 

@@ -39,4 +39,9 @@ public class FavoriteUtils {
         return check;
     }
 
+    public static void deleteAllFavorites(Context context) {
+        List<Clinic> favorites = new ArrayList<>();
+        VetClinicPreferences.saveFavoriteClinics(context, favorites);
+    }
+
 }

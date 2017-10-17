@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLight"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/pets_list_recyclerview"
@@ -17,8 +18,8 @@
         style="@style/AddNewPetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_anchor="@id/pets_list_recyclerview"
         app:elevation="0dp"
+        app:layout_anchor="@id/pets_list_recyclerview"
         app:theme="@style/ThemeOverlay.AppCompat.Light" />
 
 </RelativeLayout>

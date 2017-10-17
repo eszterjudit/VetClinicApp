@@ -45,9 +45,23 @@
 
     <!-- Map -->
     <string name="map_autocomplete_city_hint">City</string>
+
+    <!-- Settings -->
+    <string name="map_perimeter_settings_item_title">Map perimeter</string>
+    <string name="map_perimeter_settings_item_description_1">Current value: </string>
+    <string name="map_perimeter_settings_item_description_2"> km.</string>
+
     <string name="map_perimeter_dialog_title">Map perimeter</string>
     <string name="map_perimeter_dialog_description">Set the perimeter for map search.</string>
     <string name="map_perimeter_dialog_positive_button">OK</string>
     <string name="map_perimeter_dialog_negative_button">Cancel</string>
+
+    <string name="delete_all_favs_settings_item_title">Delete favorites</string>
+    <string name="delete_all_favs_settings_item_description">Delete all favorite clinics for this device.</string>
+
+    <string name="delete_all_favs_dialog_title">Delete favorites</string>
+    <string name="delete_all_favs_dialog_description">Are you sure you want to delete all your favorite clinics?</string>
+    <string name="delete_all_favs_dialog_positive_button">Delete all</string>
+    <string name="delete_all_favs_dialog_negative_button">Cancel</string>
 
 </resources>

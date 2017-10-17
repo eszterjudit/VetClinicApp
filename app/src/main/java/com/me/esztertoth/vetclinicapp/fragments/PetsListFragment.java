@@ -70,13 +70,6 @@ public class PetsListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(pets.isEmpty()) {
-            showView(noPetsMessage, true);
-            showView(petsListRecyclerView, false);
-        } else {
-            showView(noPetsMessage, false);
-            showView(petsListRecyclerView, true);
-        }
     }
 
     private void getOwnerAllPets() {
@@ -86,6 +79,10 @@ public class PetsListFragment extends Fragment {
                 .subscribe(new Subscriber<List<Pet>>() {
                     @Override
                     public final void onCompleted() {
+                        if(!pets.isEmpty()) {
+                            showView(noPetsMessage, false);
+                            showView(petsListRecyclerView, true);
+                        }
                     }
 
                     @Override
@@ -94,10 +91,7 @@ public class PetsListFragment extends Fragment {
 
                     @Override
                     public final void onNext(List<Pet> response) {
-                        for(Pet pet : response) {
-                            petsListAdapter.addData(pet);
-                            pets.add(pet);
-                        }
+                        pets.addAll(response);
                     }
                 });
     }

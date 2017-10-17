@@ -46,7 +46,7 @@ public class VetClinicPreferences {
             favorites = Arrays.asList(favoriteItems);
             favorites = new ArrayList<>(favorites);
         } else {
-            return null;
+            return new ArrayList<>();
         }
 
         return (ArrayList<Clinic>) favorites;

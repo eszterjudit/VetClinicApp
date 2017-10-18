@@ -10,6 +10,12 @@ public class BirthDate {
     @SerializedName("dayOfMonth")
     private int dayOfMonth;
 
+    public BirthDate(int year, int month, int dayOfMonth) {
+        this.year = year;
+        this.month = month;
+        this.dayOfMonth = dayOfMonth;
+    }
+
     public int getYear() {
         return year;
     }

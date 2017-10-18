@@ -92,6 +92,20 @@
         <item name="android:src">@drawable/ic_add_new</item>
     </style>
 
+    <!-- Add new pet -->
+
+    <style name="NameEditText">
+        <item name="android:ems">10</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColorHint">@color/colorPrimary</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:drawableRight">@drawable/ic_edit</item>
+        <item name="android:paddingLeft">11dp</item>
+        <item name="android:inputType">text</item>
+    </style>
+
+
     <!-- Clinic details -->
 
     <style name="ClinicDetailsBg">

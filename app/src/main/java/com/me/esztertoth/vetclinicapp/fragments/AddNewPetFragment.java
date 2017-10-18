@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.me.esztertoth.vetclinicapp.dialog.PetBirthayPickerDialog;
 import com.me.esztertoth.vetclinicapp.model.BirthDate;
 import com.me.esztertoth.vetclinicapp.model.Pet;
 import com.me.esztertoth.vetclinicapp.model.PetType;
+import com.me.esztertoth.vetclinicapp.utils.FavoriteUtils;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -62,9 +64,8 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
     }
 
     @OnClick(R.id.cancel_button)
-    public void closeFragment() {
-        hideKeyboard();
-        getActivity().onBackPressed();
+    public void cancel() {
+        openDontSaveDialog();
     }
 
     @OnClick(R.id.pet_birthday_input)
@@ -102,6 +103,19 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
         if (v == null)
             return;
         inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
+    private void openDontSaveDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(getString(R.string.dont_save_pet_dialog_title))
+                .setMessage(getString(R.string.dont_save_pet_dialog_description))
+                .setPositiveButton(R.string.dont_save_pet_dialog_positive_button, (dialog, which) -> dialog.dismiss())
+                .setNegativeButton(R.string.dont_save_pet_dialog_negative_button, (dialog, which) -> {
+                    dialog.dismiss();
+                    hideKeyboard();
+                    getActivity().onBackPressed();
+                })
+                .show();
     }
 
 }

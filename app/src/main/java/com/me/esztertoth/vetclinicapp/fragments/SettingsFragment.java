@@ -80,12 +80,8 @@ public class SettingsFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(getString(R.string.delete_all_favs_dialog_title))
                 .setMessage(getString(R.string.delete_all_favs_dialog_description))
-                .setPositiveButton(R.string.delete_all_favs_dialog_positive_button, (dialog, which) -> {
-                    FavoriteUtils.deleteAllFavorites(getContext());
-                })
-                .setNegativeButton(R.string.delete_all_favs_dialog_negative_button, (dialog, which) -> {
-                    dialog.dismiss();
-                })
+                .setPositiveButton(R.string.delete_all_favs_dialog_positive_button, (dialog, which) -> FavoriteUtils.deleteAllFavorites(getContext()))
+                .setNegativeButton(R.string.delete_all_favs_dialog_negative_button, (dialog, which) -> dialog.dismiss())
                 .show();
     }
 

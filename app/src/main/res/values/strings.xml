@@ -65,4 +65,10 @@
     <string name="delete_all_favs_dialog_positive_button">Delete all</string>
     <string name="delete_all_favs_dialog_negative_button">Cancel</string>
 
+    <!-- Add new pet -->
+    <string name="dont_save_pet_dialog_title">Are you sure?</string>
+    <string name="dont_save_pet_dialog_description">All your changes will be lost.</string>
+    <string name="dont_save_pet_dialog_positive_button">Keep editing</string>
+    <string name="dont_save_pet_dialog_negative_button">Go back</string>
+
 </resources>

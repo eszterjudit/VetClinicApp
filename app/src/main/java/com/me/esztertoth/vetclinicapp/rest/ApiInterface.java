@@ -6,6 +6,7 @@ import com.me.esztertoth.vetclinicapp.model.PetOwner;
 import com.me.esztertoth.vetclinicapp.model.Vet;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,5 +28,8 @@ public interface ApiInterface {
 
     @GET("clinic/{clinicId}/vets")
     Observable<List<Vet>> getClinicAllVets(@Path("clinicId") Long clinicId);
+
+    @GET("auth")
+    Call<Map<String, Object>> getToken();
 
 }

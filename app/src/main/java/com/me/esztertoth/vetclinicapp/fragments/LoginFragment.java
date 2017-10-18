@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,24 @@ import android.widget.EditText;
 
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.StartPageActivity;
+import com.me.esztertoth.vetclinicapp.model.Pet;
+import com.me.esztertoth.vetclinicapp.rest.ApiClient;
+import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.LoginAndSignUpTextWatcher;
+
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class LoginFragment extends Fragment {
 
@@ -27,6 +41,8 @@ public class LoginFragment extends Fragment {
     @BindView(R.id.login_button) Button loginButton;
     @BindView(R.id.email_textInput_layout) TextInputLayout emailInputLayout;
     @BindView(R.id.password_textInput_layout) TextInputLayout passwordInputLayout;
+
+    private Subscription subscription;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,8 +54,24 @@ public class LoginFragment extends Fragment {
 
     @OnClick(R.id.login_button)
     public void login() {
-        Intent i = new Intent(getActivity(), StartPageActivity.class);
-        startActivity(i);
+        ApiInterface apiInterface = ApiClient.createService(ApiInterface.class, emailEditText.getText().toString(), passwordEditText.getText().toString());
+        Call<Map<String, Object>> call = apiInterface.getToken();
+        call.enqueue(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                if (response.isSuccessful()) {
+                    Intent i = new Intent(getActivity(), StartPageActivity.class);
+                    startActivity(i);
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                // something went completely south (like no internet connection)
+            }
+        });
     }
 
     private void initUI() {

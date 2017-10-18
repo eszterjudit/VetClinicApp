@@ -19,30 +19,41 @@
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/pet_name_edit_text"
-                style="@style/NameEditText"
+                style="@style/EditPetEdittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name" />
+                android:hint="Name"
+                android:inputType="text" />
 
         </android.support.design.widget.TextInputLayout>
 
         <TextView
             android:id="@+id/pet_birthday_input"
-            style="@android:style/Widget.DeviceDefault.Light.Spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/pet_name_textInput_layout"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
+            android:drawableRight="@drawable/ic_edit"
             android:paddingLeft="10dp"
             android:text="Birthday"
             android:textColor="@color/colorPrimary"
             android:textSize="20sp" />
 
+        <EditText
+            android:id="@+id/weight_input"
+            style="@style/EditPetEdittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pet_birthday_input"
+            android:layout_marginBottom="10dp"
+            android:hint="Weight (in kg)"
+            android:inputType="number" />
+
         <Spinner
             android:id="@+id/pet_type_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/pet_birthday_input"
+            android:layout_below="@id/weight_input"
             android:spinnerMode="dropdown"
             android:textSize="20sp" />
 

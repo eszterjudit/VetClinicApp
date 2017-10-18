@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.dialog.PetBirthayPickerDialog;
+import com.me.esztertoth.vetclinicapp.model.BirthDate;
 import com.me.esztertoth.vetclinicapp.model.Pet;
 import com.me.esztertoth.vetclinicapp.model.PetType;
 
@@ -33,15 +34,15 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
     EditText petNameEditText;
     @BindView(R.id.pet_birthday_input)
     TextView petAgeTextView;
+    @BindView(R.id.weight_input)
+    EditText petWeightEditText;
     @BindView(R.id.pet_type_spinner)
     Spinner typeSpinnerView;
 
     private static final String BIRTHDAY_DIALOG_NAME = "birtdayPickerDialog";
     private static final String BIRTHDAY_DATE_FORMAT = "MM/dd/yyyy";
 
-    private Pet newPet;
-    private String name;
-    private PetType type;
+    private BirthDate birthDate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,9 +56,11 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
 
     @OnClick(R.id.save_pet_button)
     public void savePetAndClose() {
-        name = petNameEditText.getText().toString();
-        type = (PetType) typeSpinnerView.getItemAtPosition(typeSpinnerView.getSelectedItemPosition());
+    }
 
+    @OnClick(R.id.cancel_button)
+    public void closeFragment() {
+        getActivity().onBackPressed();
     }
 
     @OnClick(R.id.pet_birthday_input)
@@ -72,6 +75,21 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
         DateTime dateTime = new DateTime(year, month, day, 0, 0, 0, 0);
         DateTimeFormatter dtfOut = DateTimeFormat.forPattern(BIRTHDAY_DATE_FORMAT);
         petAgeTextView.setText(dtfOut.print(dateTime));
+        birthDate = createBirthDateFromDateTime(dateTime);
+    }
+
+    private BirthDate createBirthDateFromDateTime(DateTime dateTime) {
+        return new BirthDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth());
+    }
+
+    private Pet createNewPet() {
+        Pet newPet = new Pet();
+        newPet.setName(petNameEditText.getText().toString());
+        newPet.setDateOfBirth(birthDate);
+        newPet.setWeight(Double.valueOf(petWeightEditText.getText().toString()));
+        newPet.setType((PetType) typeSpinnerView.getItemAtPosition(typeSpinnerView.getSelectedItemPosition()));
+
+        return newPet;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.me.esztertoth.vetclinicapp.fragments;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -56,10 +58,12 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
 
     @OnClick(R.id.save_pet_button)
     public void savePetAndClose() {
+        hideKeyboard();
     }
 
     @OnClick(R.id.cancel_button)
     public void closeFragment() {
+        hideKeyboard();
         getActivity().onBackPressed();
     }
 
@@ -90,6 +94,14 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
         newPet.setType((PetType) typeSpinnerView.getItemAtPosition(typeSpinnerView.getSelectedItemPosition()));
 
         return newPet;
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        View v = getActivity().getCurrentFocus();
+        if (v == null)
+            return;
+        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
 }

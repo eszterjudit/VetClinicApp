@@ -37,6 +37,7 @@ import com.me.esztertoth.vetclinicapp.model.PetType;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.BitmapUtils;
+import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,6 +59,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     @BindView(R.id.pet_type_spinner) Spinner typeSpinner;
     @BindView(R.id.place_autocomplete_search_button) View searchButton;
     @BindView(R.id.place_autocomplete_search_input) EditText PlaceAutocompleteSearchInput;
+
+    private String token;
 
     private static int MAP_ZOOM_LEVEL = 15;
     private static int DESIRED_SNAPSHOT_SIZE = 800;
@@ -84,6 +87,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
+        token = VetClinicPreferences.getSessionToken(getContext());
+        apiService = ApiClient.createService(ApiInterface.class, token);
+
+        clinics = new ArrayList<>();
         markers = new HashMap<>();
 
         initPlacesAutocomplete();
@@ -125,9 +132,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         locationProvider = new LocationProvider(getActivity(), this);
         locationProvider.connect();
         mapView.onResume();
-
-        apiService = ApiClient.provideApiClient();
-        clinics = new ArrayList<>();
     }
 
     @Override
@@ -154,7 +158,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     }
 
     private void getAllClinics() {
-        subscription = apiService.getAllClinics()
+        subscription = apiService.getAllClinics(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Clinic>>() {

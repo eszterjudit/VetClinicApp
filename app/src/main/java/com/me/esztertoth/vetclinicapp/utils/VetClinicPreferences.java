@@ -14,9 +14,31 @@ public class VetClinicPreferences {
 
     private static final String PERIMETER = "perimeter";
     private static final String FAVORITES = "favorites";
+    private static final String SESSION_TOKEN = "sessionToken";
+    private static final String USER_ID = "userId";
 
     private static SharedPreferences getPreferences(Context context) {
         return context.getSharedPreferences("com.me.esztertoth.vetclinicapp", Context.MODE_PRIVATE);
+    }
+
+    public static String getSessionToken(Context context) {
+        return getPreferences(context).getString(SESSION_TOKEN, null);
+    }
+
+    public static void setSessionToken(Context context, String token) {
+        SharedPreferences.Editor edit = getPreferences(context).edit();
+        edit.putString(SESSION_TOKEN, token);
+        edit.commit();
+    }
+
+    public static long getUserId(Context context) {
+        return getPreferences(context).getLong(USER_ID, 0);
+    }
+
+    public static void setUserId(Context context, long id) {
+        SharedPreferences.Editor edit = getPreferences(context).edit();
+        edit.putLong(USER_ID, id);
+        edit.commit();
     }
 
     public static int getPerimeter(Context context) {

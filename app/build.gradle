@@ -53,9 +53,9 @@ dependencies {
 
     compile 'joda-time:joda-time:2.9.9'
 
-    compile 'io.reactivex:rxjava:1.1.6'
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'io.reactivex:rxjava:1.1.6+'
+    compile 'io.reactivex:rxandroid:1.2.1+'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0+'
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile "com.google.dagger:dagger:2.9"

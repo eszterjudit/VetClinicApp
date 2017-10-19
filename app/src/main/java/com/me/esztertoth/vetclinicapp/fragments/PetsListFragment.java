@@ -16,6 +16,7 @@ import com.me.esztertoth.vetclinicapp.adapters.PetsListAdapter;
 import com.me.esztertoth.vetclinicapp.model.Pet;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
+import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,9 @@ public class PetsListFragment extends Fragment {
     private PetsListAdapter petsListAdapter;
     private ApiInterface apiService;
 
+    private String token;
+    private long userId;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pets_list, container, false);
@@ -46,7 +50,9 @@ public class PetsListFragment extends Fragment {
 
         pets = new ArrayList();
 
-        apiService = ApiClient.provideApiClient();
+        token = VetClinicPreferences.getSessionToken(getContext());
+        userId = VetClinicPreferences.getUserId(getContext());
+        apiService = ApiClient.createService(ApiInterface.class, token);
 
         petsListAdapter = new PetsListAdapter(getContext(), pets);
         petsListRecyclerView.setAdapter(petsListAdapter);
@@ -73,7 +79,7 @@ public class PetsListFragment extends Fragment {
     }
 
     private void getOwnerAllPets() {
-        subscription = apiService.getPetOwnerAllPets((long) 1)
+        subscription = apiService.getPetOwnerAllPets(token, userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Pet>>() {
@@ -87,6 +93,7 @@ public class PetsListFragment extends Fragment {
 
                     @Override
                     public final void onError(Throwable e) {
+                        System.out.println("error");
                     }
 
                     @Override

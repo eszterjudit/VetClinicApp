@@ -19,6 +19,7 @@ import com.me.esztertoth.vetclinicapp.model.Pet;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.LoginAndSignUpTextWatcher;
+import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.util.List;
 import java.util.Map;
@@ -60,9 +61,11 @@ public class LoginFragment extends Fragment {
             @Override
             public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
                 if (response.isSuccessful()) {
+                    VetClinicPreferences.setSessionToken(getContext(), (String) response.body().get("session"));
                     Intent i = new Intent(getActivity(), StartPageActivity.class);
                     startActivity(i);
                 } else {
+                    System.out.println("asdasd");
 
                 }
             }

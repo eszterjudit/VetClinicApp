@@ -11,6 +11,7 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -18,16 +19,16 @@ import rx.Observable;
 public interface ApiInterface {
 
     @GET("pet/{petId}")
-    Observable<Pet> getPet(@Path("petId") Long petId);
+    Observable<Pet> getPet(@Header("x-auth-token") String token, @Path("petId") Long petId);
 
     @GET("petOwner/{petOwnerId}/pets")
-    Observable<List<Pet>> getPetOwnerAllPets(@Path("petOwnerId") Long petOwnerId);
+    Observable<List<Pet>> getPetOwnerAllPets(@Header("x-auth-token") String token, @Path("petOwnerId") Long petOwnerId);
 
     @GET("clinic/")
-    Observable<List<Clinic>> getAllClinics();
+    Observable<List<Clinic>> getAllClinics(@Header("x-auth-token") String token);
 
     @GET("clinic/{clinicId}/vets")
-    Observable<List<Vet>> getClinicAllVets(@Path("clinicId") Long clinicId);
+    Observable<List<Vet>> getClinicAllVets(@Header("x-auth-token") String token, @Path("clinicId") Long clinicId);
 
     @GET("auth")
     Call<Map<String, Object>> getToken();

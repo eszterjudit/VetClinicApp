@@ -21,9 +21,6 @@ android {
             preDexLibraries = false
             javaMaxHeapSize "4g"
         }
-        dataBinding {
-                enabled = true
-        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

@@ -72,4 +72,9 @@
     <string name="dont_save_pet_dialog_positive_button">Keep editing</string>
     <string name="dont_save_pet_dialog_negative_button">Go back</string>
 
+    <string name="fields_not_filled_dialog_title">Can\'t save</string>
+    <string name="fields_not_filled_dialog_description">Plase fill all fields.</string>
+    <string name="fields_not_filled_dialog_positive_button">Ok</string>
+    <string name="fields_not_filled_dialog_negative_button">Don\'t save</string>
+
 </resources>

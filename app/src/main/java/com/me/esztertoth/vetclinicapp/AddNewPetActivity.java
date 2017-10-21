@@ -83,7 +83,11 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
 
     @OnClick(R.id.save_pet_button)
     public void savePetAndClose() {
-        postNewPet();
+        if(areAllFieldsFilled()) {
+            postNewPet();
+        } else {
+            openFieldsNotFilledDialog();
+        }
     }
 
     @OnClick(R.id.cancel_button)
@@ -166,6 +170,18 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
                 .show();
     }
 
+    private void openFieldsNotFilledDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.fields_not_filled_dialog_title))
+                .setMessage(getString(R.string.fields_not_filled_dialog_description))
+                .setPositiveButton(R.string.fields_not_filled_dialog_positive_button, (dialog, which) -> dialog.dismiss())
+                .setNegativeButton(R.string.fields_not_filled_dialog_negative_button, (dialog, which) -> {
+                    dialog.dismiss();
+                    closeFragment();
+                })
+                .show();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -173,6 +189,14 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean areAllFieldsFilled() {
+        return  !petNameEditText.getText().toString().isEmpty() &&
+                !petAgeTextView.getText().toString().isEmpty() &&
+                !petWeightEditText.getText().toString().isEmpty() &&
+                typeSpinnerView.getSelectedItemPosition() != 0;
+
     }
 
 }

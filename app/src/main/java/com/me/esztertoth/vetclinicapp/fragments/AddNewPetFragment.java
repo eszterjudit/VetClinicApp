@@ -22,15 +22,24 @@ import com.me.esztertoth.vetclinicapp.dialog.PetBirthayPickerDialog;
 import com.me.esztertoth.vetclinicapp.model.BirthDate;
 import com.me.esztertoth.vetclinicapp.model.Pet;
 import com.me.esztertoth.vetclinicapp.model.PetType;
-import com.me.esztertoth.vetclinicapp.utils.FavoriteUtils;
+import com.me.esztertoth.vetclinicapp.rest.ApiClient;
+import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
+import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import rx.Subscription;
 
 public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
@@ -43,15 +52,26 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
     @BindView(R.id.pet_type_spinner)
     Spinner typeSpinnerView;
 
+    private Subscription subscription;
+    private ApiInterface apiService;
+
+    private String token;
+    private long userId;
+
     private static final String BIRTHDAY_DIALOG_NAME = "birtdayPickerDialog";
     private static final String BIRTHDAY_DATE_FORMAT = "MM/dd/yyyy";
+    private static final String FORMAT = "yyyy-MM-dd";
 
-    private BirthDate birthDate;
+    private String birthDate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_new_pet, container, false);
         ButterKnife.bind(this, view);
+
+        token = VetClinicPreferences.getSessionToken(getContext());
+        userId = VetClinicPreferences.getUserId(getContext());
+        apiService = ApiClient.createService(ApiInterface.class, token);
 
         typeSpinnerView.setAdapter(new ArrayAdapter<>(getContext(), R.layout.spinner_dropdown_item, PetType.values()));
 
@@ -60,7 +80,7 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
 
     @OnClick(R.id.save_pet_button)
     public void savePetAndClose() {
-        hideKeyboard();
+        postNewPet();
     }
 
     @OnClick(R.id.cancel_button)
@@ -77,10 +97,13 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        DateTime dateTime = new DateTime(year, month, day, 0, 0, 0, 0);
-        DateTimeFormatter dtfOut = DateTimeFormat.forPattern(BIRTHDAY_DATE_FORMAT);
-        petAgeTextView.setText(dtfOut.print(dateTime));
-        birthDate = createBirthDateFromDateTime(dateTime);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        SimpleDateFormat dtfOut = new SimpleDateFormat(BIRTHDAY_DATE_FORMAT);
+        SimpleDateFormat formatd = new SimpleDateFormat(FORMAT);
+        Date date = calendar.getTime();
+        petAgeTextView.setText(dtfOut.format(date));
+        birthDate = formatd.format(date);
     }
 
     private BirthDate createBirthDateFromDateTime(DateTime dateTime) {
@@ -97,12 +120,35 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
         return newPet;
     }
 
+    private void postNewPet() {
+        Call<ResponseBody> call = apiService.addPet(token, userId, createNewPet());
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    closeFragment();
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // something went completely south (like no internet connection)
+            }
+        });
+    }
+
     private void hideKeyboard() {
         InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         View v = getActivity().getCurrentFocus();
         if (v == null)
             return;
         inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
+    private void closeFragment() {
+        hideKeyboard();
+        getActivity().onBackPressed();
     }
 
     private void openDontSaveDialog() {
@@ -112,8 +158,7 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
                 .setPositiveButton(R.string.dont_save_pet_dialog_positive_button, (dialog, which) -> dialog.dismiss())
                 .setNegativeButton(R.string.dont_save_pet_dialog_negative_button, (dialog, which) -> {
                     dialog.dismiss();
-                    hideKeyboard();
-                    getActivity().onBackPressed();
+                    closeFragment();
                 })
                 .show();
     }

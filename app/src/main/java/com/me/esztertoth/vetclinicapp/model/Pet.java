@@ -3,6 +3,8 @@ package com.me.esztertoth.vetclinicapp.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class Pet {
 
     @SerializedName("id")
@@ -18,7 +20,7 @@ public class Pet {
     @Expose
     private double weight;
     @SerializedName("dateOfBirth")
-    private BirthDate dateOfBirth;
+    private String dateOfBirth;
 
     public String getName() {
         return name;
@@ -44,11 +46,11 @@ public class Pet {
         this.weight = weight;
     }
 
-    public BirthDate getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(BirthDate dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 }

@@ -13,6 +13,8 @@ import com.me.esztertoth.vetclinicapp.model.PetType;
 
 import org.joda.time.DateTime;
 import org.joda.time.Years;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class PetsListAdapter extends RecyclerView.Adapter<PetViewHolder> {
 
     private List<Pet> petsList;
     private Context context;
+
+    private static final String FORMAT = "yyyy-MM-dd";
 
     public PetsListAdapter(Context context, List<Pet> petsList) {
         this.context = context;
@@ -48,10 +52,12 @@ public class PetsListAdapter extends RecyclerView.Adapter<PetViewHolder> {
     }
 
     private int calculateBirthDate(Pet pet) {
-        DateTime dateOfBirth = new DateTime(pet.getDateOfBirth().getYear(),pet.getDateOfBirth().getDayOfMonth(),pet.getDateOfBirth().getDayOfMonth(), 0, 0, 0, 0);
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(FORMAT);
+        DateTime dt = formatter.parseDateTime(pet.getDateOfBirth());
+        //DateTime dateOfBirth = new DateTime(pet.getDateOfBirth().getYear(),pet.getDateOfBirth().getMonth(),pet.getDateOfBirth().getDay(), 0, 0, 0, 0);
         DateTime today = DateTime.now();
 
-        return Years.yearsBetween(dateOfBirth, today).getYears();
+        return Years.yearsBetween(dt, today).getYears();
     }
 
     @Override

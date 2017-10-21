@@ -16,6 +16,7 @@ import android.widget.EditText;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.StartPageActivity;
 import com.me.esztertoth.vetclinicapp.model.Pet;
+import com.me.esztertoth.vetclinicapp.model.User;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.LoginAndSignUpTextWatcher;
@@ -62,11 +63,10 @@ public class LoginFragment extends Fragment {
             public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
                 if (response.isSuccessful()) {
                     VetClinicPreferences.setSessionToken(getContext(), (String) response.body().get("session"));
+                    VetClinicPreferences.setUserId(getContext(), ((Double)response.body().get("id")).longValue());
                     Intent i = new Intent(getActivity(), StartPageActivity.class);
                     startActivity(i);
                 } else {
-                    System.out.println("asdasd");
-
                 }
             }
 

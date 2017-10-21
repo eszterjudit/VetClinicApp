@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.adapters.PetsListAdapter;
 import com.me.esztertoth.vetclinicapp.model.Pet;
+import com.me.esztertoth.vetclinicapp.model.PetOwner;
+import com.me.esztertoth.vetclinicapp.model.User;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;

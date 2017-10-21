@@ -23,22 +23,26 @@ public class PetsListAdapter extends RecyclerView.Adapter<PetViewHolder> {
     private List<Pet> petsList;
     private Context context;
 
+    private DeletePetCallback deletePetCallback;
+
     private static final String FORMAT = "yyyy-MM-dd";
 
-    public PetsListAdapter(Context context, List<Pet> petsList) {
+    public PetsListAdapter(Context context, List<Pet> petsList, DeletePetCallback deletePetCallback) {
         this.context = context;
         this.petsList = petsList;
+        this.deletePetCallback = deletePetCallback;
     }
 
     @Override
     public PetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.pet_list_item, parent, false);
-        PetViewHolder pvh = new PetViewHolder(v);
+        PetViewHolder pvh = new PetViewHolder(v, deletePetCallback);
         return pvh;
     }
 
     @Override
     public void onBindViewHolder(PetViewHolder holder, int position) {
+        holder.setPetId(petsList.get(position).getId());
         holder.setPetIcon(getPetIconByType(petsList.get(position).getType()));
         holder.setName(petsList.get(position).getName());
         holder.setType(petsList.get(position).getType().toString());
@@ -54,7 +58,6 @@ public class PetsListAdapter extends RecyclerView.Adapter<PetViewHolder> {
     private int calculateBirthDate(Pet pet) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern(FORMAT);
         DateTime dt = formatter.parseDateTime(pet.getDateOfBirth());
-        //DateTime dateOfBirth = new DateTime(pet.getDateOfBirth().getYear(),pet.getDateOfBirth().getMonth(),pet.getDateOfBirth().getDay(), 0, 0, 0, 0);
         DateTime today = DateTime.now();
 
         return Years.yearsBetween(dt, today).getYears();

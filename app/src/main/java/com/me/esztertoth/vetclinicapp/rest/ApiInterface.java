@@ -11,6 +11,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -27,6 +28,9 @@ public interface ApiInterface {
 
     @POST("petOwner/{petOwnerId}/addPet/")
     Call<ResponseBody> addPet(@Header("x-auth-token") String token, @Path("petOwnerId") long petOwnerId, @Body Pet pet);
+
+    @DELETE("/pet/{petOwnerId}/deletePet/{petId}")
+    Call<Void> deletePet(@Header("x-auth-token") String token, @Path("petOwnerId") long petOwnerId, @Path("petId") long petId);
 
     @GET("clinic/")
     Observable<List<Clinic>> getAllClinics(@Header("x-auth-token") String token);

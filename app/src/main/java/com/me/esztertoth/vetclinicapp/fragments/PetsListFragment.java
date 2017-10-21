@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.me.esztertoth.vetclinicapp.AddNewPetActivity;
 import com.me.esztertoth.vetclinicapp.ClinicDetailsActivity;
 import com.me.esztertoth.vetclinicapp.R;
+import com.me.esztertoth.vetclinicapp.adapters.DeletePetCallback;
 import com.me.esztertoth.vetclinicapp.adapters.PetsListAdapter;
 import com.me.esztertoth.vetclinicapp.model.Pet;
 import com.me.esztertoth.vetclinicapp.model.PetOwner;
@@ -25,16 +26,21 @@ import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class PetsListFragment extends Fragment {
+public class PetsListFragment extends Fragment implements DeletePetCallback {
 
     @BindView(R.id.pets_list_recyclerview) RecyclerView petsListRecyclerView;
     @BindView(R.id.addNewPetButton) FloatingActionButton addNewPetButton;
@@ -59,7 +65,7 @@ public class PetsListFragment extends Fragment {
         userId = VetClinicPreferences.getUserId(getContext());
         apiService = ApiClient.createService(ApiInterface.class, token);
 
-        petsListAdapter = new PetsListAdapter(getContext(), pets);
+        petsListAdapter = new PetsListAdapter(getContext(), pets, this);
         petsListRecyclerView.setAdapter(petsListAdapter);
         petsListRecyclerView.setNestedScrollingEnabled(false);
 
@@ -124,4 +130,27 @@ public class PetsListFragment extends Fragment {
         startActivity(i);
     }
 
+    @Override
+    public void deletePet(long petId) {
+        Pet petToDelete = pets.stream().filter(pet -> pet.getId() == petId).findFirst().get();
+        apiService.deletePet(token, userId, petId).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    pets.remove(petToDelete);
+                    petsListAdapter.notifyDataSetChanged();
+                    if(pets.isEmpty()) {
+                        showView(noPetsMessage, true);
+                        showView(petsListRecyclerView, false);
+                    }
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                // something went completely south (like no internet connection)
+            }
+        });
+    }
 }

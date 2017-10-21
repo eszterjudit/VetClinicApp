@@ -11,6 +11,7 @@ import com.me.esztertoth.vetclinicapp.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class PetViewHolder extends RecyclerView.ViewHolder {
 
@@ -21,10 +22,16 @@ public class PetViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.type) TextView typeView;
     @BindView(R.id.weight) TextView weightView;
 
-    public PetViewHolder(View itemView) {
+    private long petId;
+    private DeletePetCallback deletePetCallback;
+
+    public PetViewHolder(View itemView, DeletePetCallback deletePetCallback) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        this.deletePetCallback = deletePetCallback;
     }
+
+    public void setPetId(long petId) { this.petId = petId; }
 
     public void setPetIcon(Drawable icon) {
         petIconView.setImageDrawable(icon);
@@ -44,6 +51,11 @@ public class PetViewHolder extends RecyclerView.ViewHolder {
 
     public void setType(String type) {
         typeView.setText(type);
+    }
+
+    @OnClick(R.id.delete_pet)
+    void deletePet() {
+        deletePetCallback.deletePet(petId);
     }
 
 }

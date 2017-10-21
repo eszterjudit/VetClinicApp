@@ -30,8 +30,7 @@ public class ApiClient {
     }
 
     public static <S> S createService(Class<S> serviceClass, String username, String password) {
-        if (!TextUtils.isEmpty(username)
-                && !TextUtils.isEmpty(password)) {
+        if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
             String authToken = Credentials.basic(username, password);
             return createService(serviceClass, authToken);
         }

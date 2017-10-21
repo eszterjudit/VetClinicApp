@@ -4,6 +4,7 @@
     <string name="title_activity_start_page">StartPageActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_clinic_details">ClinicDetailsActivity</string>
+    <string name="title_add_new_pet">AddNewPetActivity</string>
 
     <string name="auth0_domain">eszterjudit.eu.auth0.com</string>
     <string name="auth0_client_id">7gIGe5F7x6pVI5pmb5ySogEhSIozG5zs</string>

@@ -1,5 +1,6 @@
 package com.me.esztertoth.vetclinicapp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.me.esztertoth.vetclinicapp.AddNewPetActivity;
+import com.me.esztertoth.vetclinicapp.ClinicDetailsActivity;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.adapters.PetsListAdapter;
 import com.me.esztertoth.vetclinicapp.model.Pet;
@@ -58,11 +61,10 @@ public class PetsListFragment extends Fragment {
 
         petsListAdapter = new PetsListAdapter(getContext(), pets);
         petsListRecyclerView.setAdapter(petsListAdapter);
+        petsListRecyclerView.setNestedScrollingEnabled(false);
 
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         petsListRecyclerView.setLayoutManager(llm);
-
-        getOwnerAllPets();
 
         return view;
     }
@@ -78,6 +80,8 @@ public class PetsListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        pets.clear();
+        getOwnerAllPets();
     }
 
     private void getOwnerAllPets() {
@@ -90,6 +94,7 @@ public class PetsListFragment extends Fragment {
                         if(!pets.isEmpty()) {
                             showView(noPetsMessage, false);
                             showView(petsListRecyclerView, true);
+                            petsListAdapter.notifyDataSetChanged();
                         }
                     }
 
@@ -100,7 +105,9 @@ public class PetsListFragment extends Fragment {
 
                     @Override
                     public final void onNext(List<Pet> response) {
-                        pets.addAll(response);
+                        for(Pet pet : response) {
+                            pets.add(pet);
+                        }
                     }
                 });
     }
@@ -113,11 +120,8 @@ public class PetsListFragment extends Fragment {
 
     @OnClick(R.id.addNewPetButton)
     public void openAddNewPetFragment() {
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        Fragment addNewPetFragment = new AddNewPetFragment();
-        ft.replace(R.id.pets_list_container, addNewPetFragment);
-        ft.addToBackStack(addNewPetFragment.getTag());
-        ft.commit();
+        Intent i = new Intent(getActivity(), AddNewPetActivity.class);
+        startActivity(i);
     }
 
 }

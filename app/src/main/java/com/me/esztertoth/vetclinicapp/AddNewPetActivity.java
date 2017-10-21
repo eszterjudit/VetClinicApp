@@ -1,15 +1,16 @@
-package com.me.esztertoth.vetclinicapp.fragments;
+package com.me.esztertoth.vetclinicapp;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -17,7 +18,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.dialog.PetBirthayPickerDialog;
 import com.me.esztertoth.vetclinicapp.model.BirthDate;
 import com.me.esztertoth.vetclinicapp.model.Pet;
@@ -39,10 +39,11 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import rx.Subscription;
 
-public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
+public class AddNewPetActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.pet_name_edit_text)
     EditText petNameEditText;
     @BindView(R.id.pet_birthday_input)
@@ -52,7 +53,6 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
     @BindView(R.id.pet_type_spinner)
     Spinner typeSpinnerView;
 
-    private Subscription subscription;
     private ApiInterface apiService;
 
     private String token;
@@ -65,17 +65,20 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
     private String birthDate;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_new_pet, container, false);
-        ButterKnife.bind(this, view);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_new_pet);
+        ButterKnife.bind(this);
 
-        token = VetClinicPreferences.getSessionToken(getContext());
-        userId = VetClinicPreferences.getUserId(getContext());
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        token = VetClinicPreferences.getSessionToken(this);
+        userId = VetClinicPreferences.getUserId(this);
         apiService = ApiClient.createService(ApiInterface.class, token);
 
-        typeSpinnerView.setAdapter(new ArrayAdapter<>(getContext(), R.layout.spinner_dropdown_item, PetType.values()));
-
-        return view;
+        typeSpinnerView.setAdapter(new ArrayAdapter<>(this, R.layout.spinner_dropdown_item, PetType.values()));
     }
 
     @OnClick(R.id.save_pet_button)
@@ -90,7 +93,7 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
 
     @OnClick(R.id.pet_birthday_input)
     void openBirthdayPicker() {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         DialogFragment birthdayPicker = new PetBirthayPickerDialog(this);
         birthdayPicker.show(ft, BIRTHDAY_DIALOG_NAME);
     }
@@ -139,8 +142,8 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
     }
 
     private void hideKeyboard() {
-        InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        View v = getActivity().getCurrentFocus();
+        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        View v = getCurrentFocus();
         if (v == null)
             return;
         inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -148,11 +151,11 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
 
     private void closeFragment() {
         hideKeyboard();
-        getActivity().onBackPressed();
+        onBackPressed();
     }
 
     private void openDontSaveDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.dont_save_pet_dialog_title))
                 .setMessage(getString(R.string.dont_save_pet_dialog_description))
                 .setPositiveButton(R.string.dont_save_pet_dialog_positive_button, (dialog, which) -> dialog.dismiss())
@@ -161,6 +164,15 @@ public class AddNewPetFragment extends Fragment implements DatePickerDialog.OnDa
                     closeFragment();
                 })
                 .show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            openDontSaveDialog();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

@@ -29,11 +29,27 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/only_show_open_clinics_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pet_type_spinner_container"
+        style="@style/PetTypeSpinnerContainer" >
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/only_show_open_clinics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ShowOnlyOpenClinicsCheckbox"
+            android:text="@string/map_show_only_open_clinics" />
+
+    </LinearLayout>
+
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/pet_type_spinner_container" />
+        android:layout_below="@id/only_show_open_clinics_container" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

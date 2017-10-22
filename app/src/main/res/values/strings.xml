@@ -49,6 +49,7 @@
 
     <!-- Map -->
     <string name="map_autocomplete_city_hint">City</string>
+    <string name="map_show_only_open_clinics">Only show open clinics</string>
 
     <!-- Settings -->
     <string name="map_perimeter_settings_item_title">Map perimeter</string>

@@ -21,7 +21,7 @@ public class Address implements Serializable {
     private String street;
     @SerializedName("zip")
     @Expose
-    private int zip;
+    private String zip;
 
     public Long getId() {
         return id;
@@ -55,11 +55,11 @@ public class Address implements Serializable {
         this.street = street;
     }
 
-    public int getZip() {
+    public String getZip() {
         return zip;
     }
 
-    public void setZip(int zip) {
+    public void setZip(String zip) {
         this.zip = zip;
     }
 

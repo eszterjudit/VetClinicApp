@@ -16,6 +16,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -44,5 +45,8 @@ public interface ApiInterface {
 
     @GET("/petOwner/{petOwnerId}")
     Observable<User> getUser(@Header("x-auth-token") String token, @Path("petOwnerId") Long petOwnerId);
+
+    @PUT("/petOwner/{petOwnerId}")
+    Call<ResponseBody> updateUser(@Header("x-auth-token") String token, @Path("petOwnerId") Long petOwnerId, @Body User user);
 
 }

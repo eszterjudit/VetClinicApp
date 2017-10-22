@@ -140,7 +140,6 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                // something went completely south (like no internet connection)
             }
         });
     }

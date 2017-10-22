@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 
 import com.me.esztertoth.vetclinicapp.fragments.EditProfileFragment;
@@ -82,7 +83,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void setToolbarWithName() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(user.getFirstName() + " " + user.getLastName());
+        if(!TextUtils.isEmpty(user.getFirstName()) || !TextUtils.isEmpty(user.getLastName()))
+            getSupportActionBar().setTitle(user.getFirstName() + " " + user.getLastName());
+        else
+            getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
@@ -94,7 +98,6 @@ public class ProfileActivity extends AppCompatActivity {
         bundle.putSerializable(USER, user);
         profileContentFragment.setArguments(bundle);
         ft.replace(R.id.profile_container, profileContentFragment);
-        ft.addToBackStack(profileContentFragment.getTag());
         ft.commit();
     }
 
@@ -102,6 +105,9 @@ public class ProfileActivity extends AppCompatActivity {
     public void openEditProfile() {
         EditProfileFragment editProfileFragment = new EditProfileFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(USER, user);
+        editProfileFragment.setArguments(bundle);
         ft.replace(R.id.profile_container, editProfileFragment);
         ft.commit();
     }

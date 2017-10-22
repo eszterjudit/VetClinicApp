@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/phone_icon"
             android:layout_toRightOf="@id/phone_icon"
-            android:text="phone" />
+            android:text="@string/phone" />
 
     </RelativeLayout>
 
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/email_icon"
             android:layout_toRightOf="@id/email_icon"
-            android:text="email" />
+            android:text="@string/email" />
 
     </RelativeLayout>
 
@@ -59,28 +59,56 @@
             style="@style/ProfileItemIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_adress" />
+            android:src="@drawable/ic_address" />
 
         <TextView
-            android:id="@+id/address_line_1"
+            android:id="@+id/street"
             style="@style/ProfileItemText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/address_icon"
             android:layout_toRightOf="@id/address_icon"
-            android:text="Address line 1" />
+            android:text="@string/street" />
 
         <TextView
-            android:id="@+id/address_line_2"
+            android:id="@+id/city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/address_line_1"
+            android:layout_below="@id/street"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@id/address_icon"
             android:layout_toRightOf="@id/address_icon"
-            android:text="Address line 2"
+            android:text="@string/city"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/zip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/street"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@id/city"
+            android:layout_toRightOf="@id/city"
+            android:text="@string/zip_code"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/city"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@id/address_icon"
+            android:layout_toRightOf="@id/address_icon"
+            android:text="@string/country"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/colorPrimaryDark" />
 

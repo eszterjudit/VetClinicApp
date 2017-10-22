@@ -42,10 +42,6 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         token = VetClinicPreferences.getSessionToken(this);
         userId = VetClinicPreferences.getUserId(this);
         apiService = ApiClient.createService(ApiInterface.class, token);
@@ -67,7 +63,7 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public final void onCompleted() {
                         if(user != null) {
-                            setName();
+                            setToolbarWithName();
                             openProfileContent();
                         }
                     }
@@ -84,8 +80,11 @@ public class ProfileActivity extends AppCompatActivity {
                 });
     }
 
-    private void setName() {
+    private void setToolbarWithName() {
+        setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(user.getFirstName() + " " + user.getLastName());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     private void openProfileContent() {

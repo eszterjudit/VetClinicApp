@@ -2,6 +2,7 @@ package com.me.esztertoth.vetclinicapp.rest;
 
 import com.me.esztertoth.vetclinicapp.model.Clinic;
 import com.me.esztertoth.vetclinicapp.model.Pet;
+import com.me.esztertoth.vetclinicapp.model.User;
 import com.me.esztertoth.vetclinicapp.model.Vet;
 
 import java.util.List;
@@ -40,5 +41,8 @@ public interface ApiInterface {
 
     @GET("auth")
     Call<Map<String, Object>> getToken();
+
+    @GET("/petOwner/{petOwnerId}")
+    Observable<User> getUser(@Header("x-auth-token") String token, @Path("petOwnerId") Long petOwnerId);
 
 }

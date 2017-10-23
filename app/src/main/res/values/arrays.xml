@@ -4,4 +4,20 @@
         <item>@drawable/login_bg1</item>
         <item>@drawable/login_bg2</item>
     </array>
+
+    <array name="symptom_checker_questions">
+        <item>Is your pet showing lack of appetite?</item>
+        <item>Is your pet showing decreased activity?</item>
+        <item>Is your pet coughing?</item>
+        <item>Does your pet have itchy skin or shows hair loss?</item>
+        <item>Does your pet have difficulty with rising?</item>
+    </array>
+
+    <array name="symptom_checker_answers">
+        <item>Dogs and cats stop eating for a host of reasons, including fever, pain, or stress.\nDogs may be picky, but with cats, you\'ve got to be careful, especially with an overweight cat, because they can develop fatty liver.</item>
+        <item>Many things can cause lethargy, including major problems, such as heart disease.\nIt may be necessary to visit the vet, especially if other symptoms arise, such as change in exercise tolerance, weakness, collapse, or loss of consciousness.</item>
+        <item>Chronic coughing may be related to heart disease, heartworms, or lung diseases.\nIf a puppy or dog with kennel cough develops more serious symptoms, such as fever, nasal discharge, loss of appetite, lethargy, or a productive cough, it may be getting pneumonia.</item>
+        <item>Fleas, ticks, mange mites, and ear mites are common reasons for hair loss and itching on the skin or around the ears.\nBut hair loss or itchy skin may also result from endocrine problems, staph infections, fungal or yeast infections, and a host of other causes.</item>
+        <item>Pets that suffer stiffness, lameness, inability to bear weight on one leg, or trouble rising from the ground may have hip or spine arthritis, disc disease, ruptured ligaments, or hip dysplasia. Tick-borne diseases, such as Lyme disease, can also cause arthritis.</item>
+    </array>
 </resources>

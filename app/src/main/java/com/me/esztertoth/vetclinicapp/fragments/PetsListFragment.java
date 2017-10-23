@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,25 +12,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.me.esztertoth.vetclinicapp.AddNewPetActivity;
-import com.me.esztertoth.vetclinicapp.ClinicDetailsActivity;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.adapters.DeletePetCallback;
 import com.me.esztertoth.vetclinicapp.adapters.PetsListAdapter;
 import com.me.esztertoth.vetclinicapp.model.Pet;
-import com.me.esztertoth.vetclinicapp.model.PetOwner;
-import com.me.esztertoth.vetclinicapp.model.User;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
-import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
+import com.me.esztertoth.vetclinicapp.rest.PetOwnerApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,7 +43,7 @@ public class PetsListFragment extends Fragment implements DeletePetCallback {
     private List<Pet> pets;
     private Subscription subscription;
     private PetsListAdapter petsListAdapter;
-    private ApiInterface apiService;
+    private PetOwnerApiInterface petOwnerApiInterface;
 
     private String token;
     private long userId;
@@ -63,7 +57,7 @@ public class PetsListFragment extends Fragment implements DeletePetCallback {
 
         token = VetClinicPreferences.getSessionToken(getContext());
         userId = VetClinicPreferences.getUserId(getContext());
-        apiService = ApiClient.createService(ApiInterface.class, token);
+        petOwnerApiInterface = ApiClient.createService(PetOwnerApiInterface.class, token);
 
         petsListAdapter = new PetsListAdapter(getContext(), pets, this);
         petsListRecyclerView.setAdapter(petsListAdapter);
@@ -91,7 +85,7 @@ public class PetsListFragment extends Fragment implements DeletePetCallback {
     }
 
     private void getOwnerAllPets() {
-        subscription = apiService.getPetOwnerAllPets(token, userId)
+        subscription = petOwnerApiInterface.getPetOwnerAllPets(token, userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Pet>>() {
@@ -133,7 +127,7 @@ public class PetsListFragment extends Fragment implements DeletePetCallback {
     @Override
     public void deletePet(long petId) {
         Pet petToDelete = pets.stream().filter(pet -> pet.getId() == petId).findFirst().get();
-        apiService.deletePet(token, userId, petId).enqueue(new Callback<Void>() {
+        petOwnerApiInterface.deletePet(token, userId, petId).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
@@ -149,7 +143,6 @@ public class PetsListFragment extends Fragment implements DeletePetCallback {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                // something went completely south (like no internet connection)
             }
         });
     }

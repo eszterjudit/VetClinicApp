@@ -35,7 +35,7 @@ import com.me.esztertoth.vetclinicapp.map.LocationProvider;
 import com.me.esztertoth.vetclinicapp.model.Clinic;
 import com.me.esztertoth.vetclinicapp.model.PetType;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
-import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
+import com.me.esztertoth.vetclinicapp.rest.ClinicApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.BitmapUtils;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
@@ -71,7 +71,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     private List<Clinic> clinics;
     private Clinic clinicToOpen;
 
-    private ApiInterface apiService;
+    private ClinicApiInterface clinicApiInterface;
     private Subscription subscription;
 
     private GoogleMap map;
@@ -88,7 +88,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         mapView.getMapAsync(this);
 
         token = VetClinicPreferences.getSessionToken(getContext());
-        apiService = ApiClient.createService(ApiInterface.class, token);
+        clinicApiInterface = ApiClient.createService(ClinicApiInterface.class, token);
 
         clinics = new ArrayList<>();
         markers = new HashMap<>();
@@ -158,7 +158,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     }
 
     private void getAllClinics() {
-        subscription = apiService.getAllClinics(token)
+        subscription = clinicApiInterface.getAllClinics(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Clinic>>() {

@@ -15,7 +15,7 @@ import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.model.Address;
 import com.me.esztertoth.vetclinicapp.model.User;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
-import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
+import com.me.esztertoth.vetclinicapp.rest.PetOwnerApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.LoginAndSignUpTextWatcher;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
@@ -46,7 +46,7 @@ public class EditProfileFragment extends Fragment {
 
     private long userId;
     private String token;
-    private ApiInterface apiService;
+    private PetOwnerApiInterface petOwnerApiInterface;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class EditProfileFragment extends Fragment {
 
         token = VetClinicPreferences.getSessionToken(getContext());
         userId = VetClinicPreferences.getUserId(getContext());
-        apiService = ApiClient.createService(ApiInterface.class, token);
+        petOwnerApiInterface = ApiClient.createService(PetOwnerApiInterface.class, token);
 
         emailEditText.addTextChangedListener(new LoginAndSignUpTextWatcher(emailEditText, emailInputLayout, getContext()));
 
@@ -115,7 +115,7 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void saveUserData() {
-        Call<ResponseBody> call = apiService.updateUser(token, userId, createUserDetails());
+        Call<ResponseBody> call = petOwnerApiInterface.updateUser(token, userId, createUserDetails());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

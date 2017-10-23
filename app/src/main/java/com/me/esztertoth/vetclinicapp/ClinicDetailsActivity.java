@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-import com.me.esztertoth.vetclinicapp.fragments.ClinicDetailsFragment;
+import com.me.esztertoth.vetclinicapp.fragments.ClinicDetailsContentFragment;
 import com.me.esztertoth.vetclinicapp.model.Clinic;
 import com.me.esztertoth.vetclinicapp.utils.FavoriteUtils;
 
@@ -52,20 +52,20 @@ public class ClinicDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        openProfileContent();
+        openClinicDetailsContent();
 
         if(FavoriteUtils.isClinicAlreadyInFavorites(this, clinic)) {
             fab.setImageResource(R.drawable.ic_favorite);
         }
     }
 
-    private void openProfileContent() {
-        ClinicDetailsFragment clinicDetailsFragment = new ClinicDetailsFragment();
+    private void openClinicDetailsContent() {
+        ClinicDetailsContentFragment clinicDetailsContentFragment = new ClinicDetailsContentFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
         bundle.putSerializable(CLINIC_NAME, clinic);
-        clinicDetailsFragment.setArguments(bundle);
-        ft.replace(R.id.clinic_details_container, clinicDetailsFragment);
+        clinicDetailsContentFragment.setArguments(bundle);
+        ft.replace(R.id.clinic_details_container, clinicDetailsContentFragment);
         ft.commit();
     }
 

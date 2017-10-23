@@ -12,7 +12,7 @@ import com.me.esztertoth.vetclinicapp.fragments.EditProfileFragment;
 import com.me.esztertoth.vetclinicapp.fragments.ProfileContentFragment;
 import com.me.esztertoth.vetclinicapp.model.User;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
-import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
+import com.me.esztertoth.vetclinicapp.rest.PetOwnerApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import butterknife.BindView;
@@ -34,7 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private String token;
     private long userId;
-    private ApiInterface apiService;
+    private PetOwnerApiInterface petOwnerApiInterface;
     private Subscription subscription;
 
     @Override
@@ -45,7 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         token = VetClinicPreferences.getSessionToken(this);
         userId = VetClinicPreferences.getUserId(this);
-        apiService = ApiClient.createService(ApiInterface.class, token);
+        petOwnerApiInterface = ApiClient.createService(PetOwnerApiInterface.class, token);
 
         getUserDetails();
     }
@@ -57,7 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void getUserDetails() {
-        subscription = apiService.getUser(token, userId)
+        subscription = petOwnerApiInterface.getUser(token, userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<User>() {

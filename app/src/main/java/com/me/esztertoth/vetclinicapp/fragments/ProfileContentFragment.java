@@ -8,22 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.gms.vision.text.Text;
 import com.me.esztertoth.vetclinicapp.R;
-import com.me.esztertoth.vetclinicapp.model.Clinic;
 import com.me.esztertoth.vetclinicapp.model.User;
-import com.me.esztertoth.vetclinicapp.rest.ApiClient;
-import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
-import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class ProfileContentFragment extends Fragment {
 

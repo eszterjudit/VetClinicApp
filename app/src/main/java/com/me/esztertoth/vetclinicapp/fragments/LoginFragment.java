@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.StartPageActivity;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
-import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
+import com.me.esztertoth.vetclinicapp.rest.AuthenticationApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.LoginAndSignUpTextWatcher;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
@@ -56,8 +56,8 @@ public class LoginFragment extends Fragment {
     }
 
     private void doLogin(String email, String password) {
-        ApiInterface apiInterface = ApiClient.createService(ApiInterface.class, email, password);
-        Call<Map<String, Object>> call = apiInterface.getToken();
+        AuthenticationApiInterface authenticationApiInterface = ApiClient.createService(AuthenticationApiInterface.class, email, password);
+        Call<Map<String, Object>> call = authenticationApiInterface.getToken();
         call.enqueue(new Callback<Map<String, Object>>() {
             @Override
             public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {

@@ -22,7 +22,7 @@ import com.me.esztertoth.vetclinicapp.dialog.PetBirthayPickerDialog;
 import com.me.esztertoth.vetclinicapp.model.Pet;
 import com.me.esztertoth.vetclinicapp.model.PetType;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
-import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
+import com.me.esztertoth.vetclinicapp.rest.PetOwnerApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.text.SimpleDateFormat;
@@ -50,7 +50,7 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
     @BindView(R.id.pet_type_spinner)
     Spinner typeSpinnerView;
 
-    private ApiInterface apiService;
+    private PetOwnerApiInterface petOwnerApiInterface;
 
     private String token;
     private long userId;
@@ -73,7 +73,7 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
 
         token = VetClinicPreferences.getSessionToken(this);
         userId = VetClinicPreferences.getUserId(this);
-        apiService = ApiClient.createService(ApiInterface.class, token);
+        petOwnerApiInterface = ApiClient.createService(PetOwnerApiInterface.class, token);
 
         typeSpinnerView.setAdapter(new ArrayAdapter<>(this, R.layout.spinner_dropdown_item, PetType.values()));
     }
@@ -121,7 +121,7 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
     }
 
     private void postNewPet() {
-        Call<ResponseBody> call = apiService.addPet(token, userId, createNewPet());
+        Call<ResponseBody> call = petOwnerApiInterface.addPet(token, userId, createNewPet());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

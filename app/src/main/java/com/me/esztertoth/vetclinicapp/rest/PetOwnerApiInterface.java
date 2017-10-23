@@ -31,6 +31,6 @@ public interface PetOwnerApiInterface {
     Observable<User> getUser(@Header("x-auth-token") String token, @Path("petOwnerId") Long petOwnerId);
 
     @PUT("/petOwner/{petOwnerId}")
-    Call<ResponseBody> updateUser(@Header("x-auth-token") String token, @Path("petOwnerId") Long petOwnerId, @Body User user);
+    Call<ResponseBody> updatePetOwner(@Header("x-auth-token") String token, @Path("petOwnerId") Long petOwnerId, @Body User user);
 
 }

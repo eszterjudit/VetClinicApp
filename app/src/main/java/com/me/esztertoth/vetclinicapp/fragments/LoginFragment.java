@@ -78,6 +78,7 @@ public class LoginFragment extends Fragment {
     private void openStartPageActivity(Response<Map<String, Object>> response) {
         VetClinicPreferences.setSessionToken(getContext(), (String) response.body().get("session"));
         VetClinicPreferences.setUserId(getContext(), ((Double)response.body().get("id")).longValue());
+        VetClinicPreferences.setIsVet(getContext(), (boolean) response.body().get("isVet"));
         Intent i = new Intent(getActivity(), StartPageActivity.class);
         startActivity(i);
     }

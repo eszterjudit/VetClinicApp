@@ -20,6 +20,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_start_page"
-        app:menu="@menu/activity_start_page_drawer" />
+        app:menu="@menu/pet_owner_menu" />
 
 </android.support.v4.widget.DrawerLayout>

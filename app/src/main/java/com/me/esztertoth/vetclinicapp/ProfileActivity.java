@@ -13,6 +13,7 @@ import com.me.esztertoth.vetclinicapp.fragments.ProfileContentFragment;
 import com.me.esztertoth.vetclinicapp.model.User;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.PetOwnerApiInterface;
+import com.me.esztertoth.vetclinicapp.rest.VetApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import butterknife.BindView;
@@ -35,6 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
     private String token;
     private long userId;
     private PetOwnerApiInterface petOwnerApiInterface;
+    private VetApiInterface vetApiInterface;
     private Subscription subscription;
 
     @Override
@@ -45,9 +47,14 @@ public class ProfileActivity extends AppCompatActivity {
 
         token = VetClinicPreferences.getSessionToken(this);
         userId = VetClinicPreferences.getUserId(this);
-        petOwnerApiInterface = ApiClient.createService(PetOwnerApiInterface.class, token);
 
-        getUserDetails();
+        if(VetClinicPreferences.getIsVet(this) == true) {
+            vetApiInterface = ApiClient.createService(VetApiInterface.class, token);
+            getVetDetails();
+        } else {
+            petOwnerApiInterface = ApiClient.createService(PetOwnerApiInterface.class, token);
+            getPetOwnerDetails();
+        }
     }
 
     @Override
@@ -56,8 +63,33 @@ public class ProfileActivity extends AppCompatActivity {
         subscription.unsubscribe();
     }
 
-    private void getUserDetails() {
+    private void getPetOwnerDetails() {
         subscription = petOwnerApiInterface.getUser(token, userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<User>() {
+                    @Override
+                    public final void onCompleted() {
+                        if(user != null) {
+                            setToolbarWithName();
+                            openProfileContent();
+                        }
+                    }
+
+                    @Override
+                    public final void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public final void onNext(User response) {
+                        user = response;
+                    }
+
+                });
+    }
+
+    private void getVetDetails() {
+        subscription = vetApiInterface.getVet(token, userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<User>() {

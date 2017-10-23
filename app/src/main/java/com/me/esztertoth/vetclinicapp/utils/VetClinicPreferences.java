@@ -16,6 +16,7 @@ public class VetClinicPreferences {
     private static final String FAVORITES = "favorites";
     private static final String SESSION_TOKEN = "sessionToken";
     private static final String USER_ID = "userId";
+    private static final String IS_VET = "isVet";
 
     private static SharedPreferences getPreferences(Context context) {
         return context.getSharedPreferences("com.me.esztertoth.vetclinicapp", Context.MODE_PRIVATE);
@@ -38,6 +39,16 @@ public class VetClinicPreferences {
     public static void setUserId(Context context, long id) {
         SharedPreferences.Editor edit = getPreferences(context).edit();
         edit.putLong(USER_ID, id);
+        edit.commit();
+    }
+
+    public static boolean getIsVet(Context context) {
+        return getPreferences(context).getBoolean(IS_VET, false);
+    }
+
+    public static void setIsVet(Context context, boolean isVet) {
+        SharedPreferences.Editor edit = getPreferences(context).edit();
+        edit.putBoolean(IS_VET, isVet);
         edit.commit();
     }
 

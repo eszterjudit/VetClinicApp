@@ -16,6 +16,7 @@ import com.me.esztertoth.vetclinicapp.model.Address;
 import com.me.esztertoth.vetclinicapp.model.User;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.PetOwnerApiInterface;
+import com.me.esztertoth.vetclinicapp.rest.VetApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.LoginAndSignUpTextWatcher;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
@@ -46,7 +47,10 @@ public class EditProfileFragment extends Fragment {
 
     private long userId;
     private String token;
+    private boolean isVet;
+
     private PetOwnerApiInterface petOwnerApiInterface;
+    private VetApiInterface vetApiInterface;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,7 +62,13 @@ public class EditProfileFragment extends Fragment {
 
         token = VetClinicPreferences.getSessionToken(getContext());
         userId = VetClinicPreferences.getUserId(getContext());
-        petOwnerApiInterface = ApiClient.createService(PetOwnerApiInterface.class, token);
+        isVet = VetClinicPreferences.getIsVet(getContext());
+
+        if(isVet == true) {
+            vetApiInterface = ApiClient.createService(VetApiInterface.class, token);
+        } else {
+            petOwnerApiInterface = ApiClient.createService(PetOwnerApiInterface.class, token);
+        }
 
         emailEditText.addTextChangedListener(new LoginAndSignUpTextWatcher(emailEditText, emailInputLayout, getContext()));
 
@@ -75,7 +85,11 @@ public class EditProfileFragment extends Fragment {
     @OnClick(R.id.save_profile_button)
     public void saveProfile() {
         if(!TextUtils.isEmpty(emailEditText.getText().toString())) {
-            saveUserData();
+            if(isVet) {
+                saveVetData();
+            } else {
+                savePetOwnerData();
+            }
             closeFragment();
         } else {
             openEmailCannotBeEmptyDialog();
@@ -87,10 +101,12 @@ public class EditProfileFragment extends Fragment {
         lastNameEditText.setText(user.getLastName());
         emailEditText.setText(user.getEmail());
         phoneEditText.setText(user.getPhone());
-        streetEditText.setText(user.getAddress().getStreet());
-        cityEditText.setText(user.getAddress().getCity());
-        countryEditText.setText(user.getAddress().getCountry());
-        zipEditText.setText(String.valueOf(user.getAddress().getZip()));
+        if(user.getAddress() != null) {
+            streetEditText.setText(user.getAddress().getStreet());
+            cityEditText.setText(user.getAddress().getCity());
+            countryEditText.setText(user.getAddress().getCountry());
+            zipEditText.setText(String.valueOf(user.getAddress().getZip()));
+        }
     }
 
     private User createUserDetails() {
@@ -114,8 +130,26 @@ public class EditProfileFragment extends Fragment {
         return address;
     }
 
-    private void saveUserData() {
-        Call<ResponseBody> call = petOwnerApiInterface.updateUser(token, userId, createUserDetails());
+    private void savePetOwnerData() {
+        Call<ResponseBody> call = petOwnerApiInterface.updatePetOwner(token, userId, createUserDetails());
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            }
+        });
+    }
+
+    private void saveVetData() {
+        Call<ResponseBody> call = vetApiInterface.updateVet(token, userId, createUserDetails());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

@@ -10,31 +10,32 @@ import com.me.esztertoth.vetclinicapp.model.Clinic;
 
 import java.util.List;
 
-public class FavoritesAdapter extends RecyclerView.Adapter<ClinicViewHolder> {
+public class ClinicsAdapter extends RecyclerView.Adapter<ClinicViewHolder> {
 
-    private List<Clinic> favorites;
-    private RecyclerViewClickListener favoritesClickListener;
+    private List<Clinic> clinincs;
+    private RecyclerViewClickListener clinicsClickListener;
 
-    public FavoritesAdapter(List<Clinic> favorites, RecyclerViewClickListener favoritesClickListener) {
-        this.favorites = favorites;
-        this.favoritesClickListener = favoritesClickListener;
+    public ClinicsAdapter(List<Clinic> clinics, RecyclerViewClickListener clinicsClickListener) {
+        this.clinincs = clinics;
+        this.clinicsClickListener = clinicsClickListener;
     }
 
     @Override
     public ClinicViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.clinic_list_item, parent, false);
-        ClinicViewHolder clinicViewHolder = new ClinicViewHolder(v, favoritesClickListener);
-        return clinicViewHolder;
+        ClinicViewHolder pvh = new ClinicViewHolder(v, clinicsClickListener);
+        return pvh;
     }
 
     @Override
     public void onBindViewHolder(ClinicViewHolder holder, int position) {
-        holder.setName(favorites.get(position).getName());
-        holder.setAddress(favorites.get(position).getAddress().toString());
+        holder.setName(clinincs.get(position).getName());
+        holder.setAddress(clinincs.get(position).getAddress().toString());
     }
 
     @Override
     public int getItemCount() {
-        return favorites.size();
+        return clinincs.size();
     }
+
 }

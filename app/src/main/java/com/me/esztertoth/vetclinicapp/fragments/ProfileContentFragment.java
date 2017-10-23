@@ -49,14 +49,16 @@ public class ProfileContentFragment extends Fragment {
             phone.setText(user.getPhone());
         if(!TextUtils.isEmpty(user.getEmail()))
             email.setText(user.getEmail());
-        if(!TextUtils.isEmpty(user.getAddress().getStreet()))
-            street.setText(user.getAddress().getStreet());
-        if(!TextUtils.isEmpty(user.getAddress().getCity()))
-            city.setText(user.getAddress().getCity());
-        if(!TextUtils.isEmpty(user.getAddress().getZip()))
-            zip.setText(user.getAddress().getZip());
-        if(!TextUtils.isEmpty(user.getAddress().getCountry()))
-            country.setText(user.getAddress().getCountry());
+        if(user.getAddress() != null) {
+            if (!TextUtils.isEmpty(user.getAddress().getStreet()))
+                street.setText(user.getAddress().getStreet());
+            if (!TextUtils.isEmpty(user.getAddress().getCity()))
+                city.setText(user.getAddress().getCity());
+            if (!TextUtils.isEmpty(user.getAddress().getZip()))
+                zip.setText(user.getAddress().getZip());
+            if (!TextUtils.isEmpty(user.getAddress().getCountry()))
+                country.setText(user.getAddress().getCountry());
+        }
     }
 
 }

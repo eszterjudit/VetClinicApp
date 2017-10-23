@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@color/green" />
+            <corners
+                android:bottomLeftRadius="100dp"
+                android:bottomRightRadius="0dp"
+                android:radius="100dp"
+                android:topLeftRadius="100dp"
+                android:topRightRadius="0dp" />
+        </shape>
+    </item>
+    <item
+        android:width="50dp"
+        android:height="50dp"
+        android:drawable="@drawable/ic_check"
+        android:gravity="center_horizontal|center_vertical" />
+</layer-list>

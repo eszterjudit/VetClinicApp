@@ -22,6 +22,10 @@
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_map"
             android:title="@string/map" />
+        <item
+            android:id="@+id/nav_symptom_checker"
+            android:icon="@drawable/ic_self_check"
+            android:title="@string/symptom_checker" />
     </group>
 <!--
     <item android:title="Communicate">

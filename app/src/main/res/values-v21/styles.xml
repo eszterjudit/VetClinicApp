@@ -126,6 +126,19 @@
         <item name="android:src">@drawable/ic_favorite_border</item>
     </style>
 
+    <!-- Symptom checker -->
+
+    <style name="SymptomCheckerQuestion">
+        <item name="android:textSize">30sp</item>
+        <item name="android:layout_marginBottom">50dp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <style name="SymptomCheckerAnswer">
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
     <!-- Common views -->
 
     <style name="ProfileItemIcon">

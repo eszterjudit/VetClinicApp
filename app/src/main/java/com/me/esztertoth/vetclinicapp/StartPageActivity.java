@@ -20,6 +20,7 @@ import com.me.esztertoth.vetclinicapp.fragments.MapFragment;
 import com.me.esztertoth.vetclinicapp.fragments.MyFavoritesFragment;
 import com.me.esztertoth.vetclinicapp.fragments.PetsListFragment;
 import com.me.esztertoth.vetclinicapp.fragments.SettingsFragment;
+import com.me.esztertoth.vetclinicapp.fragments.SymtomCheckerFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -92,6 +93,9 @@ public class StartPageActivity extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.nav_map:
                 fragmentToOpen = new MapFragment();
+                break;
+            case R.id.nav_symptom_checker:
+                fragmentToOpen = new SymtomCheckerFragment();
                 break;
             default:
                 break;

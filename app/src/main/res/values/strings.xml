@@ -53,8 +53,8 @@
 
     <!-- Settings -->
     <string name="map_perimeter_settings_item_title">Map perimeter</string>
-    <string name="map_perimeter_settings_item_description_1">Current value: </string>
-    <string name="map_perimeter_settings_item_description_2"> km.</string>
+    <string name="map_perimeter_settings_item_description_1">Current value:&#160;</string>
+    <string name="map_perimeter_settings_item_description_2">&#160;km.</string>
 
     <string name="map_perimeter_dialog_title">Map perimeter</string>
     <string name="map_perimeter_dialog_description">Set the perimeter for map search.</string>

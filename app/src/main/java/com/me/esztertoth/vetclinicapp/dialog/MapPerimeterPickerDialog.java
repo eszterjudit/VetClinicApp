@@ -1,6 +1,7 @@
 package com.me.esztertoth.vetclinicapp.dialog;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -9,12 +10,20 @@ import android.view.View;
 import android.widget.NumberPicker;
 
 import com.me.esztertoth.vetclinicapp.R;
+import com.me.esztertoth.vetclinicapp.fragments.PerimeterChangedCallback;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 public class MapPerimeterPickerDialog extends DialogFragment {
 
     private NumberPicker numberPicker;
     private static int KILOMETERS = 1000;
+    private PerimeterChangedCallback perimeterChangedCallback;
+
+    public MapPerimeterPickerDialog(){}
+
+    public MapPerimeterPickerDialog(PerimeterChangedCallback perimeterChangedCallback) {
+        this.perimeterChangedCallback = perimeterChangedCallback;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -94,4 +103,9 @@ public class MapPerimeterPickerDialog extends DialogFragment {
         return 2;
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        perimeterChangedCallback.perimeterChanged();
+    }
 }

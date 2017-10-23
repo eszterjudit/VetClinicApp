@@ -1,5 +1,6 @@
 package com.me.esztertoth.vetclinicapp.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,7 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends Fragment implements PerimeterChangedCallback {
 
     @BindView(R.id.settings_list_recyclerview)
     RecyclerView settingsListRecyclerView;
@@ -33,6 +34,8 @@ public class SettingsFragment extends Fragment {
 
     private List<SettingsItem> settingsItemList;
     private SettingsListAdapter settingsListAdapter;
+
+    SettingsItem mapPerimeter = new SettingsItem();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,7 +74,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void openMapPerimeterDialog() {
-        MapPerimeterPickerDialog mapPerimeterPickerDialog = new MapPerimeterPickerDialog();
+        MapPerimeterPickerDialog mapPerimeterPickerDialog = new MapPerimeterPickerDialog(this);
         FragmentManager fm = getFragmentManager();
         mapPerimeterPickerDialog.show(fm, "");
     }
@@ -86,7 +89,8 @@ public class SettingsFragment extends Fragment {
     }
 
     private void initSettingsItems() {
-        SettingsItem mapPerimeter = new SettingsItem();
+
+
         mapPerimeter.setIcon(getActivity().getDrawable(R.drawable.ic_map));
         mapPerimeter.setTitle(getString(R.string.map_perimeter_settings_item_title));
         mapPerimeter.setDescription(getString(R.string.map_perimeter_settings_item_description_1) + VetClinicPreferences.getPerimeter(getContext()) / KILOMETERS + getString(R.string.map_perimeter_settings_item_description_2));
@@ -94,6 +98,7 @@ public class SettingsFragment extends Fragment {
         settingsItemList.add(mapPerimeter);
 
         SettingsItem deleteAllFavs = new SettingsItem();
+
         deleteAllFavs.setIcon(getActivity().getDrawable(R.drawable.ic_delete));
         deleteAllFavs.setTitle(getActivity().getString(R.string.delete_all_favs_settings_item_title));
         deleteAllFavs.setDescription(getActivity().getString(R.string.delete_all_favs_settings_item_description));
@@ -101,4 +106,9 @@ public class SettingsFragment extends Fragment {
         settingsItemList.add(deleteAllFavs);
     }
 
+    @Override
+    public void perimeterChanged() {
+        mapPerimeter.setDescription(getString(R.string.map_perimeter_settings_item_description_1) + VetClinicPreferences.getPerimeter(getContext()) / KILOMETERS + getString(R.string.map_perimeter_settings_item_description_2));
+        settingsListAdapter.notifyDataSetChanged();
+    }
 }

@@ -19,14 +19,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.me.esztertoth.vetclinicapp.dialog.PetBirthayPickerDialog;
-import com.me.esztertoth.vetclinicapp.model.BirthDate;
 import com.me.esztertoth.vetclinicapp.model.Pet;
 import com.me.esztertoth.vetclinicapp.model.PetType;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.ApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
-
-import org.joda.time.DateTime;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -111,10 +108,6 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
         Date date = calendar.getTime();
         petAgeTextView.setText(dtfOut.format(date));
         birthDate = formatd.format(date);
-    }
-
-    private BirthDate createBirthDateFromDateTime(DateTime dateTime) {
-        return new BirthDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth());
     }
 
     private Pet createNewPet() {

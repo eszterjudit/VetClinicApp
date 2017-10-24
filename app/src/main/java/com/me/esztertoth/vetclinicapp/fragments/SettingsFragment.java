@@ -89,20 +89,21 @@ public class SettingsFragment extends Fragment implements PerimeterChangedCallba
 
     private void initSettingsItems() {
 
-
         mapPerimeter.setIcon(getActivity().getDrawable(R.drawable.ic_map));
         mapPerimeter.setTitle(getString(R.string.map_perimeter_settings_item_title));
         mapPerimeter.setDescription(getString(R.string.map_perimeter_settings_item_description_1) + VetClinicPreferences.getPerimeter(getContext()) / KILOMETERS + getString(R.string.map_perimeter_settings_item_description_2));
 
         settingsItemList.add(mapPerimeter);
 
-        SettingsItem deleteAllFavs = new SettingsItem();
+        if(!VetClinicPreferences.getIsVet(getContext())) {
+            SettingsItem deleteAllFavs = new SettingsItem();
 
-        deleteAllFavs.setIcon(getActivity().getDrawable(R.drawable.ic_delete));
-        deleteAllFavs.setTitle(getActivity().getString(R.string.delete_all_favs_settings_item_title));
-        deleteAllFavs.setDescription(getActivity().getString(R.string.delete_all_favs_settings_item_description));
+            deleteAllFavs.setIcon(getActivity().getDrawable(R.drawable.ic_delete));
+            deleteAllFavs.setTitle(getActivity().getString(R.string.delete_all_favs_settings_item_title));
+            deleteAllFavs.setDescription(getActivity().getString(R.string.delete_all_favs_settings_item_description));
 
-        settingsItemList.add(deleteAllFavs);
+            settingsItemList.add(deleteAllFavs);
+        }
     }
 
     @Override

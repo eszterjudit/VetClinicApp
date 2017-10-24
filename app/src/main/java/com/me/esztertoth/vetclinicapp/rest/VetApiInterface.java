@@ -2,6 +2,7 @@ package com.me.esztertoth.vetclinicapp.rest;
 
 import com.me.esztertoth.vetclinicapp.model.Clinic;
 import com.me.esztertoth.vetclinicapp.model.User;
+import com.me.esztertoth.vetclinicapp.model.Vet;
 
 import java.util.List;
 

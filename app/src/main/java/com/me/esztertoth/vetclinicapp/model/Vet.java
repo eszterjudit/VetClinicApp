@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 public class Vet extends User implements Serializable {
 
@@ -12,7 +12,7 @@ public class Vet extends User implements Serializable {
     @Expose
     private Long id;
     @SerializedName("speciality")
-    private List<PetType> speciality;
+    private Set<PetType> speciality;
 
     public Long getId() {
         return id;
@@ -22,12 +22,21 @@ public class Vet extends User implements Serializable {
         this.id = id;
     }
 
-    public List<PetType> getSpeciality() {
+    public Set<PetType> getSpeciality() {
         return speciality;
     }
 
-    public void setSpeciality(List<PetType> speciality) {
+    public void setSpeciality(Set<PetType> speciality) {
         this.speciality = speciality;
     }
 
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof Vet))return false;
+        Vet vet = (Vet)obj;
+        return vet.getId() == ((Vet) obj).getId();
+    }
 }

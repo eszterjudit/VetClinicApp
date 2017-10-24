@@ -8,11 +8,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.me.esztertoth.vetclinicapp.fragments.ClinicDetailsContentFragment;
 import com.me.esztertoth.vetclinicapp.model.Clinic;
 import com.me.esztertoth.vetclinicapp.utils.FavoriteUtils;
+import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,14 +48,17 @@ public class ClinicDetailsActivity extends AppCompatActivity {
             mapImage = BitmapFactory.decodeResource(getResources(), R.drawable.clinic_bg);
         }
 
-        mapIv.setImageBitmap(mapImage);
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        initUI();
         openClinicDetailsContent();
+    }
 
+    private void initUI() {
+        mapIv.setImageBitmap(mapImage);
+        hideFavoriteButtonForVet();
         if(FavoriteUtils.isClinicAlreadyInFavorites(this, clinic)) {
             fab.setImageResource(R.drawable.ic_favorite);
         }
@@ -95,6 +100,12 @@ public class ClinicDetailsActivity extends AppCompatActivity {
     private void unfavorite() {
         FavoriteUtils.removeFavorite(this, clinic);
         fab.setImageResource(R.drawable.ic_favorite_border);
+    }
+
+    private void hideFavoriteButtonForVet() {
+        if(VetClinicPreferences.getIsVet(this)) {
+            fab.setVisibility(View.GONE);
+        }
     }
 
 }

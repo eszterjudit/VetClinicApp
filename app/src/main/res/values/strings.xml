@@ -92,4 +92,7 @@
     <string name="symptom_checker_no_symptoms">All good!</string>
     <string name="symptom_checker_no_symptoms_desc">Please keep in mind, this test only checks for common symptoms. If you see unusual changes in your pet\'s behaviour, please seek a professional vet.</string>
 
+    <string name="vet_works_here_add_button">I work here</string>
+    <string name="vet_works_here_remove_button">I don\'t work here anymore</string>
+
 </resources>

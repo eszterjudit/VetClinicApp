@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class Clinic implements Serializable {
 
@@ -23,7 +24,7 @@ public class Clinic implements Serializable {
     @SerializedName("closingHour")
     private String closingHour;
     @SerializedName("vets")
-    private List<Vet> vetList;
+    private Set<Vet> vetList;
 
     public Long getId() {
         return id;
@@ -65,11 +66,11 @@ public class Clinic implements Serializable {
         this.closingHour = closingHour;
     }
 
-    public List<Vet> getVetList() {
+    public Set<Vet> getVetList() {
         return vetList;
     }
 
-    public void setVetList(List<Vet> vetList) {
+    public void setVetList(Set<Vet> vetList) {
         this.vetList = vetList;
     }
 

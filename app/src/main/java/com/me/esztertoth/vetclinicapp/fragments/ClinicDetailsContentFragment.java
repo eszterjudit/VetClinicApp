@@ -12,25 +12,19 @@ import android.widget.TextView;
 
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.model.Clinic;
-import com.me.esztertoth.vetclinicapp.model.Pet;
 import com.me.esztertoth.vetclinicapp.model.PetType;
-import com.me.esztertoth.vetclinicapp.model.User;
 import com.me.esztertoth.vetclinicapp.model.Vet;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.ClinicApiInterface;
-import com.me.esztertoth.vetclinicapp.rest.PetOwnerApiInterface;
 import com.me.esztertoth.vetclinicapp.rest.VetApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,8 +46,10 @@ public class ClinicDetailsContentFragment extends Fragment {
     @BindView(R.id.vet_works_here_button)
     Button vetWorksHereButton;
 
+    private static final String CLINIC_NAME = "clinic";
+
     private Clinic clinic;
-    private User vet;
+    private Vet vet;
 
     private long userId;
     private String token;
@@ -68,7 +64,7 @@ public class ClinicDetailsContentFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-           clinic = (Clinic) bundle.getSerializable("clinic");
+            clinic = (Clinic) bundle.getSerializable(CLINIC_NAME);
         }
     }
 
@@ -85,9 +81,8 @@ public class ClinicDetailsContentFragment extends Fragment {
         clinicApiInterface = ApiClient.createService(ClinicApiInterface.class, token);
         vetApiInterface = ApiClient.createService(VetApiInterface.class, token);
 
-        if(VetClinicPreferences.getIsVet(getContext())) {
+        if (VetClinicPreferences.getIsVet(getContext())) {
             getVetById();
-
         }
 
         return view;
@@ -101,18 +96,17 @@ public class ClinicDetailsContentFragment extends Fragment {
 
     private void showWorkHereButtonForVet() {
         vetWorksHereButton.setVisibility(View.VISIBLE);
-        if(isVetAlreadyInClinic()) {
-            vetWorksHereButton.setText("I don't work here");
+        if (isVetAlreadyInClinic()) {
+            vetWorksHereButton.setText(getString(R.string.vet_works_here_remove_button));
         } else {
-            vetWorksHereButton.setText("I work here");
+            vetWorksHereButton.setText(getString(R.string.vet_works_here_add_button));
         }
     }
 
     private void setDetails() {
         addressTextView.setText(clinic.getAddress().toString());
         openingHoursTextView.setText(clinic.getOpeningHour() + " - " + clinic.getClosingHour());
-        specialitiesTextView.setText(createListOfSpecialities());
-        doctorsTextView.setText(createListOfVetNames());
+        listDoctorsAndSpecialities();
     }
 
     private String createListOfVetNames() {
@@ -127,7 +121,7 @@ public class ClinicDetailsContentFragment extends Fragment {
         Set<PetType> specialities = new HashSet<>();
         StringBuilder builder = new StringBuilder();
         for (Vet vet : clinic.getVetList()) {
-            for(PetType petType : vet.getSpeciality()) {
+            for (PetType petType : vet.getSpeciality()) {
                 specialities.add(petType);
                 builder.append(petType + "\n");
             }
@@ -140,8 +134,8 @@ public class ClinicDetailsContentFragment extends Fragment {
     }
 
     @OnClick(R.id.vet_works_here_button)
-    void addVetToClinic() {
-        if(isVetAlreadyInClinic()) {
+    void addOrRemoveVet() {
+        if (isVetAlreadyInClinic()) {
             removeVet();
         } else {
             postVet();
@@ -150,14 +144,14 @@ public class ClinicDetailsContentFragment extends Fragment {
     }
 
     private boolean isVetAlreadyInClinic() {
-        return clinic.getVetList().contains(vet);
+        return clinic.getVetList().stream().anyMatch(vet1 -> vet.getId().equals(vet1.getId()));
     }
 
     private void getVetById() {
         subscription = vetApiInterface.getVet(token, userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<User>() {
+                .subscribe(new Subscriber<Vet>() {
                     @Override
                     public final void onCompleted() {
                         showWorkHereButtonForVet();
@@ -168,7 +162,7 @@ public class ClinicDetailsContentFragment extends Fragment {
                     }
 
                     @Override
-                    public final void onNext(User response) {
+                    public final void onNext(Vet response) {
                         vet = response;
                     }
 
@@ -182,7 +176,8 @@ public class ClinicDetailsContentFragment extends Fragment {
             public void onResponse(Call<Clinic> call, Response<Clinic> response) {
                 if (response.isSuccessful()) {
                     clinic = response.body();
-                    vetWorksHereButton.setText("I dont work here");
+                    listDoctorsAndSpecialities();
+                    vetWorksHereButton.setText(getString(R.string.vet_works_here_remove_button));
                 }
             }
 
@@ -199,7 +194,8 @@ public class ClinicDetailsContentFragment extends Fragment {
             public void onResponse(Call<Clinic> call, Response<Clinic> response) {
                 if (response.isSuccessful()) {
                     clinic = response.body();
-                    vetWorksHereButton.setText("I work here");
+                    listDoctorsAndSpecialities();
+                    vetWorksHereButton.setText(getString(R.string.vet_works_here_add_button));
                 }
             }
 
@@ -207,6 +203,11 @@ public class ClinicDetailsContentFragment extends Fragment {
             public void onFailure(Call<Clinic> call, Throwable t) {
             }
         });
+    }
+
+    private void listDoctorsAndSpecialities() {
+        doctorsTextView.setText(createListOfVetNames());
+        specialitiesTextView.setText(createListOfSpecialities());
     }
 
 }

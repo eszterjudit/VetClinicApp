@@ -96,10 +96,13 @@ public class MyClinicsFragment extends Fragment {
                 .subscribe(new Subscriber<List<Clinic>>() {
                     @Override
                     public final void onCompleted() {
+                        clinicsAdapter.notifyDataSetChanged();
                         if(!clinics.isEmpty()) {
                             showView(noClinicsMessage, false);
                             showView(clinicsRecyclerView, true);
-                            clinicsAdapter.notifyDataSetChanged();
+                        } else {
+                            showView(noClinicsMessage, true);
+                            showView(clinicsRecyclerView, false);
                         }
                     }
 

@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.me.esztertoth.vetclinicapp.fragments.EditProfileFragment;
 import com.me.esztertoth.vetclinicapp.fragments.ProfileContentFragment;
 import com.me.esztertoth.vetclinicapp.model.User;
+import com.me.esztertoth.vetclinicapp.model.Vet;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.PetOwnerApiInterface;
 import com.me.esztertoth.vetclinicapp.rest.VetApiInterface;
@@ -92,7 +93,7 @@ public class ProfileActivity extends AppCompatActivity {
         subscription = vetApiInterface.getVet(token, userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<User>() {
+                .subscribe(new Subscriber<Vet>() {
                     @Override
                     public final void onCompleted() {
                         if(user != null) {
@@ -106,7 +107,7 @@ public class ProfileActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public final void onNext(User response) {
+                    public final void onNext(Vet response) {
                         user = response;
                     }
 

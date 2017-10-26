@@ -18,7 +18,7 @@ import rx.Observable;
 public interface VetApiInterface {
 
     @GET("/vet/{vetId}")
-    Observable<User> getVet(@Header("x-auth-token") String token, @Path("vetId") Long vetId);
+    Observable<Vet> getVet(@Header("x-auth-token") String token, @Path("vetId") Long vetId);
 
     @PUT("/vet/{vetId}")
     Call<ResponseBody> updateVet(@Header("x-auth-token") String token, @Path("vetId") Long vetId, @Body User user);

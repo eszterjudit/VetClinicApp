@@ -9,7 +9,6 @@
 
     <Button
         android:id="@+id/vet_works_here_button"
-        android:text="I work here"
         android:background="@color/colorAccent"
         android:textColor="@color/colorPrimaryLight"
         android:elevation="5dp"

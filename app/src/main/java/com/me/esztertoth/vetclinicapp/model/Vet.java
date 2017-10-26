@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 public class Vet extends User implements Serializable {
@@ -30,13 +31,4 @@ public class Vet extends User implements Serializable {
         this.speciality = speciality;
     }
 
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) return false;
-        if (obj == this) return true;
-        if (!(obj instanceof Vet))return false;
-        Vet vet = (Vet)obj;
-        return vet.getId() == ((Vet) obj).getId();
-    }
 }

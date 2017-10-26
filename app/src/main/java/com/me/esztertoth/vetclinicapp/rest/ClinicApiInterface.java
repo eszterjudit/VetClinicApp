@@ -26,7 +26,7 @@ public interface ClinicApiInterface {
     @POST("clinic/{clinicId}/addVet")
     Call<Clinic> addVetToClinic(@Header("x-auth-token") String token, @Path("clinicId") Long clinicId, @Body Long vetId);
 
-    @PUT("clinic/{clinicId}/removeVet")
+    @POST("clinic/{clinicId}/removeVet")
     Call<Clinic> removeVetFromClinic(@Header("x-auth-token") String token, @Path("clinicId") Long clinicId, @Body Long vetId);
 
 }

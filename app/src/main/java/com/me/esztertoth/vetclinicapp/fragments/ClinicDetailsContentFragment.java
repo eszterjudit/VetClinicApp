@@ -19,7 +19,9 @@ import com.me.esztertoth.vetclinicapp.rest.ClinicApiInterface;
 import com.me.esztertoth.vetclinicapp.rest.VetApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -118,12 +120,14 @@ public class ClinicDetailsContentFragment extends Fragment {
     }
 
     private String createListOfSpecialities() {
-        Set<PetType> specialities = new HashSet<>();
+        List<PetType> specialities = new ArrayList<>();
         StringBuilder builder = new StringBuilder();
         for (Vet vet : clinic.getVetList()) {
             for (PetType petType : vet.getSpeciality()) {
-                specialities.add(petType);
-                builder.append(petType + "\n");
+                if(!specialities.contains(petType)) {
+                    specialities.add(petType);
+                    builder.append(petType + "\n");
+                }
             }
         }
         return builder.toString();

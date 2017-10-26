@@ -65,7 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void getPetOwnerDetails() {
-        subscription = petOwnerApiInterface.getUser(token, userId)
+        subscription = petOwnerApiInterface.getPetOwner(token, userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<User>() {

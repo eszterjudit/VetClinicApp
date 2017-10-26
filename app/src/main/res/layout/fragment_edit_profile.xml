@@ -154,7 +154,15 @@
 
     </RelativeLayout>
 
-    <include layout="@layout/fragment_specialities"/>
+    <LinearLayout
+        android:id="@+id/specialitiesContainer"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/fragment_specialities"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/EditProfileButtonContainer"

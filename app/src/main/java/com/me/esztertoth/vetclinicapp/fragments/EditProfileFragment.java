@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.model.Address;
@@ -47,6 +48,8 @@ public class EditProfileFragment extends Fragment {
     @BindView(R.id.country) TextInputEditText countryEditText;
     @BindView(R.id.zip) TextInputEditText zipEditText;
 
+    @BindView(R.id.specialitiesContainer) LinearLayout specialitiesContainer;
+
     @BindView(R.id.dogImage) ImageView dogImage;
     @BindView(R.id.dogOverlay) ImageView dogOverlay;
     @BindView(R.id.catImage) ImageView catImage;
@@ -81,7 +84,6 @@ public class EditProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         ButterKnife.bind(this, view);
 
-
         fab = ButterKnife.findById(getActivity(), R.id.fab);
 
         token = VetClinicPreferences.getSessionToken(getContext());
@@ -93,6 +95,7 @@ public class EditProfileFragment extends Fragment {
         if(isVet) {
             vet = (Vet) getArguments().getSerializable(USER);
             vetApiInterface = ApiClient.createService(VetApiInterface.class, token);
+            showSpecialitiesEditorForVet();
         } else {
             petOwner = (PetOwner) getArguments().getSerializable(USER);
             petOwnerApiInterface = ApiClient.createService(PetOwnerApiInterface.class, token);
@@ -103,6 +106,10 @@ public class EditProfileFragment extends Fragment {
         hideFloatingActionButton();
         prefillForm();
         return view;
+    }
+
+    private void showSpecialitiesEditorForVet() {
+        specialitiesContainer.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.cancel_edit_button)
@@ -127,13 +134,21 @@ public class EditProfileFragment extends Fragment {
     private void addOrRemovePetType(PetType petType, ImageView imageView, ImageView overlay) {
         if(specialities.contains(petType)) {
             specialities.remove(petType);
-            imageView.setImageAlpha(255);
-            overlay.setVisibility(View.INVISIBLE);
+            removeOverlay(imageView, overlay);
         } else {
             specialities.add(petType);
-            imageView.setImageAlpha(50);
-            overlay.setVisibility(View.VISIBLE);
+            overLayImage(imageView, overlay);
         }
+    }
+
+    private void overLayImage(ImageView imageView, ImageView overlay) {
+        imageView.setImageAlpha(50);
+        overlay.setVisibility(View.VISIBLE);
+    }
+
+    private void removeOverlay(ImageView imageView, ImageView overlay) {
+        imageView.setImageAlpha(255);
+        overlay.setVisibility(View.INVISIBLE);
     }
 
     @OnClick(R.id.dogView)

@@ -1,6 +1,7 @@
 package com.me.esztertoth.vetclinicapp.rest;
 
 import com.me.esztertoth.vetclinicapp.model.Pet;
+import com.me.esztertoth.vetclinicapp.model.PetOwner;
 import com.me.esztertoth.vetclinicapp.model.User;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public interface PetOwnerApiInterface {
     Call<Void> deletePet(@Header("x-auth-token") String token, @Path("petOwnerId") long petOwnerId, @Path("petId") long petId);
 
     @GET("/petOwner/{petOwnerId}")
-    Observable<User> getUser(@Header("x-auth-token") String token, @Path("petOwnerId") Long petOwnerId);
+    Observable<PetOwner> getPetOwner(@Header("x-auth-token") String token, @Path("petOwnerId") Long petOwnerId);
 
     @PUT("/petOwner/{petOwnerId}")
     Call<ResponseBody> updatePetOwner(@Header("x-auth-token") String token, @Path("petOwnerId") Long petOwnerId, @Body User user);

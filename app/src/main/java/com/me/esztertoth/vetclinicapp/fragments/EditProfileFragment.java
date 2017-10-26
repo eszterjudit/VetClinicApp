@@ -10,15 +10,22 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.model.Address;
+import com.me.esztertoth.vetclinicapp.model.PetOwner;
+import com.me.esztertoth.vetclinicapp.model.PetType;
 import com.me.esztertoth.vetclinicapp.model.User;
+import com.me.esztertoth.vetclinicapp.model.Vet;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.PetOwnerApiInterface;
 import com.me.esztertoth.vetclinicapp.rest.VetApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.LoginAndSignUpTextWatcher;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,9 +47,24 @@ public class EditProfileFragment extends Fragment {
     @BindView(R.id.country) TextInputEditText countryEditText;
     @BindView(R.id.zip) TextInputEditText zipEditText;
 
+    @BindView(R.id.dogImage) ImageView dogImage;
+    @BindView(R.id.dogOverlay) ImageView dogOverlay;
+    @BindView(R.id.catImage) ImageView catImage;
+    @BindView(R.id.catOverlay) ImageView catOverlay;
+    @BindView(R.id.reptileImage) ImageView reptileImage;
+    @BindView(R.id.reptileOverlay) ImageView reptileOverlay;
+    @BindView(R.id.rodentImage) ImageView rodentImage;
+    @BindView(R.id.rodentOverlay) ImageView rodentOverlay;
+    @BindView(R.id.birdImage) ImageView birdImage;
+    @BindView(R.id.birdOverlay) ImageView birdOverlay;
+
     private static final String USER = "user";
 
     private FloatingActionButton fab;
+
+    private PetOwner petOwner;
+    private Vet vet;
+
     private User user;
 
     private long userId;
@@ -52,21 +74,27 @@ public class EditProfileFragment extends Fragment {
     private PetOwnerApiInterface petOwnerApiInterface;
     private VetApiInterface vetApiInterface;
 
+    private List<PetType> specialities;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         ButterKnife.bind(this, view);
 
-        user = (User) getArguments().getSerializable(USER);
+
         fab = ButterKnife.findById(getActivity(), R.id.fab);
 
         token = VetClinicPreferences.getSessionToken(getContext());
         userId = VetClinicPreferences.getUserId(getContext());
         isVet = VetClinicPreferences.getIsVet(getContext());
 
-        if(isVet == true) {
+        specialities = new ArrayList<>();
+
+        if(isVet) {
+            vet = (Vet) getArguments().getSerializable(USER);
             vetApiInterface = ApiClient.createService(VetApiInterface.class, token);
         } else {
+            petOwner = (PetOwner) getArguments().getSerializable(USER);
             petOwnerApiInterface = ApiClient.createService(PetOwnerApiInterface.class, token);
         }
 
@@ -96,7 +124,49 @@ public class EditProfileFragment extends Fragment {
         }
     }
 
+    private void addOrRemovePetType(PetType petType, ImageView imageView, ImageView overlay) {
+        if(specialities.contains(petType)) {
+            specialities.remove(petType);
+            imageView.setImageAlpha(255);
+            overlay.setVisibility(View.INVISIBLE);
+        } else {
+            specialities.add(petType);
+            imageView.setImageAlpha(50);
+            overlay.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @OnClick(R.id.dogView)
+    void addDogSpecialityForVet() {
+        addOrRemovePetType(PetType.DOG, dogImage, dogOverlay);
+    }
+
+    @OnClick(R.id.catView)
+    void addCatSpecialityForVet() {
+        addOrRemovePetType(PetType.CAT, catImage, catOverlay);
+    }
+
+    @OnClick(R.id.reptileView)
+    void addReptileSpecialityForVet() {
+        addOrRemovePetType(PetType.REPTILE, reptileImage, reptileOverlay);
+    }
+
+    @OnClick(R.id.rodentView)
+    void addRodentSpecialityForVet() {
+        addOrRemovePetType(PetType.RODENT, rodentImage, rodentOverlay);
+    }
+
+    @OnClick(R.id.birdView)
+    void addBirdSpecialityForVet() {
+        addOrRemovePetType(PetType.BIRD, birdImage, birdOverlay);
+    }
+
     private void prefillForm() {
+        if(isVet) {
+            user = vet;
+        } else {
+            user = petOwner;
+        }
         firstNameEditText.setText(user.getFirstName());
         lastNameEditText.setText(user.getLastName());
         emailEditText.setText(user.getEmail());
@@ -109,13 +179,25 @@ public class EditProfileFragment extends Fragment {
         }
     }
 
-    private User createUserDetails() {
-        User editedUser = new User();
+    private PetOwner createPetOwnerDetails() {
+        PetOwner editedUser = new PetOwner();
         editedUser.setFirstName(firstNameEditText.getText().toString());
         editedUser.setLastName(lastNameEditText.getText().toString());
         editedUser.setEmail(emailEditText.getText().toString());
         editedUser.setPhone(phoneEditText.getText().toString());
         editedUser.setAddress(createAddress());
+
+        return editedUser;
+    }
+
+    private Vet createVetDetails() {
+        Vet editedUser = new Vet();
+        editedUser.setFirstName(firstNameEditText.getText().toString());
+        editedUser.setLastName(lastNameEditText.getText().toString());
+        editedUser.setEmail(emailEditText.getText().toString());
+        editedUser.setPhone(phoneEditText.getText().toString());
+        editedUser.setAddress(createAddress());
+        editedUser.setSpeciality(specialities);
 
         return editedUser;
     }
@@ -131,7 +213,7 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void savePetOwnerData() {
-        Call<ResponseBody> call = petOwnerApiInterface.updatePetOwner(token, userId, createUserDetails());
+        Call<ResponseBody> call = petOwnerApiInterface.updatePetOwner(token, userId, createPetOwnerDetails());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -149,7 +231,7 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void saveVetData() {
-        Call<ResponseBody> call = vetApiInterface.updateVet(token, userId, createUserDetails());
+        Call<ResponseBody> call = vetApiInterface.updateVet(token, userId, createVetDetails());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

@@ -1,13 +1,11 @@
 package com.me.esztertoth.vetclinicapp.model;
 
 public enum PetType {
-    ALL, CAT, DOG, REPTILE, BIRD, RODENT;
+    CAT, DOG, REPTILE, BIRD, RODENT;
 
     @Override
     public String toString() {
         switch (this) {
-            case ALL:
-                return "All pet types";
             case CAT:
                 return "Cat";
             case DOG:

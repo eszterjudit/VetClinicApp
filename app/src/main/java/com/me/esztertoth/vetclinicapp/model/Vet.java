@@ -13,7 +13,7 @@ public class Vet extends User implements Serializable {
     @Expose
     private Long id;
     @SerializedName("speciality")
-    private Set<PetType> speciality;
+    private List<PetType> speciality;
 
     public Long getId() {
         return id;
@@ -23,11 +23,11 @@ public class Vet extends User implements Serializable {
         this.id = id;
     }
 
-    public Set<PetType> getSpeciality() {
+    public List<PetType> getSpeciality() {
         return speciality;
     }
 
-    public void setSpeciality(Set<PetType> speciality) {
+    public void setSpeciality(List<PetType> speciality) {
         this.speciality = speciality;
     }
 

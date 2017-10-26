@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:nestedScrollingEnabled="true"
+    android:layout_margin="5dp"
+    android:scrollbarAlwaysDrawHorizontalTrack="true"
+    android:scrollbars="horizontal">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/dogView"
+            style="@style/SpecialitiesCardview"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:shape="ring"
+            app:cardCornerRadius="40dp">
+
+            <ImageView
+                android:id="@+id/dogImage"
+                style="@style/SpecialitiesImage"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:alpha="1"
+                android:src="@drawable/ic_dog" />
+
+            <ImageView
+                android:id="@+id/dogOverlay"
+                style="@style/SpecialitiesImage"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_check"
+                android:visibility="invisible" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/catView"
+            style="@style/SpecialitiesCardview"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_toRightOf="@id/dogView"
+            android:shape="ring"
+            app:cardCornerRadius="40dp">
+
+            <ImageView
+                android:id="@+id/catImage"
+                style="@style/SpecialitiesImage"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_cat" />
+
+            <ImageView
+                android:id="@+id/catOverlay"
+                style="@style/SpecialitiesImage"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_check"
+                android:visibility="invisible" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/reptileView"
+            style="@style/SpecialitiesCardview"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_toRightOf="@id/catView"
+            android:shape="ring"
+            app:cardCornerRadius="40dp">
+
+            <ImageView
+                android:id="@+id/reptileImage"
+                style="@style/SpecialitiesImage"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_reptile" />
+
+            <ImageView
+                android:id="@+id/reptileOverlay"
+                style="@style/SpecialitiesImage"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_check"
+                android:visibility="invisible" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/rodentView"
+            style="@style/SpecialitiesCardview"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_toRightOf="@id/reptileView"
+            app:cardCornerRadius="40dp">
+
+            <ImageView
+                android:id="@+id/rodentImage"
+                style="@style/SpecialitiesImage"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_rodent" />
+
+            <ImageView
+                android:id="@+id/rodentOverlay"
+                style="@style/SpecialitiesImage"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_check"
+                android:visibility="invisible" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/birdView"
+            style="@style/SpecialitiesCardview"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_toRightOf="@id/rodentView"
+            android:shape="ring"
+            app:cardCornerRadius="40dp">
+
+            <ImageView
+                android:id="@+id/birdImage"
+                style="@style/SpecialitiesImage"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_bird" />
+
+            <ImageView
+                android:id="@+id/birdOverlay"
+                style="@style/SpecialitiesImage"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_check"
+                android:visibility="invisible" />
+
+        </android.support.v7.widget.CardView>
+
+    </GridLayout>
+
+</HorizontalScrollView>

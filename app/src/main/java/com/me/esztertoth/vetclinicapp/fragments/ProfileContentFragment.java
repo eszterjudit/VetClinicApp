@@ -39,6 +39,7 @@ public class ProfileContentFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         user = (User) getArguments().getSerializable(USER);
+
         setUserDetails();
 
         return view;

@@ -154,6 +154,8 @@
 
     </RelativeLayout>
 
+    <include layout="@layout/fragment_specialities"/>
+
     <LinearLayout
         android:id="@+id/EditProfileButtonContainer"
         style="@style/EditProfileButtonContainer"

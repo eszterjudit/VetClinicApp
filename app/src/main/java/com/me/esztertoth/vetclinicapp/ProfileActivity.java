@@ -49,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
         token = VetClinicPreferences.getSessionToken(this);
         userId = VetClinicPreferences.getUserId(this);
 
-        if(VetClinicPreferences.getIsVet(this) == true) {
+        if(VetClinicPreferences.getIsVet(this)) {
             vetApiInterface = ApiClient.createService(VetApiInterface.class, token);
             getVetDetails();
         } else {
@@ -133,6 +133,7 @@ public class ProfileActivity extends AppCompatActivity {
         ft.replace(R.id.profile_container, profileContentFragment);
         ft.commit();
     }
+
 
     @OnClick(R.id.fab)
     public void openEditProfile() {

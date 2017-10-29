@@ -114,4 +114,29 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/vet_specialities_conatiner"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:id="@+id/vet_specialities_icon"
+            style="@style/ProfileItemIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_pets" />
+
+        <TextView
+            android:id="@+id/vet_specialities"
+            style="@style/ProfileItemText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/vet_specialities_icon"
+            android:layout_toRightOf="@id/vet_specialities_icon"
+            android:text="@string/specialities" />
+
+    </RelativeLayout>
+
 </LinearLayout>

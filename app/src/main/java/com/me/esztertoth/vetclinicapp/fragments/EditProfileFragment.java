@@ -90,11 +90,10 @@ public class EditProfileFragment extends Fragment {
         userId = VetClinicPreferences.getUserId(getContext());
         isVet = VetClinicPreferences.getIsVet(getContext());
 
-        specialities = new ArrayList<>();
-
         if(isVet) {
             vet = (Vet) getArguments().getSerializable(USER);
             vetApiInterface = ApiClient.createService(VetApiInterface.class, token);
+            specialities = vet.getSpeciality();
             showSpecialitiesEditorForVet();
         } else {
             petOwner = (PetOwner) getArguments().getSerializable(USER);
@@ -110,8 +109,26 @@ public class EditProfileFragment extends Fragment {
 
     private void showSpecialitiesEditorForVet() {
         specialitiesContainer.setVisibility(View.VISIBLE);
+        prefillSpecialities();
     }
 
+    private void prefillSpecialities() {
+        if(specialities.contains(PetType.DOG)) {
+            overLayImage(dogImage, dogOverlay);
+        }
+        if(specialities.contains(PetType.CAT)) {
+            overLayImage(catImage, catOverlay);
+        }
+        if(specialities.contains(PetType.REPTILE)) {
+            overLayImage(reptileImage, reptileOverlay);
+        }
+        if(specialities.contains(PetType.RODENT)) {
+            overLayImage(rodentImage, rodentImage);
+        }
+        if(specialities.contains(PetType.BIRD)) {
+            overLayImage(birdImage, birdOverlay);
+        }
+    }
     @OnClick(R.id.cancel_edit_button)
     public void cancelEdit() {
         openDontSaveDialog();

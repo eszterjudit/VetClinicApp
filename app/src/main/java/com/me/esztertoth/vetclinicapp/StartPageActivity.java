@@ -22,6 +22,7 @@ import com.me.esztertoth.vetclinicapp.fragments.MyFavoritesFragment;
 import com.me.esztertoth.vetclinicapp.fragments.MyPetsFragment;
 import com.me.esztertoth.vetclinicapp.fragments.SettingsFragment;
 import com.me.esztertoth.vetclinicapp.fragments.SymtomCheckerFragment;
+import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,7 +48,9 @@ public class StartPageActivity extends AppCompatActivity implements NavigationVi
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        changeNavigationItemsIfVet();
+        if(VetClinicPreferences.getIsVet(this)) {
+            changeNavigationItemsIfVet();
+        }
 
         if (!isLocationPermissionGranted()) {
             RequestLocationPermission();

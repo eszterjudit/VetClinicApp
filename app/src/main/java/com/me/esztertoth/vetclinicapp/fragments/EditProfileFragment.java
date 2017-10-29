@@ -218,7 +218,12 @@ public class EditProfileFragment extends Fragment {
     }
 
     private Address createAddress() {
-        Address address = new Address();
+        Address address;
+        if(user.getAddress() != null) {
+            address = user.getAddress();
+        } else {
+            address = new Address();
+        }
         address.setStreet(streetEditText.getText().toString());
         address.setCity(cityEditText.getText().toString());
         address.setCountry(countryEditText.getText().toString());
@@ -233,9 +238,7 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-
                 } else {
-
                 }
             }
 

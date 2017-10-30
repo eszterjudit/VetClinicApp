@@ -20,22 +20,14 @@ import butterknife.ButterKnife;
 
 public class ProfileContentFragment extends Fragment {
 
-    @BindView(R.id.phone)
-    TextView phone;
-    @BindView(R.id.email)
-    TextView email;
-    @BindView(R.id.street)
-    TextView street;
-    @BindView(R.id.city)
-    TextView city;
-    @BindView(R.id.country)
-    TextView country;
-    @BindView(R.id.zip)
-    TextView zip;
-    @BindView(R.id.vet_specialities_conatiner)
-    RelativeLayout specialitiesContainer;
-    @BindView(R.id.vet_specialities)
-    TextView vetSpecialities;
+    @BindView(R.id.phone) TextView phone;
+    @BindView(R.id.email) TextView email;
+    @BindView(R.id.street) TextView street;
+    @BindView(R.id.city) TextView city;
+    @BindView(R.id.country) TextView country;
+    @BindView(R.id.zip) TextView zip;
+    @BindView(R.id.vet_specialities_conatiner) RelativeLayout specialitiesContainer;
+    @BindView(R.id.vet_specialities) TextView vetSpecialities;
 
     private static final String USER = "user";
 

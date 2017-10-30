@@ -27,7 +27,6 @@ public class SignUpFragment extends Fragment {
     @BindView(R.id.email) EditText emailEditText;
     @BindView(R.id.password) EditText passwordEditText;
     @BindView(R.id.password_again) EditText passwordAgainEditText;
-    @BindView(R.id.signup_button) Button signUpButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

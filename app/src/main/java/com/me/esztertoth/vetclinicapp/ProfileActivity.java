@@ -17,6 +17,8 @@ import com.me.esztertoth.vetclinicapp.rest.PetOwnerApiInterface;
 import com.me.esztertoth.vetclinicapp.rest.VetApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,7 +30,8 @@ import rx.schedulers.Schedulers;
 public class ProfileActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.fab) FloatingActionButton fab;
+
+    @Inject ApiClient apiClient;
 
     private static final String USER = "user";
 
@@ -36,6 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private String token;
     private long userId;
+
     private PetOwnerApiInterface petOwnerApiInterface;
     private VetApiInterface vetApiInterface;
     private Subscription subscription;
@@ -46,16 +50,22 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
+        satisfyDependencies();
+
         token = VetClinicPreferences.getSessionToken(this);
         userId = VetClinicPreferences.getUserId(this);
 
         if(VetClinicPreferences.getIsVet(this)) {
-            vetApiInterface = ApiClient.createService(VetApiInterface.class, token);
+            vetApiInterface = apiClient.createService(VetApiInterface.class, token);
             getVetDetails();
         } else {
-            petOwnerApiInterface = ApiClient.createService(PetOwnerApiInterface.class, token);
+            petOwnerApiInterface = apiClient.createService(PetOwnerApiInterface.class, token);
             getPetOwnerDetails();
         }
+    }
+
+    private void satisfyDependencies() {
+        ((App) getApplication()).getNetComponent().inject(this);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.me.esztertoth.vetclinicapp.fragments;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.method.PasswordTransformationMethod;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.StartPageActivity;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
@@ -21,6 +23,8 @@ import com.me.esztertoth.vetclinicapp.utils.LoginAndSignUpTextWatcher;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +41,15 @@ public class LoginFragment extends Fragment {
     @BindView(R.id.email_textInput_layout) TextInputLayout emailInputLayout;
     @BindView(R.id.password_textInput_layout) TextInputLayout passwordInputLayout;
     @BindView(R.id.login_error_message) TextView loginErrorMessage;
+
+    @Inject
+    ApiClient apiClient;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        satisfyDependencies();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,8 +68,12 @@ public class LoginFragment extends Fragment {
         }
     }
 
+    private void satisfyDependencies() {
+        ((App) getActivity().getApplication()).getNetComponent().inject(this);
+    }
+
     private void doLogin(String email, String password) {
-        AuthenticationApiInterface authenticationApiInterface = ApiClient.createService(AuthenticationApiInterface.class, email, password);
+        AuthenticationApiInterface authenticationApiInterface = apiClient.createService(AuthenticationApiInterface.class, email, password);
         Call<Map<String, Object>> call = authenticationApiInterface.getToken();
         call.enqueue(new Callback<Map<String, Object>>() {
             @Override

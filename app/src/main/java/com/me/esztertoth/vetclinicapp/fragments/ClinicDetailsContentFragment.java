@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.R;
+import com.me.esztertoth.vetclinicapp.dagger.module.NetModule;
 import com.me.esztertoth.vetclinicapp.model.Clinic;
 import com.me.esztertoth.vetclinicapp.model.PetType;
 import com.me.esztertoth.vetclinicapp.model.Vet;
@@ -23,6 +25,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +52,9 @@ public class ClinicDetailsContentFragment extends Fragment {
     @BindView(R.id.vet_works_here_button)
     Button vetWorksHereButton;
 
+    @Inject
+    ApiClient apiClient;
+
     private static final String CLINIC_NAME = "clinic";
 
     private Clinic clinic;
@@ -68,6 +75,11 @@ public class ClinicDetailsContentFragment extends Fragment {
         if (bundle != null) {
             clinic = (Clinic) bundle.getSerializable(CLINIC_NAME);
         }
+        satisfyDependencies();
+    }
+
+    private void satisfyDependencies() {
+        ((App) getActivity().getApplication()).getNetComponent().inject(this);
     }
 
     @Override
@@ -80,8 +92,8 @@ public class ClinicDetailsContentFragment extends Fragment {
 
         token = VetClinicPreferences.getSessionToken(getContext());
         userId = VetClinicPreferences.getUserId(getContext());
-        clinicApiInterface = ApiClient.createService(ClinicApiInterface.class, token);
-        vetApiInterface = ApiClient.createService(VetApiInterface.class, token);
+        clinicApiInterface = apiClient.createService(ClinicApiInterface.class, token);
+        vetApiInterface = apiClient.createService(VetApiInterface.class, token);
 
         if (VetClinicPreferences.getIsVet(getContext())) {
             getVetById();

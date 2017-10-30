@@ -29,6 +29,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -39,16 +41,14 @@ import retrofit2.Response;
 
 public class AddNewPetActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.pet_name_edit_text)
-    EditText petNameEditText;
-    @BindView(R.id.pet_birthday_input)
-    TextView petAgeTextView;
-    @BindView(R.id.weight_input)
-    EditText petWeightEditText;
-    @BindView(R.id.pet_type_spinner)
-    Spinner typeSpinnerView;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.pet_name_edit_text) EditText petNameEditText;
+    @BindView(R.id.pet_birthday_input) TextView petAgeTextView;
+    @BindView(R.id.weight_input) EditText petWeightEditText;
+    @BindView(R.id.pet_type_spinner) Spinner typeSpinnerView;
+
+    @Inject
+    ApiClient apiClient;
 
     private PetOwnerApiInterface petOwnerApiInterface;
 
@@ -71,11 +71,17 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        satisfyDependencies();
+
         token = VetClinicPreferences.getSessionToken(this);
         userId = VetClinicPreferences.getUserId(this);
-        petOwnerApiInterface = ApiClient.createService(PetOwnerApiInterface.class, token);
+        petOwnerApiInterface = apiClient.createService(PetOwnerApiInterface.class, token);
 
         typeSpinnerView.setAdapter(new ArrayAdapter<>(this, R.layout.spinner_dropdown_item, PetType.values()));
+    }
+
+    private void satisfyDependencies() {
+        ((App) getApplication()).getNetComponent().inject(this);
     }
 
     @OnClick(R.id.save_pet_button)

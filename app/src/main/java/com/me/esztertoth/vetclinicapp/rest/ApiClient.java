@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import javax.inject.Inject;
+
 import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -13,23 +15,27 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    private static String BASE_URL = "http://192.168.226.83:8080/";
+    private String baseUrl = "http://192.168.226.83:8080/";
 
-    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+    @Inject
+    public ApiClient() {
+    }
 
-    private static Retrofit.Builder builder =
+    private OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
+    private Retrofit.Builder builder =
             new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(baseUrl)
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create());
 
-    private static Retrofit retrofit = builder.build();
+    private Retrofit retrofit = builder.build();
 
-    public static <S> S createService(Class<S> serviceClass) {
+    public <S> S createService(Class<S> serviceClass) {
         return createService(serviceClass, null, null);
     }
 
-    public static <S> S createService(Class<S> serviceClass, String username, String password) {
+    public <S> S createService(Class<S> serviceClass, String username, String password) {
         if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
             String authToken = Credentials.basic(username, password);
             return createService(serviceClass, authToken);
@@ -38,7 +44,7 @@ public class ApiClient {
         return createService(serviceClass, null, null);
     }
 
-    public static <S> S createService(Class<S> serviceClass, final String authToken) {
+    public <S> S createService(Class<S> serviceClass, final String authToken) {
         if (!TextUtils.isEmpty(authToken)) {
             AuthenticationInterceptor interceptor = new AuthenticationInterceptor(authToken);
 

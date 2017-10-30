@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.common.api.Api;
+import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.model.Address;
 import com.me.esztertoth.vetclinicapp.model.PetOwner;
@@ -27,6 +29,8 @@ import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,6 +78,9 @@ public class EditProfileFragment extends Fragment {
     private String token;
     private boolean isVet;
 
+    @Inject
+    ApiClient apiClient;
+
     private PetOwnerApiInterface petOwnerApiInterface;
     private VetApiInterface vetApiInterface;
 
@@ -90,14 +97,16 @@ public class EditProfileFragment extends Fragment {
         userId = VetClinicPreferences.getUserId(getContext());
         isVet = VetClinicPreferences.getIsVet(getContext());
 
+        satisfyDependencies();
+
         if(isVet) {
             vet = (Vet) getArguments().getSerializable(USER);
-            vetApiInterface = ApiClient.createService(VetApiInterface.class, token);
+            vetApiInterface = apiClient.createService(VetApiInterface.class, token);
             specialities = vet.getSpeciality();
             showSpecialitiesEditorForVet();
         } else {
             petOwner = (PetOwner) getArguments().getSerializable(USER);
-            petOwnerApiInterface = ApiClient.createService(PetOwnerApiInterface.class, token);
+            petOwnerApiInterface = apiClient.createService(PetOwnerApiInterface.class, token);
         }
 
         emailEditText.addTextChangedListener(new LoginAndSignUpTextWatcher(emailEditText, emailInputLayout, getContext()));
@@ -105,6 +114,10 @@ public class EditProfileFragment extends Fragment {
         hideFloatingActionButton();
         prefillForm();
         return view;
+    }
+
+    private void satisfyDependencies() {
+        ((App) getActivity().getApplication()).getNetComponent().inject(this);
     }
 
     private void showSpecialitiesEditorForVet() {

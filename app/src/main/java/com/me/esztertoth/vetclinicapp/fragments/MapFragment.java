@@ -65,6 +65,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     @BindView(R.id.place_autocomplete_search_input) EditText PlaceAutocompleteSearchInput;
 
     @Inject ApiClient apiClient;
+    @Inject VetClinicPreferences prefs;
+    @Inject BitmapUtils bitmapUtils;
 
     private String token;
 
@@ -99,7 +101,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
-        token = VetClinicPreferences.getSessionToken(getContext());
+        token = prefs.getSessionToken();
         clinicApiInterface = apiClient.createService(ClinicApiInterface.class, token);
 
         clinics = new ArrayList<>();
@@ -113,6 +115,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
     private void satisfyDependencies() {
         ((App) getActivity().getApplication()).getNetComponent().inject(this);
+        ((App) getActivity().getApplication()).getAppComponent().inject(this);
     }
 
     private void initTypeSpinner() {
@@ -252,8 +255,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     public void onSnapshotReady(Bitmap snapshot) {
         Intent i = new Intent(getActivity(), ClinicDetailsActivity.class);
         i.putExtra(CLINIC_NAME, clinicToOpen);
-        snapshot = BitmapUtils.resizeBitmap(snapshot, DESIRED_SNAPSHOT_SIZE);
-        i.putExtra(SNAPSHOT_NAME, BitmapUtils.convertBitmapToByteArray(snapshot));
+        snapshot = bitmapUtils.resizeBitmap(snapshot, DESIRED_SNAPSHOT_SIZE);
+        i.putExtra(SNAPSHOT_NAME, bitmapUtils.convertBitmapToByteArray(snapshot));
         startActivity(i);
     }
 

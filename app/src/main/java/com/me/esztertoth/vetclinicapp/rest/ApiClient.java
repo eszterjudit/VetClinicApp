@@ -2,9 +2,6 @@ package com.me.esztertoth.vetclinicapp.rest;
 
 import android.text.TextUtils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import javax.inject.Inject;
 
 import okhttp3.Credentials;

@@ -44,8 +44,8 @@ public class MyPetsFragment extends Fragment implements DeletePetCallback {
     @BindView(R.id.addNewPetButton) FloatingActionButton addNewPetButton;
     @BindView(R.id.no_pets_message) TextView noPetsMessage;
 
-    @Inject
-    ApiClient apiClient;
+    @Inject ApiClient apiClient;
+    @Inject VetClinicPreferences prefs;
 
     private List<Pet> pets;
     private Subscription subscription;
@@ -63,6 +63,7 @@ public class MyPetsFragment extends Fragment implements DeletePetCallback {
 
     private void satisfyDependencies() {
         ((App) getActivity().getApplication()).getNetComponent().inject(this);
+        ((App) getActivity().getApplication()).getAppComponent().inject(this);
     }
 
     @Override
@@ -72,8 +73,8 @@ public class MyPetsFragment extends Fragment implements DeletePetCallback {
 
         pets = new ArrayList();
 
-        token = VetClinicPreferences.getSessionToken(getContext());
-        userId = VetClinicPreferences.getUserId(getContext());
+        token = prefs.getSessionToken();
+        userId = prefs.getUserId();
         petOwnerApiInterface = apiClient.createService(PetOwnerApiInterface.class, token);
 
         petsListAdapter = new PetsListAdapter(getContext(), pets, this);

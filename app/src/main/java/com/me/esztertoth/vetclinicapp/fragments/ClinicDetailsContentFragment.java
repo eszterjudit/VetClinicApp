@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.R;
-import com.me.esztertoth.vetclinicapp.dagger.module.NetModule;
 import com.me.esztertoth.vetclinicapp.model.Clinic;
 import com.me.esztertoth.vetclinicapp.model.PetType;
 import com.me.esztertoth.vetclinicapp.model.Vet;
@@ -22,9 +21,7 @@ import com.me.esztertoth.vetclinicapp.rest.VetApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -41,19 +38,14 @@ import rx.schedulers.Schedulers;
 
 public class ClinicDetailsContentFragment extends Fragment {
 
-    @BindView(R.id.clinic_address_tv)
-    TextView addressTextView;
-    @BindView(R.id.clinic_opening_hours_tv)
-    TextView openingHoursTextView;
-    @BindView(R.id.clinic_speciality_tv)
-    TextView specialitiesTextView;
-    @BindView(R.id.clinic_vets_tv)
-    TextView doctorsTextView;
-    @BindView(R.id.vet_works_here_button)
-    Button vetWorksHereButton;
+    @BindView(R.id.clinic_address_tv) TextView addressTextView;
+    @BindView(R.id.clinic_opening_hours_tv) TextView openingHoursTextView;
+    @BindView(R.id.clinic_speciality_tv) TextView specialitiesTextView;
+    @BindView(R.id.clinic_vets_tv) TextView doctorsTextView;
+    @BindView(R.id.vet_works_here_button) Button vetWorksHereButton;
 
-    @Inject
-    ApiClient apiClient;
+    @Inject ApiClient apiClient;
+    @Inject VetClinicPreferences prefs;
 
     private static final String CLINIC_NAME = "clinic";
 
@@ -80,6 +72,7 @@ public class ClinicDetailsContentFragment extends Fragment {
 
     private void satisfyDependencies() {
         ((App) getActivity().getApplication()).getNetComponent().inject(this);
+        ((App) getActivity().getApplication()).getAppComponent().inject(this);
     }
 
     @Override
@@ -90,12 +83,12 @@ public class ClinicDetailsContentFragment extends Fragment {
         setNameOnToolbar();
         setDetails();
 
-        token = VetClinicPreferences.getSessionToken(getContext());
-        userId = VetClinicPreferences.getUserId(getContext());
+        token = prefs.getSessionToken();
+        userId = prefs.getUserId();
         clinicApiInterface = apiClient.createService(ClinicApiInterface.class, token);
         vetApiInterface = apiClient.createService(VetApiInterface.class, token);
 
-        if (VetClinicPreferences.getIsVet(getContext())) {
+        if (prefs.getIsVet()) {
             getVetById();
         }
 
@@ -105,7 +98,9 @@ public class ClinicDetailsContentFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        subscription.unsubscribe();
+        if(subscription != null) {
+            subscription.unsubscribe();
+        }
     }
 
     private void showWorkHereButtonForVet() {

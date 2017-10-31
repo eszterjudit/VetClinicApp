@@ -1,7 +1,6 @@
 package com.me.esztertoth.vetclinicapp;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -32,6 +31,7 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
 
     @Inject ApiClient apiClient;
+    @Inject VetClinicPreferences prefs;
 
     private static final String USER = "user";
 
@@ -52,10 +52,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         satisfyDependencies();
 
-        token = VetClinicPreferences.getSessionToken(this);
-        userId = VetClinicPreferences.getUserId(this);
+        token = prefs.getSessionToken();
+        userId = prefs.getUserId();
 
-        if(VetClinicPreferences.getIsVet(this)) {
+        if(prefs.getIsVet()) {
             vetApiInterface = apiClient.createService(VetApiInterface.class, token);
             getVetDetails();
         } else {
@@ -66,6 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void satisfyDependencies() {
         ((App) getApplication()).getNetComponent().inject(this);
+        ((App) getApplication()).getAppComponent().inject(this);
     }
 
     @Override

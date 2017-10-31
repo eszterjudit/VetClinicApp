@@ -47,8 +47,8 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
     @BindView(R.id.weight_input) EditText petWeightEditText;
     @BindView(R.id.pet_type_spinner) Spinner typeSpinnerView;
 
-    @Inject
-    ApiClient apiClient;
+    @Inject ApiClient apiClient;
+    @Inject VetClinicPreferences prefs;
 
     private PetOwnerApiInterface petOwnerApiInterface;
 
@@ -73,8 +73,8 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
 
         satisfyDependencies();
 
-        token = VetClinicPreferences.getSessionToken(this);
-        userId = VetClinicPreferences.getUserId(this);
+        token = prefs.getSessionToken();
+        userId = prefs.getUserId();
         petOwnerApiInterface = apiClient.createService(PetOwnerApiInterface.class, token);
 
         typeSpinnerView.setAdapter(new ArrayAdapter<>(this, R.layout.spinner_dropdown_item, PetType.values()));
@@ -82,6 +82,7 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
 
     private void satisfyDependencies() {
         ((App) getApplication()).getNetComponent().inject(this);
+        ((App) getApplication()).getAppComponent().inject(this);
     }
 
     @OnClick(R.id.save_pet_button)

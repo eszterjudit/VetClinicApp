@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.gms.common.api.Api;
 import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.ClinicDetailsActivity;
 import com.me.esztertoth.vetclinicapp.R;
@@ -39,8 +38,8 @@ public class MyClinicsFragment extends Fragment {
     @BindView(R.id.my_clinincs_list_recyclerview) RecyclerView clinicsRecyclerView;
     @BindView(R.id.no_clinincs_message) TextView noClinicsMessage;
 
-    @Inject
-    ApiClient apiClient;
+    @Inject ApiClient apiClient;
+    @Inject VetClinicPreferences prefs;
 
     private List<Clinic> clinics;
 
@@ -58,6 +57,7 @@ public class MyClinicsFragment extends Fragment {
 
     private void satisfyDependencies() {
         ((App) getActivity().getApplication()).getNetComponent().inject(this);
+        ((App) getActivity().getApplication()).getAppComponent().inject(this);
     }
 
     @Nullable
@@ -66,8 +66,8 @@ public class MyClinicsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_clinincs_list, container, false);
         ButterKnife.bind(this, view);
 
-        token = VetClinicPreferences.getSessionToken(getContext());
-        userId = VetClinicPreferences.getUserId(getContext());
+        token = prefs.getSessionToken();
+        userId = prefs.getUserId();
         vetApiInterface = apiClient.createService(VetApiInterface.class, token);
 
         clinics = new ArrayList<>();

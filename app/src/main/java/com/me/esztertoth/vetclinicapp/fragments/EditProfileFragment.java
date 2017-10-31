@@ -1,6 +1,7 @@
 package com.me.esztertoth.vetclinicapp.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -13,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.google.android.gms.common.api.Api;
 import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.model.Address;
@@ -27,7 +27,6 @@ import com.me.esztertoth.vetclinicapp.rest.VetApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.LoginAndSignUpTextWatcher;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -78,13 +77,19 @@ public class EditProfileFragment extends Fragment {
     private String token;
     private boolean isVet;
 
-    @Inject
-    ApiClient apiClient;
+    @Inject ApiClient apiClient;
+    @Inject VetClinicPreferences prefs;
 
     private PetOwnerApiInterface petOwnerApiInterface;
     private VetApiInterface vetApiInterface;
 
     private List<PetType> specialities;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        satisfyDependencies();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -93,11 +98,9 @@ public class EditProfileFragment extends Fragment {
 
         fab = ButterKnife.findById(getActivity(), R.id.fab);
 
-        token = VetClinicPreferences.getSessionToken(getContext());
-        userId = VetClinicPreferences.getUserId(getContext());
-        isVet = VetClinicPreferences.getIsVet(getContext());
-
-        satisfyDependencies();
+        token = prefs.getSessionToken();
+        userId = prefs.getUserId();
+        isVet = prefs.getIsVet();
 
         if(isVet) {
             vet = (Vet) getArguments().getSerializable(USER);
@@ -118,6 +121,7 @@ public class EditProfileFragment extends Fragment {
 
     private void satisfyDependencies() {
         ((App) getActivity().getApplication()).getNetComponent().inject(this);
+        ((App) getActivity().getApplication()).getAppComponent().inject(this);
     }
 
     private void showSpecialitiesEditorForVet() {

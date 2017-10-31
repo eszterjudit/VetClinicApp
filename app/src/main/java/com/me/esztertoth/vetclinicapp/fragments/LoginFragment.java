@@ -42,8 +42,8 @@ public class LoginFragment extends Fragment {
     @BindView(R.id.password_textInput_layout) TextInputLayout passwordInputLayout;
     @BindView(R.id.login_error_message) TextView loginErrorMessage;
 
-    @Inject
-    ApiClient apiClient;
+    @Inject ApiClient apiClient;
+    @Inject VetClinicPreferences prefs;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +70,7 @@ public class LoginFragment extends Fragment {
 
     private void satisfyDependencies() {
         ((App) getActivity().getApplication()).getNetComponent().inject(this);
+        ((App) getActivity().getApplication()).getAppComponent().inject(this);
     }
 
     private void doLogin(String email, String password) {
@@ -93,9 +94,9 @@ public class LoginFragment extends Fragment {
     }
 
     private void openStartPageActivity(Response<Map<String, Object>> response) {
-        VetClinicPreferences.setSessionToken(getContext(), (String) response.body().get("session"));
-        VetClinicPreferences.setUserId(getContext(), ((Double)response.body().get("id")).longValue());
-        VetClinicPreferences.setIsVet(getContext(), (boolean) response.body().get("isVet"));
+        prefs.setSessionToken((String) response.body().get("session"));
+        prefs.setUserId(((Double)response.body().get("id")).longValue());
+        prefs.setIsVet((boolean) response.body().get("isVet"));
         Intent i = new Intent(getActivity(), StartPageActivity.class);
         startActivity(i);
     }

@@ -19,6 +19,7 @@ import com.me.esztertoth.vetclinicapp.adapters.DeletePetCallback;
 import com.me.esztertoth.vetclinicapp.adapters.PetsListAdapter;
 import com.me.esztertoth.vetclinicapp.model.Pet;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
+import com.me.esztertoth.vetclinicapp.rest.PetApiInterface;
 import com.me.esztertoth.vetclinicapp.rest.PetOwnerApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
@@ -51,6 +52,7 @@ public class MyPetsFragment extends Fragment implements DeletePetCallback {
     private Subscription subscription;
     private PetsListAdapter petsListAdapter;
     private PetOwnerApiInterface petOwnerApiInterface;
+    private PetApiInterface petApiInterface;
 
     private String token;
     private long userId;
@@ -76,6 +78,7 @@ public class MyPetsFragment extends Fragment implements DeletePetCallback {
         token = prefs.getSessionToken();
         userId = prefs.getUserId();
         petOwnerApiInterface = apiClient.createService(PetOwnerApiInterface.class, token);
+        petApiInterface = apiClient.createService(PetApiInterface.class, token);
 
         petsListAdapter = new PetsListAdapter(getContext(), pets, this);
         petsListRecyclerView.setAdapter(petsListAdapter);
@@ -139,7 +142,7 @@ public class MyPetsFragment extends Fragment implements DeletePetCallback {
     @Override
     public void deletePet(long petId) {
         Pet petToDelete = pets.stream().filter(pet -> pet.getId() == petId).findFirst().get();
-        petOwnerApiInterface.deletePet(token, userId, petId).enqueue(new Callback<Void>() {
+        petApiInterface.deletePet(token, petId).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {

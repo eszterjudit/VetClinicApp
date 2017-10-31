@@ -30,12 +30,6 @@ public class AppModule {
 
     @Provides
     @Singleton
-    Context provideContext() {
-        return application;
-    }
-
-    @Provides
-    @Singleton
     SharedPreferences provideSharedPreferences() {
         return application.getSharedPreferences("com.me.esztertoth.vetclinicapp", Context.MODE_PRIVATE);
     }

@@ -25,9 +25,6 @@ public interface PetOwnerApiInterface {
     @POST("petOwner/{petOwnerId}/addPet/")
     Call<ResponseBody> addPet(@Header("x-auth-token") String token, @Path("petOwnerId") long petOwnerId, @Body Pet pet);
 
-    @DELETE("/pet/{petOwnerId}/deletePet/{petId}")
-    Call<Void> deletePet(@Header("x-auth-token") String token, @Path("petOwnerId") long petOwnerId, @Path("petId") long petId);
-
     @GET("/petOwner/{petOwnerId}")
     Observable<PetOwner> getPetOwner(@Header("x-auth-token") String token, @Path("petOwnerId") Long petOwnerId);
 

@@ -1,7 +1,6 @@
 package com.me.esztertoth.vetclinicapp.rest;
 
 import com.me.esztertoth.vetclinicapp.model.Clinic;
-import com.me.esztertoth.vetclinicapp.model.User;
 import com.me.esztertoth.vetclinicapp.model.Vet;
 
 import java.util.List;
@@ -11,7 +10,6 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import rx.Observable;

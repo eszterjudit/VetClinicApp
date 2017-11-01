@@ -4,9 +4,16 @@ import android.graphics.Bitmap;
 
 import java.io.ByteArrayOutputStream;
 
+import javax.inject.Inject;
+
 public class BitmapUtils {
 
-    public static Bitmap resizeBitmap(Bitmap image, int maxSize) {
+    @Inject
+    public BitmapUtils() {
+
+    }
+
+    public Bitmap resizeBitmap(Bitmap image, int maxSize) {
         int width = image.getWidth();
         int height = image.getHeight();
 
@@ -21,7 +28,7 @@ public class BitmapUtils {
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
-    public static byte[] convertBitmapToByteArray(Bitmap snapshot) {
+    public byte[] convertBitmapToByteArray(Bitmap snapshot) {
         ByteArrayOutputStream outpuStream = new ByteArrayOutputStream();
         snapshot.compress(Bitmap.CompressFormat.PNG, 100, outpuStream);
         return outpuStream.toByteArray();

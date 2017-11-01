@@ -1,6 +1,7 @@
 package com.me.esztertoth.vetclinicapp.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.adapters.RecyclerViewClickListener;
 import com.me.esztertoth.vetclinicapp.adapters.SettingsListAdapter;
@@ -21,13 +23,17 @@ import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SettingsFragment extends Fragment implements PerimeterChangedCallback {
 
-    @BindView(R.id.settings_list_recyclerview)
-    RecyclerView settingsListRecyclerView;
+    @BindView(R.id.settings_list_recyclerview) RecyclerView settingsListRecyclerView;
+
+    @Inject VetClinicPreferences prefs;
+    @Inject FavoriteUtils favoriteUtils;
 
     private static int KILOMETERS = 1000;
 
@@ -35,6 +41,16 @@ public class SettingsFragment extends Fragment implements PerimeterChangedCallba
     private SettingsListAdapter settingsListAdapter;
 
     SettingsItem mapPerimeter = new SettingsItem();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        satisfyDependencies();
+    }
+
+    private void satisfyDependencies() {
+        ((App) getActivity().getApplication()).getAppComponent().inject(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,7 +98,7 @@ public class SettingsFragment extends Fragment implements PerimeterChangedCallba
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(getString(R.string.delete_all_favs_dialog_title))
                 .setMessage(getString(R.string.delete_all_favs_dialog_description))
-                .setPositiveButton(R.string.delete_all_favs_dialog_positive_button, (dialog, which) -> FavoriteUtils.deleteAllFavorites(getContext()))
+                .setPositiveButton(R.string.delete_all_favs_dialog_positive_button, (dialog, which) -> favoriteUtils.deleteAllFavorites())
                 .setNegativeButton(R.string.delete_all_favs_dialog_negative_button, (dialog, which) -> dialog.dismiss())
                 .show();
     }
@@ -91,11 +107,11 @@ public class SettingsFragment extends Fragment implements PerimeterChangedCallba
 
         mapPerimeter.setIcon(getActivity().getDrawable(R.drawable.ic_map));
         mapPerimeter.setTitle(getString(R.string.map_perimeter_settings_item_title));
-        mapPerimeter.setDescription(getString(R.string.map_perimeter_settings_item_description_1) + VetClinicPreferences.getPerimeter(getContext()) / KILOMETERS + getString(R.string.map_perimeter_settings_item_description_2));
+        mapPerimeter.setDescription(getString(R.string.map_perimeter_settings_item_description_1) + prefs.getPerimeter() / KILOMETERS + getString(R.string.map_perimeter_settings_item_description_2));
 
         settingsItemList.add(mapPerimeter);
 
-        if(!VetClinicPreferences.getIsVet(getContext())) {
+        if(!prefs.getIsVet()) {
             SettingsItem deleteAllFavs = new SettingsItem();
 
             deleteAllFavs.setIcon(getActivity().getDrawable(R.drawable.ic_delete));
@@ -108,7 +124,7 @@ public class SettingsFragment extends Fragment implements PerimeterChangedCallba
 
     @Override
     public void perimeterChanged() {
-        mapPerimeter.setDescription(getString(R.string.map_perimeter_settings_item_description_1) + VetClinicPreferences.getPerimeter(getContext()) / KILOMETERS + getString(R.string.map_perimeter_settings_item_description_2));
+        mapPerimeter.setDescription(getString(R.string.map_perimeter_settings_item_description_1) + prefs.getPerimeter() / KILOMETERS + getString(R.string.map_perimeter_settings_item_description_2));
         settingsListAdapter.notifyDataSetChanged();
     }
 }

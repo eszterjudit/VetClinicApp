@@ -1,33 +1,45 @@
 package com.me.esztertoth.vetclinicapp.utils;
 
+import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.me.esztertoth.vetclinicapp.model.Clinic;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class FavoriteUtils {
 
-    public static void addFavoriteClinic(Context context, Clinic clinic) {
-        List<Clinic> favorites = VetClinicPreferences.getFavoriteClinics(context);
+    private VetClinicPreferences prefs;
+
+    @Inject
+    public FavoriteUtils(Application application) {
+        SharedPreferences sharedPreferences = application.getSharedPreferences("com.me.esztertoth.vetclinicapp", Context.MODE_PRIVATE);
+        this.prefs = new VetClinicPreferences(sharedPreferences);
+    }
+
+    public void addFavoriteClinic(Clinic clinic) {
+        List<Clinic> favorites = prefs.getFavoriteClinics();
         if (favorites == null)
             favorites = new ArrayList<>();
         favorites.add(clinic);
-        VetClinicPreferences.saveFavoriteClinics(context, favorites);
+        prefs.saveFavoriteClinics(favorites);
     }
 
-    public static void removeFavorite(Context context, Clinic clinic) {
-        ArrayList<Clinic> favorites = VetClinicPreferences.getFavoriteClinics(context);
+    public void removeFavorite(Clinic clinic) {
+        ArrayList<Clinic> favorites = prefs.getFavoriteClinics();
         if (favorites != null) {
             favorites.remove(clinic);
-            VetClinicPreferences.saveFavoriteClinics(context, favorites);
+            prefs.saveFavoriteClinics(favorites);
         }
     }
 
-    public static boolean isClinicAlreadyInFavorites(Context context, Clinic clinic) {
+    public boolean isClinicAlreadyInFavorites(Clinic clinic) {
         boolean check = false;
-        List<Clinic> favorites = VetClinicPreferences.getFavoriteClinics(context);
+        List<Clinic> favorites = prefs.getFavoriteClinics();
         if (favorites != null) {
             for (Clinic favclinic : favorites) {
                 if (favclinic.equals(clinic)) {
@@ -39,9 +51,9 @@ public class FavoriteUtils {
         return check;
     }
 
-    public static void deleteAllFavorites(Context context) {
+    public void deleteAllFavorites() {
         List<Clinic> favorites = new ArrayList<>();
-        VetClinicPreferences.saveFavoriteClinics(context, favorites);
+        prefs.saveFavoriteClinics(favorites);
     }
 
 }

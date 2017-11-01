@@ -1,7 +1,6 @@
 package com.me.esztertoth.vetclinicapp;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +16,8 @@ import com.me.esztertoth.vetclinicapp.rest.PetOwnerApiInterface;
 import com.me.esztertoth.vetclinicapp.rest.VetApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,7 +29,9 @@ import rx.schedulers.Schedulers;
 public class ProfileActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.fab) FloatingActionButton fab;
+
+    @Inject ApiClient apiClient;
+    @Inject VetClinicPreferences prefs;
 
     private static final String USER = "user";
 
@@ -36,6 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private String token;
     private long userId;
+
     private PetOwnerApiInterface petOwnerApiInterface;
     private VetApiInterface vetApiInterface;
     private Subscription subscription;
@@ -46,16 +50,23 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
-        token = VetClinicPreferences.getSessionToken(this);
-        userId = VetClinicPreferences.getUserId(this);
+        satisfyDependencies();
 
-        if(VetClinicPreferences.getIsVet(this)) {
-            vetApiInterface = ApiClient.createService(VetApiInterface.class, token);
+        token = prefs.getSessionToken();
+        userId = prefs.getUserId();
+
+        if(prefs.getIsVet()) {
+            vetApiInterface = apiClient.createService(VetApiInterface.class, token);
             getVetDetails();
         } else {
-            petOwnerApiInterface = ApiClient.createService(PetOwnerApiInterface.class, token);
+            petOwnerApiInterface = apiClient.createService(PetOwnerApiInterface.class, token);
             getPetOwnerDetails();
         }
+    }
+
+    private void satisfyDependencies() {
+        ((App) getApplication()).getNetComponent().inject(this);
+        ((App) getApplication()).getAppComponent().inject(this);
     }
 
     @Override

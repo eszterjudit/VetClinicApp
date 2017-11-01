@@ -1,6 +1,7 @@
 package com.me.esztertoth.vetclinicapp.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -9,33 +10,30 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.model.PetOwner;
 import com.me.esztertoth.vetclinicapp.model.PetType;
 import com.me.esztertoth.vetclinicapp.model.Vet;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ProfileContentFragment extends Fragment {
 
-    @BindView(R.id.phone)
-    TextView phone;
-    @BindView(R.id.email)
-    TextView email;
-    @BindView(R.id.street)
-    TextView street;
-    @BindView(R.id.city)
-    TextView city;
-    @BindView(R.id.country)
-    TextView country;
-    @BindView(R.id.zip)
-    TextView zip;
-    @BindView(R.id.vet_specialities_conatiner)
-    RelativeLayout specialitiesContainer;
-    @BindView(R.id.vet_specialities)
-    TextView vetSpecialities;
+    @BindView(R.id.phone) TextView phone;
+    @BindView(R.id.email) TextView email;
+    @BindView(R.id.street) TextView street;
+    @BindView(R.id.city) TextView city;
+    @BindView(R.id.country) TextView country;
+    @BindView(R.id.zip) TextView zip;
+    @BindView(R.id.vet_specialities_conatiner) RelativeLayout specialitiesContainer;
+    @BindView(R.id.vet_specialities) TextView vetSpecialities;
+
+    @Inject VetClinicPreferences prefs;
 
     private static final String USER = "user";
 
@@ -43,11 +41,21 @@ public class ProfileContentFragment extends Fragment {
     private Vet vet;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        satisfyDependencies();
+    }
+
+    private void satisfyDependencies() {
+        ((App) getActivity().getApplication()).getAppComponent().inject(this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_content, container, false);
         ButterKnife.bind(this, view);
 
-        boolean isVet = VetClinicPreferences.getIsVet(getContext());
+        boolean isVet = prefs.getIsVet();
 
         if(isVet){
             vet = (Vet) getArguments().getSerializable(USER);

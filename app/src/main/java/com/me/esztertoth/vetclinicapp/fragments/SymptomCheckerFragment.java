@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SymtomCheckerFragment extends Fragment {
+public class SymptomCheckerFragment extends Fragment {
 
     @BindView(R.id.question) TextView question;
     @BindView(R.id.answer) TextView answer;

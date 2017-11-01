@@ -8,7 +8,6 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -27,7 +26,6 @@ public class SignUpFragment extends Fragment {
     @BindView(R.id.email) EditText emailEditText;
     @BindView(R.id.password) EditText passwordEditText;
     @BindView(R.id.password_again) EditText passwordAgainEditText;
-    @BindView(R.id.signup_button) Button signUpButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

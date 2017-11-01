@@ -21,8 +21,10 @@ import com.me.esztertoth.vetclinicapp.fragments.MyClinicsFragment;
 import com.me.esztertoth.vetclinicapp.fragments.MyFavoritesFragment;
 import com.me.esztertoth.vetclinicapp.fragments.MyPetsFragment;
 import com.me.esztertoth.vetclinicapp.fragments.SettingsFragment;
-import com.me.esztertoth.vetclinicapp.fragments.SymtomCheckerFragment;
+import com.me.esztertoth.vetclinicapp.fragments.SymptomCheckerFragment;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +36,8 @@ public class StartPageActivity extends AppCompatActivity implements NavigationVi
     @BindView(R.id.nav_view) NavigationView navigationView;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
+
+    @Inject VetClinicPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +52,19 @@ public class StartPageActivity extends AppCompatActivity implements NavigationVi
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(VetClinicPreferences.getIsVet(this)) {
+        satisfyDependencies();
+
+        if(prefs.getIsVet()) {
             changeNavigationItemsIfVet();
         }
 
         if (!isLocationPermissionGranted()) {
             RequestLocationPermission();
         }
+    }
+
+    private void satisfyDependencies() {
+        ((App) getApplication()).getAppComponent().inject(this);
     }
 
     private void changeNavigationItemsIfVet() {
@@ -109,7 +119,7 @@ public class StartPageActivity extends AppCompatActivity implements NavigationVi
                 fragmentToOpen = new MapFragment();
                 break;
             case R.id.nav_symptom_checker:
-                fragmentToOpen = new SymtomCheckerFragment();
+                fragmentToOpen = new SymptomCheckerFragment();
                 break;
             default:
                 break;

@@ -2,6 +2,7 @@ package com.me.esztertoth.vetclinicapp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.ClinicDetailsActivity;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.adapters.FavoritesAdapter;
@@ -19,6 +21,8 @@ import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -27,8 +31,20 @@ public class MyFavoritesFragment extends Fragment {
     @BindView(R.id.favorites_list_recyclerview) RecyclerView favoritesRecyclerView;
     @BindView(R.id.no_favorites_message) TextView noFavoritesMessage;
 
+    @Inject VetClinicPreferences prefs;
+
     private List<Clinic> favorites;
     private FavoritesAdapter favoritesAdapter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        satisfyDependencies();
+    }
+
+    private void satisfyDependencies() {
+        ((App) getActivity().getApplication()).getAppComponent().inject(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,6 +96,6 @@ public class MyFavoritesFragment extends Fragment {
     }
 
     public List<Clinic> getFavorites() {
-        return VetClinicPreferences.getFavoriteClinics(getContext());
+        return prefs.getFavoriteClinics();
     }
 }

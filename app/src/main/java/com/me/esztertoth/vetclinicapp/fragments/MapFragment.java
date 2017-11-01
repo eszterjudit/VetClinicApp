@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.ClinicDetailsActivity;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.map.LocationCallback;
@@ -44,6 +46,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -59,6 +63,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     @BindView(R.id.pet_type_spinner) Spinner typeSpinner;
     @BindView(R.id.place_autocomplete_search_button) View searchButton;
     @BindView(R.id.place_autocomplete_search_input) EditText PlaceAutocompleteSearchInput;
+
+    @Inject ApiClient apiClient;
+    @Inject VetClinicPreferences prefs;
+    @Inject BitmapUtils bitmapUtils;
 
     private String token;
 
@@ -81,14 +89,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     private LocationProvider locationProvider;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        satisfyDependencies();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         ButterKnife.bind(this, view);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
-        token = VetClinicPreferences.getSessionToken(getContext());
-        clinicApiInterface = ApiClient.createService(ClinicApiInterface.class, token);
+        token = prefs.getSessionToken();
+        clinicApiInterface = apiClient.createService(ClinicApiInterface.class, token);
 
         clinics = new ArrayList<>();
         markers = new HashMap<>();
@@ -97,6 +111,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         initTypeSpinner();
 
         return view;
+    }
+
+    private void satisfyDependencies() {
+        ((App) getActivity().getApplication()).getNetComponent().inject(this);
+        ((App) getActivity().getApplication()).getAppComponent().inject(this);
     }
 
     private void initTypeSpinner() {
@@ -236,8 +255,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     public void onSnapshotReady(Bitmap snapshot) {
         Intent i = new Intent(getActivity(), ClinicDetailsActivity.class);
         i.putExtra(CLINIC_NAME, clinicToOpen);
-        snapshot = BitmapUtils.resizeBitmap(snapshot, DESIRED_SNAPSHOT_SIZE);
-        i.putExtra(SNAPSHOT_NAME, BitmapUtils.convertBitmapToByteArray(snapshot));
+        snapshot = bitmapUtils.resizeBitmap(snapshot, DESIRED_SNAPSHOT_SIZE);
+        i.putExtra(SNAPSHOT_NAME, bitmapUtils.convertBitmapToByteArray(snapshot));
         startActivity(i);
     }
 

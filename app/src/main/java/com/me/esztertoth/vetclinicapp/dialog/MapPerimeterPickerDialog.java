@@ -9,11 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 
+import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.fragments.PerimeterChangedCallback;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
+import javax.inject.Inject;
+
 public class MapPerimeterPickerDialog extends DialogFragment {
+
+    @Inject VetClinicPreferences prefs;
 
     private NumberPicker numberPicker;
     private static int KILOMETERS = 1000;
@@ -28,6 +33,8 @@ public class MapPerimeterPickerDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
+        satisfyDependencies();
+
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View numberPickerDialogView = inflater.inflate(R.layout.dialog_numberpicker, null);
 
@@ -41,7 +48,7 @@ public class MapPerimeterPickerDialog extends DialogFragment {
         alertDialogBuilder.setMessage(R.string.map_perimeter_dialog_description);
         alertDialogBuilder.setPositiveButton(R.string.map_perimeter_dialog_positive_button, (dialog, which) -> {
             int chosenPerimeter = getChosenPerimeterForDisplayedValue(numberPicker.getValue());
-            VetClinicPreferences.setPerimeter(getActivity(), chosenPerimeter * KILOMETERS);
+            prefs.setPerimeter(chosenPerimeter * KILOMETERS);
         });
         alertDialogBuilder.setNegativeButton(R.string.map_perimeter_dialog_negative_button, (dialog, which) -> {
             if (dialog != null) {
@@ -50,6 +57,10 @@ public class MapPerimeterPickerDialog extends DialogFragment {
         });
 
         return alertDialogBuilder.create();
+    }
+
+    private void satisfyDependencies() {
+        ((App) getActivity().getApplication()).getAppComponent().inject(this);
     }
 
     private void initPicker() {
@@ -86,7 +97,7 @@ public class MapPerimeterPickerDialog extends DialogFragment {
     }
 
     private int getValueForPerimeter() {
-        switch (VetClinicPreferences.getPerimeter(getActivity())) {
+        switch (prefs.getPerimeter()) {
             case 1000:
                 return 1;
             case 5000:

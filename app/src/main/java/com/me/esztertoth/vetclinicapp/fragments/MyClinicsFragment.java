@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.ClinicDetailsActivity;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.adapters.ClinicsAdapter;
@@ -22,6 +23,8 @@ import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +38,9 @@ public class MyClinicsFragment extends Fragment {
     @BindView(R.id.my_clinincs_list_recyclerview) RecyclerView clinicsRecyclerView;
     @BindView(R.id.no_clinincs_message) TextView noClinicsMessage;
 
+    @Inject ApiClient apiClient;
+    @Inject VetClinicPreferences prefs;
+
     private List<Clinic> clinics;
 
     private ClinicsAdapter clinicsAdapter;
@@ -43,15 +49,26 @@ public class MyClinicsFragment extends Fragment {
     private String token;
     private long userId;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        satisfyDependencies();
+    }
+
+    private void satisfyDependencies() {
+        ((App) getActivity().getApplication()).getNetComponent().inject(this);
+        ((App) getActivity().getApplication()).getAppComponent().inject(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_clinincs_list, container, false);
         ButterKnife.bind(this, view);
 
-        token = VetClinicPreferences.getSessionToken(getContext());
-        userId = VetClinicPreferences.getUserId(getContext());
-        vetApiInterface = ApiClient.createService(VetApiInterface.class, token);
+        token = prefs.getSessionToken();
+        userId = prefs.getUserId();
+        vetApiInterface = apiClient.createService(VetApiInterface.class, token);
 
         clinics = new ArrayList<>();
 

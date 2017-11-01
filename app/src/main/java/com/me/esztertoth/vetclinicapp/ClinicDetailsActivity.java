@@ -16,6 +16,8 @@ import com.me.esztertoth.vetclinicapp.model.Clinic;
 import com.me.esztertoth.vetclinicapp.utils.FavoriteUtils;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -25,6 +27,9 @@ public class ClinicDetailsActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.clinic_details_bg) ImageView mapIv;
     @BindView(R.id.fab) FloatingActionButton fab;
+
+    @Inject VetClinicPreferences prefs;
+    @Inject FavoriteUtils favoriteUtils;
 
     private static String CLINIC_NAME = "clinic";
     private static String SNAPSHOT_NAME = "snapshot";
@@ -52,14 +57,20 @@ public class ClinicDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        satisfyDependencies();
+
         initUI();
         openClinicDetailsContent();
+    }
+
+    private void satisfyDependencies() {
+        ((App) getApplication()).getAppComponent().inject(this);
     }
 
     private void initUI() {
         mapIv.setImageBitmap(mapImage);
         hideFavoriteButtonForVet();
-        if(FavoriteUtils.isClinicAlreadyInFavorites(this, clinic)) {
+        if(favoriteUtils.isClinicAlreadyInFavorites(clinic)) {
             fab.setImageResource(R.drawable.ic_favorite);
         }
     }
@@ -85,7 +96,7 @@ public class ClinicDetailsActivity extends AppCompatActivity {
 
     @OnClick(R.id.fab)
     public void favoriteOrUnfavoriteClinic() {
-        if(FavoriteUtils.isClinicAlreadyInFavorites(this, clinic)) {
+        if(favoriteUtils.isClinicAlreadyInFavorites(clinic)) {
             unfavorite();
         } else {
             favorite();
@@ -93,17 +104,17 @@ public class ClinicDetailsActivity extends AppCompatActivity {
     }
 
     private void favorite() {
-        FavoriteUtils.addFavoriteClinic(this, clinic);
+        favoriteUtils.addFavoriteClinic(clinic);
         fab.setImageResource(R.drawable.ic_favorite);
     }
 
     private void unfavorite() {
-        FavoriteUtils.removeFavorite(this, clinic);
+        favoriteUtils.removeFavorite(clinic);
         fab.setImageResource(R.drawable.ic_favorite_border);
     }
 
     private void hideFavoriteButtonForVet() {
-        if(VetClinicPreferences.getIsVet(this)) {
+        if(prefs.getIsVet()) {
             fab.setVisibility(View.GONE);
         }
     }

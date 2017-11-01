@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "24.0.2"
+    buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.me.esztertoth.vetclinic"
         minSdkVersion 24
@@ -58,8 +58,8 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0+'
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    compile "com.google.dagger:dagger:2.9"
-    annotationProcessor "com.google.dagger:dagger-compiler:2.9"
+    compile 'com.google.dagger:dagger:2.9'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
     provided 'javax.annotation:jsr250-api:1.0'
 
     testCompile 'junit:junit:4.12'

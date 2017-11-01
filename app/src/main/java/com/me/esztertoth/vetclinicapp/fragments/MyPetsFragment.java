@@ -2,6 +2,7 @@ package com.me.esztertoth.vetclinicapp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,16 +13,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.me.esztertoth.vetclinicapp.AddNewPetActivity;
+import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.adapters.DeletePetCallback;
 import com.me.esztertoth.vetclinicapp.adapters.PetsListAdapter;
 import com.me.esztertoth.vetclinicapp.model.Pet;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
+import com.me.esztertoth.vetclinicapp.rest.PetApiInterface;
 import com.me.esztertoth.vetclinicapp.rest.PetOwnerApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,13 +45,28 @@ public class MyPetsFragment extends Fragment implements DeletePetCallback {
     @BindView(R.id.addNewPetButton) FloatingActionButton addNewPetButton;
     @BindView(R.id.no_pets_message) TextView noPetsMessage;
 
+    @Inject ApiClient apiClient;
+    @Inject VetClinicPreferences prefs;
+
     private List<Pet> pets;
     private Subscription subscription;
     private PetsListAdapter petsListAdapter;
     private PetOwnerApiInterface petOwnerApiInterface;
+    private PetApiInterface petApiInterface;
 
     private String token;
     private long userId;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        satisfyDependencies();
+    }
+
+    private void satisfyDependencies() {
+        ((App) getActivity().getApplication()).getNetComponent().inject(this);
+        ((App) getActivity().getApplication()).getAppComponent().inject(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,9 +75,10 @@ public class MyPetsFragment extends Fragment implements DeletePetCallback {
 
         pets = new ArrayList();
 
-        token = VetClinicPreferences.getSessionToken(getContext());
-        userId = VetClinicPreferences.getUserId(getContext());
-        petOwnerApiInterface = ApiClient.createService(PetOwnerApiInterface.class, token);
+        token = prefs.getSessionToken();
+        userId = prefs.getUserId();
+        petOwnerApiInterface = apiClient.createService(PetOwnerApiInterface.class, token);
+        petApiInterface = apiClient.createService(PetApiInterface.class, token);
 
         petsListAdapter = new PetsListAdapter(getContext(), pets, this);
         petsListRecyclerView.setAdapter(petsListAdapter);
@@ -121,7 +142,7 @@ public class MyPetsFragment extends Fragment implements DeletePetCallback {
     @Override
     public void deletePet(long petId) {
         Pet petToDelete = pets.stream().filter(pet -> pet.getId() == petId).findFirst().get();
-        petOwnerApiInterface.deletePet(token, userId, petId).enqueue(new Callback<Void>() {
+        petApiInterface.deletePet(token, petId).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {

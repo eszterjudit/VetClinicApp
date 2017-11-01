@@ -8,13 +8,13 @@ public class Pet {
     @SerializedName("id")
     @Expose
     private Long id;
-    @SerializedName("name")
+    @SerializedName("petName")
     @Expose
     private String name;
-    @SerializedName("type")
+    @SerializedName("petType")
     @Expose
     private PetType type;
-    @SerializedName("weight")
+    @SerializedName("petWeight")
     @Expose
     private double weight;
     @SerializedName("dateOfBirth")

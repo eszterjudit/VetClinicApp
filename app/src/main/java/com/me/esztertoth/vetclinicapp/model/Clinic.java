@@ -13,7 +13,7 @@ public class Clinic implements Serializable {
     @SerializedName("id")
     @Expose
     private Long id;
-    @SerializedName("name")
+    @SerializedName("clinicName")
     @Expose
     private String name;
     @SerializedName("address")

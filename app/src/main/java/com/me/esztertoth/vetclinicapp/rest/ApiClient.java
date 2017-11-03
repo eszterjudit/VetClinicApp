@@ -12,7 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    private String baseUrl = "http://192.168.226.83:8080/";
+    private AuthenticationApiInterface authenticationApiInterface = null;
+    private String baseUrl = "http://192.168.1.8:8080/";
 
     @Inject
     public ApiClient() {
@@ -54,6 +55,15 @@ public class ApiClient {
         }
 
         return retrofit.create(serviceClass);
+    }
+
+    public AuthenticationApiInterface registerVet() {
+        if(authenticationApiInterface == null) {
+            retrofit = builder.build();
+            authenticationApiInterface = retrofit.create(AuthenticationApiInterface.class);
+        }
+
+        return authenticationApiInterface;
     }
 
 }

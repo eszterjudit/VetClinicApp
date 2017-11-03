@@ -26,6 +26,8 @@
     <string name="invalid_email">This is not a valid email</string>
     <string name="empty_password">Password cannot be empty</string>
     <string name="passwords_do_not_match">Passwords do not match</string>
+    <string name="fill_form_error">Please fill the form</string>
+    <string name="user_already_exists">User already exists</string>
 
     <!-- Profile -->
     <string name="firstName">First name</string>

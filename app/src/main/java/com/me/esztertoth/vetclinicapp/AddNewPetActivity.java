@@ -201,8 +201,7 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
     private boolean areAllFieldsFilled() {
         return  !petNameEditText.getText().toString().isEmpty() &&
                 !petAgeTextView.getText().toString().isEmpty() &&
-                !petWeightEditText.getText().toString().isEmpty() &&
-                typeSpinnerView.getSelectedItemPosition() != 0;
+                !petWeightEditText.getText().toString().isEmpty();
 
     }
 

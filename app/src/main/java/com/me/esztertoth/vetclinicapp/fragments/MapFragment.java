@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +99,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         ButterKnife.bind(this, view);
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Map");
+
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 

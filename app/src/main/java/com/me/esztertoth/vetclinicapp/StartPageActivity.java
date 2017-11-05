@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.me.esztertoth.vetclinicapp.fragments.AllVetsFragment;
 import com.me.esztertoth.vetclinicapp.fragments.MapFragment;
 import com.me.esztertoth.vetclinicapp.fragments.MyClinicsFragment;
 import com.me.esztertoth.vetclinicapp.fragments.MyFavoritesFragment;
@@ -61,10 +62,20 @@ public class StartPageActivity extends AppCompatActivity implements NavigationVi
         if (!isLocationPermissionGranted()) {
             RequestLocationPermission();
         }
+
+        openAllVetsFragmentOnStart();
     }
 
     private void satisfyDependencies() {
         ((App) getApplication()).getAppComponent().inject(this);
+    }
+
+    private void openAllVetsFragmentOnStart() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        AllVetsFragment allVetsFragment = new AllVetsFragment();
+        ft.replace(R.id.content_start_page, allVetsFragment);
+        ft.addToBackStack(allVetsFragment.getTag());
+        ft.commit();
     }
 
     private void changeNavigationItemsIfVet() {

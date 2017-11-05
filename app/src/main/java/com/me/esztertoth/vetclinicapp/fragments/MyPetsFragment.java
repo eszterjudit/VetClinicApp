@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -72,6 +73,8 @@ public class MyPetsFragment extends Fragment implements DeletePetCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pets_list, container, false);
         ButterKnife.bind(this, view);
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("My pets");
 
         pets = new ArrayList();
 

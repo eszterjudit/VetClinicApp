@@ -1,9 +1,6 @@
 package com.me.esztertoth.vetclinicapp.rest;
 
-import com.me.esztertoth.vetclinicapp.model.PetOwner;
-import com.me.esztertoth.vetclinicapp.model.User;
 import com.me.esztertoth.vetclinicapp.model.UserDTO;
-import com.me.esztertoth.vetclinicapp.model.Vet;
 
 import java.util.Map;
 

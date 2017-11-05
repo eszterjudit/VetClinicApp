@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.me.esztertoth.vetclinicapp.utils.BitmapUtils;
+import com.me.esztertoth.vetclinicapp.utils.DialogUtils;
 import com.me.esztertoth.vetclinicapp.utils.FavoriteUtils;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
@@ -17,9 +18,8 @@ import dagger.Provides;
 public class AppModule {
 
     Application application;
-
-    public AppModule(Application mApplication) {
-        this.application = mApplication;
+    public AppModule(Application application) {
+        this.application = application;
     }
 
     @Provides
@@ -44,6 +44,12 @@ public class AppModule {
     @Singleton
     FavoriteUtils provideFavoriteUtils(Application application) {
         return new FavoriteUtils(application);
+    }
+
+    @Provides
+    @Singleton
+    DialogUtils provideDialogUtils() {
+        return new DialogUtils();
     }
 
     @Provides

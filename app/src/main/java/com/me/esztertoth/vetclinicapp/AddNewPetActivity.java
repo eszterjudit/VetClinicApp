@@ -23,6 +23,7 @@ import com.me.esztertoth.vetclinicapp.model.Pet;
 import com.me.esztertoth.vetclinicapp.model.PetType;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.PetOwnerApiInterface;
+import com.me.esztertoth.vetclinicapp.utils.DialogUtils;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.text.SimpleDateFormat;
@@ -49,6 +50,7 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
 
     @Inject ApiClient apiClient;
     @Inject VetClinicPreferences prefs;
+    @Inject DialogUtils dialogUtils;
 
     private PetOwnerApiInterface petOwnerApiInterface;
 
@@ -158,27 +160,33 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
     }
 
     private void openDontSaveDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.dont_save_pet_dialog_title))
-                .setMessage(getString(R.string.dont_save_pet_dialog_description))
-                .setPositiveButton(R.string.dont_save_pet_dialog_positive_button, (dialog, which) -> dialog.dismiss())
-                .setNegativeButton(R.string.dont_save_pet_dialog_negative_button, (dialog, which) -> {
-                    dialog.dismiss();
+        dialogUtils.showWarningDialog( this,
+                getString(R.string.dont_save_pet_dialog_title),
+                getString(R.string.dont_save_pet_dialog_description),
+                getString(R.string.dont_save_pet_dialog_positive_button),
+                getString(R.string.dont_save_pet_dialog_negative_button),
+                (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                },
+                (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
                     closeFragment();
-                })
-                .show();
+                });
     }
 
     private void openFieldsNotFilledDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.fields_not_filled_dialog_title))
-                .setMessage(getString(R.string.fields_not_filled_dialog_description))
-                .setPositiveButton(R.string.fields_not_filled_dialog_positive_button, (dialog, which) -> dialog.dismiss())
-                .setNegativeButton(R.string.fields_not_filled_dialog_negative_button, (dialog, which) -> {
-                    dialog.dismiss();
+        dialogUtils.showWarningDialog(  this,
+                getString(R.string.fields_not_filled_dialog_title),
+                getString(R.string.fields_not_filled_dialog_description),
+                getString(R.string.fields_not_filled_dialog_positive_button),
+                getString(R.string.fields_not_filled_dialog_negative_button),
+                (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                },
+                (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
                     closeFragment();
-                })
-                .show();
+                });
     }
 
     @Override

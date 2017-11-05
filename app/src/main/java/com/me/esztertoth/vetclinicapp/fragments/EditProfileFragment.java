@@ -1,5 +1,6 @@
 package com.me.esztertoth.vetclinicapp.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +25,7 @@ import com.me.esztertoth.vetclinicapp.model.Vet;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.PetOwnerApiInterface;
 import com.me.esztertoth.vetclinicapp.rest.VetApiInterface;
+import com.me.esztertoth.vetclinicapp.utils.DialogUtils;
 import com.me.esztertoth.vetclinicapp.utils.LoginAndSignUpTextWatcher;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
@@ -79,6 +81,7 @@ public class EditProfileFragment extends Fragment {
 
     @Inject ApiClient apiClient;
     @Inject VetClinicPreferences prefs;
+    @Inject DialogUtils dialogUtils;
 
     private PetOwnerApiInterface petOwnerApiInterface;
     private VetApiInterface vetApiInterface;
@@ -146,23 +149,35 @@ public class EditProfileFragment extends Fragment {
             overLayImage(birdImage, birdOverlay);
         }
     }
+
     @OnClick(R.id.cancel_edit_button)
     public void cancelEdit() {
-        openDontSaveDialog();
+        showCloseWarningDialog();
     }
 
     @OnClick(R.id.save_profile_button)
     public void saveProfile() {
-        if(!TextUtils.isEmpty(emailEditText.getText().toString())) {
             if(isVet) {
                 saveVetData();
             } else {
                 savePetOwnerData();
             }
             closeFragment();
-        } else {
-            openEmailCannotBeEmptyDialog();
-        }
+    }
+
+    private void showCloseWarningDialog() {
+        dialogUtils.showWarningDialog(  getContext(),
+                getString(R.string.dont_save_pet_dialog_title),
+                getString(R.string.dont_save_pet_dialog_description),
+                getString(R.string.dont_save_pet_dialog_positive_button),
+                getString(R.string.dont_save_pet_dialog_negative_button),
+                (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                },
+                (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                    closeFragment();
+                });
     }
 
     private void addOrRemovePetType(PetType petType, ImageView imageView, ImageView overlay) {
@@ -303,30 +318,6 @@ public class EditProfileFragment extends Fragment {
     private void closeFragment() {
         showFloatingActionButton();
         getActivity().onBackPressed();
-    }
-
-    private void openDontSaveDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(getString(R.string.dont_save_pet_dialog_title))
-                .setMessage(getString(R.string.dont_save_pet_dialog_description))
-                .setPositiveButton(R.string.dont_save_pet_dialog_positive_button, (dialog, which) -> dialog.dismiss())
-                .setNegativeButton(R.string.dont_save_pet_dialog_negative_button, (dialog, which) -> {
-                    dialog.dismiss();
-                    closeFragment();
-                })
-                .show();
-    }
-
-    private void openEmailCannotBeEmptyDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(getString(R.string.email_cant_be_empty_dialog_title))
-                .setMessage(getString(R.string.email_cant_be_empty_dialog_description))
-                .setPositiveButton(R.string.email_cant_be_empty_dialog_positive_button, (dialog, which) -> dialog.dismiss())
-                .setNegativeButton(R.string.email_cant_be_empty_dialog_negative_button, (dialog, which) -> {
-                    dialog.dismiss();
-                    closeFragment();
-                })
-                .show();
     }
 
     private void hideFloatingActionButton() {

@@ -98,4 +98,9 @@
     <string name="vet_works_here_add_button">I work here</string>
     <string name="vet_works_here_remove_button">I don\'t work here anymore</string>
 
+    <!-- Clinic details -->
+
+    <string name="no_name_set_dialog_message">Please set your first name and last name in your profile before adding yourself to a clinic.</string>
+    <string name="no_name_set_dialog_positive_button">OK</string>
+
 </resources>

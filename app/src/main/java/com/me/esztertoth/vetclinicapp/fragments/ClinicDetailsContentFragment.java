@@ -3,6 +3,7 @@ package com.me.esztertoth.vetclinicapp.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.me.esztertoth.vetclinicapp.model.Vet;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.ClinicApiInterface;
 import com.me.esztertoth.vetclinicapp.rest.VetApiInterface;
+import com.me.esztertoth.vetclinicapp.utils.DialogUtils;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ public class ClinicDetailsContentFragment extends Fragment {
 
     @Inject ApiClient apiClient;
     @Inject VetClinicPreferences prefs;
+    @Inject DialogUtils dialogUtils;
 
     private static final String CLINIC_NAME = "clinic";
 
@@ -148,6 +151,8 @@ public class ClinicDetailsContentFragment extends Fragment {
     void addOrRemoveVet() {
         if (isVetAlreadyInClinic()) {
             removeVet();
+        } else if(vet.getFirstName() == null && vet.getLastName() == null) {
+            dialogUtils.showErrorMessage(getContext(), getString(R.string.no_name_set_dialog_message), getString(R.string.no_name_set_dialog_positive_button));
         } else {
             postVet();
         }

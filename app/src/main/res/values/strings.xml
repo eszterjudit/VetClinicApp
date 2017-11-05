@@ -6,6 +6,14 @@
     <string name="title_activity_clinic_details">Clinic details</string>
     <string name="title_add_new_pet">Add new pet</string>
 
+    <string name="all_vets_fragment">All vets</string>
+    <string name="map_fragment">Map</string>
+    <string name="my_clinics_fragment">My clinics</string>
+    <string name="my_favorites_fragment">My favorite clinics</string>
+    <string name="my_pets_fragment">My pets</string>
+    <string name="settings_fragment">Settings</string>
+    <string name="symptom_checker_fragment">Symptom checker</string>
+
     <!-- Login & Sign up-->
     <string name="email">Email</string>
     <string name="password">Password</string>

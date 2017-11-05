@@ -67,7 +67,7 @@ public class MyClinicsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_clinincs_list, container, false);
         ButterKnife.bind(this, view);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("My clinics");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.my_clinics_fragment));
 
         token = prefs.getSessionToken();
         userId = prefs.getUserId();

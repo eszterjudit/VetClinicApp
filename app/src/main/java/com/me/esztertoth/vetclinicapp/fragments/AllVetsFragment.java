@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.adapters.VetsListAdapter;
-import com.me.esztertoth.vetclinicapp.model.Clinic;
-import com.me.esztertoth.vetclinicapp.model.Pet;
 import com.me.esztertoth.vetclinicapp.model.Vet;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.VetApiInterface;
@@ -66,7 +64,7 @@ public class AllVetsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_all_vets, container, false);
         ButterKnife.bind(this, view);
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("All vets");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.all_vets_fragment));
 
         vets = new ArrayList<>();
 

@@ -52,7 +52,7 @@ public class MyFavoritesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_favorites, container, false);
         ButterKnife.bind(this, view);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("My favorite clinics");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.my_favorites_fragment));
 
         favorites = getFavorites();
 

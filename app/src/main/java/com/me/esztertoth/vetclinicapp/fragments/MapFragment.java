@@ -100,7 +100,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         ButterKnife.bind(this, view);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Map");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.map_fragment));
 
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);

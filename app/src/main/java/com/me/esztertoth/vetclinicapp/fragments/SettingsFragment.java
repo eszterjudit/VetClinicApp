@@ -59,7 +59,7 @@ public class SettingsFragment extends Fragment implements PerimeterChangedCallba
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this, view);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Settings");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.settings_fragment));
 
         settingsItemList = new ArrayList<>();
 

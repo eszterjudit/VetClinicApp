@@ -74,7 +74,7 @@ public class MyPetsFragment extends Fragment implements DeletePetCallback {
         View view = inflater.inflate(R.layout.fragment_pets_list, container, false);
         ButterKnife.bind(this, view);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("My pets");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.my_pets_fragment));
 
         pets = new ArrayList();
 

@@ -38,7 +38,7 @@ public class SymptomCheckerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_symptom_checker, container, false);
         ButterKnife.bind(this, view);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Symptom checker");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.symptom_checker_fragment));
 
         questions = createQuestionsList();
         currentQuestion = 0;

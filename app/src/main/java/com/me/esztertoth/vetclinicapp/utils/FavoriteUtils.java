@@ -42,7 +42,7 @@ public class FavoriteUtils {
         List<Clinic> favorites = prefs.getFavoriteClinics();
         if (favorites != null) {
             for (Clinic favclinic : favorites) {
-                if (favclinic.equals(clinic)) {
+                if (favclinic.getId().equals(clinic.getId())) {
                     check = true;
                     break;
                 }

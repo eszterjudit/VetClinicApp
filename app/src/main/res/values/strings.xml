@@ -5,6 +5,7 @@
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_clinic_details">Clinic details</string>
     <string name="title_add_new_pet">Add new pet</string>
+    <string name="title_add_new_clinic">Add new clinic</string>
 
     <string name="all_vets_fragment">All vets</string>
     <string name="map_fragment">Map</string>
@@ -107,5 +108,9 @@
 
     <string name="no_name_set_dialog_message">Please set your first name and last name in your profile before adding yourself to a clinic.</string>
     <string name="no_name_set_dialog_positive_button">OK</string>
+
+    <!-- Add new clinic -->
+
+    <string name="add_new_clinic_waring">Please note, that adding a new clinic will automatically add you to its list of vets.</string>
 
 </resources>

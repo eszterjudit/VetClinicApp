@@ -5,6 +5,7 @@ import com.me.esztertoth.vetclinicapp.model.Vet;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -23,6 +24,9 @@ public interface ClinicApiInterface {
 
     @POST("clinic/{clinicId}/addVet")
     Call<Clinic> addVetToClinic(@Header("x-auth-token") String token, @Path("clinicId") Long clinicId, @Body Long vetId);
+
+    @POST("clinic/{vetId}")
+    Call<ResponseBody> addClinic(@Header("x-auth-token") String token, @Path("vetId") Long vetId, @Body Clinic clinic);
 
     @POST("clinic/{clinicId}/removeVet")
     Call<Clinic> removeVetFromClinic(@Header("x-auth-token") String token, @Path("clinicId") Long clinicId, @Body Long vetId);

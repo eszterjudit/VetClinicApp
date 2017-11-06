@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.me.esztertoth.vetclinicapp.StartPageActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:id="@+id/add_new_clinic_form_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/clinic_name_textInput_layout"
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/clinic_name_edit_text"
+                    style="@style/EditPetEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Name"
+                    android:inputType="text" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/opening_hour_textInput_layout"
+                style="@style/TextInputLayout"
+                android:layout_below="@id/clinic_name_textInput_layout"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/opening_hour_edit_text"
+                    style="@style/EditPetEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="00:00"
+                    android:inputType="time" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:layout_centerInParent="true"
+                android:id="@+id/hour_separator"
+                android:layout_below="@id/clinic_name_textInput_layout"
+                android:layout_toRightOf="@id/opening_hour_textInput_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="-"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/closing_hour_textInput_layout"
+                style="@style/TextInputLayout"
+                android:layout_below="@id/clinic_name_textInput_layout"
+                android:layout_toRightOf="@id/hour_separator"
+                android:layout_alignParentRight="true"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/closing_hour_edit_text"
+                    style="@style/EditPetEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="00:00"
+                    android:inputType="time" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/street_textInput_layout"
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/opening_hour_textInput_layout">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/street"
+                    style="@style/EditPetEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/street"
+                    android:inputType="text" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/city_textInput_layout"
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/street_textInput_layout">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/city"
+                    style="@style/EditPetEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/city"
+                    android:inputType="text" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/country_textInput_layout"
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/city_textInput_layout">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/country"
+                    style="@style/EditPetEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/country"
+                    android:inputType="text" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/zip_textInput_layout"
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/country_textInput_layout">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/zip"
+                    style="@style/EditPetEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/zip_code"
+                    android:inputType="number" />
+
+            </android.support.design.widget.TextInputLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/add_new_clinic_warning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/add_new_clinic_form_container"
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
+            android:text="@string/add_new_clinic_waring" />
+
+        <LinearLayout
+            android:id="@+id/add_new_clinic_buttons_container"
+            style="@style/EditProfileButtonContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/add_new_clinic_warning"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/cancel_button"
+                style="@style/Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:text="@string/cancel" />
+
+            <Button
+                android:id="@+id/save_clinic_button"
+                style="@style/Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:text="@string/save" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

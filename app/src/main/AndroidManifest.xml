@@ -43,6 +43,11 @@
             android:label="@string/title_add_new_pet"
             android:parentActivityName=".StartPageActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".AddNewClinicActivity"
+            android:label="@string/title_add_new_clinic"
+            android:parentActivityName=".StartPageActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

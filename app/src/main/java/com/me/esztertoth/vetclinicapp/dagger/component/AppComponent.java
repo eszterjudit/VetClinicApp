@@ -1,5 +1,6 @@
 package com.me.esztertoth.vetclinicapp.dagger.component;
 
+import com.me.esztertoth.vetclinicapp.AddNewClinicActivity;
 import com.me.esztertoth.vetclinicapp.AddNewPetActivity;
 import com.me.esztertoth.vetclinicapp.ClinicDetailsActivity;
 import com.me.esztertoth.vetclinicapp.MainActivity;
@@ -31,6 +32,7 @@ public interface AppComponent {
     void inject(ClinicDetailsActivity clinicDetailsActivity);
     void inject(MainActivity mainActivity);
     void inject(StartPageActivity startPageActivity);
+    void inject(AddNewClinicActivity addNewClinicActivity);
 
     void inject(ClinicDetailsContentFragment clinicDetailsContentFragment);
     void inject(EditProfileFragment editProfileFragment);

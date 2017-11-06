@@ -1,5 +1,6 @@
 package com.me.esztertoth.vetclinicapp.dagger.component;
 
+import com.me.esztertoth.vetclinicapp.AddNewClinicActivity;
 import com.me.esztertoth.vetclinicapp.AddNewPetActivity;
 import com.me.esztertoth.vetclinicapp.ProfileActivity;
 import com.me.esztertoth.vetclinicapp.dagger.module.AppModule;
@@ -24,6 +25,7 @@ public interface NetComponent {
 
     void inject(AddNewPetActivity addNewPetActivity);
     void inject(ProfileActivity profileActivity);
+    void inject(AddNewClinicActivity addNewClinicActivity);
 
     void inject(ClinicDetailsContentFragment clinicDetailsContentFragment);
     void inject(EditProfileFragment editProfileFragment);

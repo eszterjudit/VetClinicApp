@@ -43,7 +43,6 @@ import rx.schedulers.Schedulers;
 public class MyPetsFragment extends Fragment implements DeletePetCallback {
 
     @BindView(R.id.pets_list_recyclerview) RecyclerView petsListRecyclerView;
-    @BindView(R.id.addNewPetButton) FloatingActionButton addNewPetButton;
     @BindView(R.id.no_pets_message) TextView noPetsMessage;
 
     @Inject ApiClient apiClient;

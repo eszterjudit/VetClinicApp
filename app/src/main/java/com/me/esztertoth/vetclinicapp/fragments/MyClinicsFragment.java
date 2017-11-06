@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.me.esztertoth.vetclinicapp.AddNewClinicActivity;
+import com.me.esztertoth.vetclinicapp.AddNewPetActivity;
 import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.ClinicDetailsActivity;
 import com.me.esztertoth.vetclinicapp.R;
@@ -29,6 +31,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -107,6 +110,12 @@ public class MyClinicsFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         subscription.unsubscribe();
+    }
+
+    @OnClick(R.id.addNewClinicButton)
+    public void openAddNewClinicFragment() {
+        Intent i = new Intent(getActivity(), AddNewClinicActivity.class);
+        startActivity(i);
     }
 
     private void getVetAllClinics() {

@@ -20,6 +20,7 @@ import com.me.esztertoth.vetclinicapp.model.User;
 import com.me.esztertoth.vetclinicapp.model.UserDTO;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.AuthenticationApiInterface;
+import com.me.esztertoth.vetclinicapp.utils.FormValidator;
 import com.me.esztertoth.vetclinicapp.utils.LoginAndSignUpTextWatcher;
 
 import javax.inject.Inject;
@@ -79,7 +80,9 @@ public class SignUpFragment extends Fragment {
 
     @OnClick(R.id.signup_button)
     public void signUp() {
-        if(!passwordsMatch()) {
+        if(!isEmailValid()) {
+            showErrorInToast(getString(R.string.invalid_email));
+        } else if(!passwordsMatch()) {
             showErrorInToast(getString(R.string.passwords_do_not_match));
         } else if(!isAllFieldsFilled()) {
             showErrorInToast(getString(R.string.fill_form_error));
@@ -94,13 +97,17 @@ public class SignUpFragment extends Fragment {
     }
 
     private boolean isAllFieldsFilled() {
-        return  emailEditText.getText() != null &&
-                passwordEditText.getText() != null &&
-                passwordAgainEditText.getText() != null;
+        return  !emailEditText.getText().toString().isEmpty() &&
+                !passwordEditText.getText().toString().isEmpty() &&
+                !passwordAgainEditText.getText().toString().isEmpty();
     }
 
     private boolean passwordsMatch() {
         return passwordEditText.getText().toString().equals(passwordAgainEditText.getText().toString());
+    }
+
+    private boolean isEmailValid() {
+        return FormValidator.validateEmail(emailEditText.getText().toString());
     }
 
     private void showErrorInToast(String error) {

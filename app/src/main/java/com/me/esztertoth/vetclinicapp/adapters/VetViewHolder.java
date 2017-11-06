@@ -12,7 +12,6 @@ import butterknife.ButterKnife;
 public class VetViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.name) TextView nameTextView;
-    @BindView(R.id.specialities) TextView specialitiesTextView;
     @BindView(R.id.phone) TextView phoneTextView;
 
     public VetViewHolder(View itemView) {
@@ -22,10 +21,6 @@ public class VetViewHolder extends RecyclerView.ViewHolder {
 
     public void setName(String name) {
         nameTextView.setText(name);
-    }
-
-    public void setSpecialities(String specialities) {
-        specialitiesTextView.setText(specialities);
     }
 
     public void setPhone(String phone) {

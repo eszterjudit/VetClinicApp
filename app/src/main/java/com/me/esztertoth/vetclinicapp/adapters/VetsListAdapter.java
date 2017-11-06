@@ -29,17 +29,9 @@ public class VetsListAdapter extends RecyclerView.Adapter<VetViewHolder> {
     @Override
     public void onBindViewHolder(VetViewHolder holder, int position) {
         String name = vets.get(position).getFirstName() + " " + vets.get(position).getLastName();
-        StringBuilder sb = new StringBuilder();
-        for (PetType petType : vets.get(position).getSpeciality())
-        {
-            sb.append(petType);
-            sb.append(" ");
-        }
-        String speciality = sb.toString();
         String phone = vets.get(position).getPhone();
 
         holder.setName(name);
-        holder.setSpecialities(speciality);
         holder.setPhone(phone);
     }
 

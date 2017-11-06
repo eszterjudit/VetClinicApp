@@ -11,12 +11,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/vet_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
             android:src="@drawable/ic_vet" />
@@ -31,18 +31,10 @@
             android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/specialities"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
-            android:layout_toRightOf="@id/vet_icon"
-            android:text="Specialities" />
-
-        <TextView
             android:id="@+id/phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/specialities"
+            android:layout_below="@+id/name"
             android:layout_toRightOf="@id/vet_icon"
             android:text="Phone" />
 

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.R;
+import com.me.esztertoth.vetclinicapp.adapters.VetsListAdapter;
 import com.me.esztertoth.vetclinicapp.model.Clinic;
 import com.me.esztertoth.vetclinicapp.model.PetType;
 import com.me.esztertoth.vetclinicapp.model.Vet;
@@ -42,14 +45,18 @@ public class ClinicDetailsContentFragment extends Fragment {
     @BindView(R.id.clinic_address_tv) TextView addressTextView;
     @BindView(R.id.clinic_opening_hours_tv) TextView openingHoursTextView;
     @BindView(R.id.clinic_speciality_tv) TextView specialitiesTextView;
-    @BindView(R.id.clinic_vets_tv) TextView doctorsTextView;
     @BindView(R.id.vet_works_here_button) Button vetWorksHereButton;
+    @BindView(R.id.all_vets_recyclerView) RecyclerView allVetsRecyclerView;
 
     @Inject ApiClient apiClient;
     @Inject VetClinicPreferences prefs;
     @Inject DialogUtils dialogUtils;
 
     private static final String CLINIC_NAME = "clinic";
+
+    private VetsListAdapter vetsListAdapter;
+
+    private List<Vet> vets;
 
     private Clinic clinic;
     private Vet vet;
@@ -68,6 +75,7 @@ public class ClinicDetailsContentFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             clinic = (Clinic) bundle.getSerializable(CLINIC_NAME);
+            vets = clinic.getVetList();
         }
         satisfyDependencies();
     }
@@ -94,6 +102,13 @@ public class ClinicDetailsContentFragment extends Fragment {
             getVetById();
         }
 
+        vetsListAdapter = new VetsListAdapter(vets);
+        allVetsRecyclerView.setAdapter(vetsListAdapter);
+        allVetsRecyclerView.setNestedScrollingEnabled(false);
+
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        allVetsRecyclerView.setLayoutManager(llm);
+
         return view;
     }
 
@@ -117,15 +132,7 @@ public class ClinicDetailsContentFragment extends Fragment {
     private void setDetails() {
         addressTextView.setText(clinic.getAddress().toString());
         openingHoursTextView.setText(clinic.getOpeningHour() + " - " + clinic.getClosingHour());
-        listDoctorsAndSpecialities();
-    }
-
-    private String createListOfVetNames() {
-        StringBuilder builder = new StringBuilder();
-        for (Vet vet : clinic.getVetList()) {
-            builder.append(vet.getFirstName() + " " + vet.getLastName() + "\n");
-        }
-        return builder.toString();
+        listSpecialities();
     }
 
     private String createListOfSpecialities() {
@@ -191,7 +198,10 @@ public class ClinicDetailsContentFragment extends Fragment {
             public void onResponse(Call<Clinic> call, Response<Clinic> response) {
                 if (response.isSuccessful()) {
                     clinic = response.body();
-                    listDoctorsAndSpecialities();
+                    vets.clear();
+                    vets.addAll(clinic.getVetList());
+                    vetsListAdapter.notifyDataSetChanged();
+                    listSpecialities();
                     vetWorksHereButton.setText(getString(R.string.vet_works_here_remove_button));
                 }
             }
@@ -209,7 +219,10 @@ public class ClinicDetailsContentFragment extends Fragment {
             public void onResponse(Call<Clinic> call, Response<Clinic> response) {
                 if (response.isSuccessful()) {
                     clinic = response.body();
-                    listDoctorsAndSpecialities();
+                    vets.clear();
+                    vets.addAll(clinic.getVetList());
+                    vetsListAdapter.notifyDataSetChanged();
+                    listSpecialities();
                     vetWorksHereButton.setText(getString(R.string.vet_works_here_add_button));
                 }
             }
@@ -220,8 +233,7 @@ public class ClinicDetailsContentFragment extends Fragment {
         });
     }
 
-    private void listDoctorsAndSpecialities() {
-        doctorsTextView.setText(createListOfVetNames());
+    private void listSpecialities() {
         specialitiesTextView.setText(createListOfSpecialities());
     }
 

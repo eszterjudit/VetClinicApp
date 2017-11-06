@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.me.esztertoth.vetclinicapp.App;
+import com.me.esztertoth.vetclinicapp.LoginSignUpCallback;
 import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.model.User;
 import com.me.esztertoth.vetclinicapp.model.UserDTO;
@@ -48,6 +49,14 @@ public class SignUpFragment extends Fragment {
     private boolean isVet;
 
     private AuthenticationApiInterface authenticationApiInterface;
+
+    private LoginSignUpCallback callback;
+
+    public SignUpFragment(){}
+
+    public SignUpFragment(LoginSignUpCallback callback) {
+        this.callback = callback;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -130,7 +139,8 @@ public class SignUpFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                   showErrorInToast("Success");
+                    showErrorInToast("Success");
+                    callback.openLoginFragment();
                 } else {
                     showErrorInToast("Unsuccessful signup");
                 }
@@ -138,7 +148,7 @@ public class SignUpFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                showErrorInToast("Failure");
+                showErrorInToast("No connection. Tr again later.");
             }
         });
     }
@@ -150,6 +160,7 @@ public class SignUpFragment extends Fragment {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     showErrorInToast("Success");
+                    callback.openLoginFragment();
                 } else {
                     showErrorInToast("Unsuccessful signup");
                 }
@@ -157,7 +168,7 @@ public class SignUpFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                showErrorInToast("Failure");
+                showErrorInToast("No connection. Tr again later.");
             }
         });
     }

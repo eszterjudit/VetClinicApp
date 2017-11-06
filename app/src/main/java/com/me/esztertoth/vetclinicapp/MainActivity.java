@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoginSignUpCallback {
 
     private static final int BACKGROUND_BLUR_RADIUS = 5;
 
@@ -60,32 +60,34 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void openLoginFragment() {
+    @Override
+    public void openLoginFragment() {
         isOnLoginScreen = true;
         LoginFragment loginFragment = new LoginFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
         ft.replace(R.id.loginAndSignUp_container, loginFragment);
         ft.commit();
+        changeTextForLoginOrSignupButton();
     }
 
-    private void openSignupFragment() {
+    @Override
+    public void openSignupFragment() {
         isOnLoginScreen = false;
-        SignUpFragment signUpFragment = new SignUpFragment();
+        SignUpFragment signUpFragment = new SignUpFragment(this);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
         ft.replace(R.id.loginAndSignUp_container, signUpFragment);
         ft.commit();
+        changeTextForLoginOrSignupButton();
     }
 
     @OnClick(R.id.login_or_signUp_link)
     public void switchForm() {
         if (isOnLoginScreen) {
             openSignupFragment();
-            changeTextForLoginOrSignupButton();
         } else {
             openLoginFragment();
-            changeTextForLoginOrSignupButton();
         }
     }
 

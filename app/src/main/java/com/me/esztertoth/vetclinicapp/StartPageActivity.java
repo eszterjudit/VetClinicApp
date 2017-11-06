@@ -72,9 +72,9 @@ public class StartPageActivity extends AppCompatActivity implements NavigationVi
 
     private void openAllVetsFragmentOnStart() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        AllVetsFragment allVetsFragment = new AllVetsFragment();
-        ft.replace(R.id.content_start_page, allVetsFragment);
-        ft.addToBackStack(allVetsFragment.getTag());
+        MapFragment mapFragment = new MapFragment();
+        ft.replace(R.id.content_start_page, mapFragment);
+        ft.addToBackStack(mapFragment.getTag());
         ft.commit();
     }
 

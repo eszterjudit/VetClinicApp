@@ -1,27 +1,26 @@
 package com.me.esztertoth.vetclinicapp;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
+import com.me.esztertoth.vetclinicapp.dialog.ClinicTimePickerDialog;
 import com.me.esztertoth.vetclinicapp.model.Address;
 import com.me.esztertoth.vetclinicapp.model.Clinic;
-import com.me.esztertoth.vetclinicapp.model.Vet;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.ClinicApiInterface;
-import com.me.esztertoth.vetclinicapp.rest.VetApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.DialogUtils;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -32,17 +31,14 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import rx.Subscriber;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
-public class AddNewClinicActivity extends AppCompatActivity {
+public class AddNewClinicActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.clinic_name_edit_text) EditText clinicName;
-    @BindView(R.id.opening_hour_edit_text) EditText openingHour;
-    @BindView(R.id.closing_hour_edit_text) EditText closingHour;
+    @BindView(R.id.opening_hour) TextView openingHour;
+    @BindView(R.id.closing_hour) TextView closingHour;
     @BindView(R.id.street) EditText street;
     @BindView(R.id.country) EditText country;
     @BindView(R.id.city) EditText city;
@@ -52,15 +48,16 @@ public class AddNewClinicActivity extends AppCompatActivity {
     @Inject VetClinicPreferences prefs;
     @Inject DialogUtils dialogUtils;
 
+    private static final String OPENING_HOUR_PICKER = "timePicker";
+
     private ClinicApiInterface clinicApiInterface;
-    private VetApiInterface vetApiInterface;
 
     private Subscription subscription;
 
     private String token;
     private Long userId;
 
-    private Vet vet;
+    private TextView pickedTimeView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,7 +74,6 @@ public class AddNewClinicActivity extends AppCompatActivity {
         token = prefs.getSessionToken();
         userId = prefs.getUserId();
         clinicApiInterface = apiClient.createService(ClinicApiInterface.class, token);
-        vetApiInterface = apiClient.createService(VetApiInterface.class, token);
 
     }
 
@@ -98,6 +94,22 @@ public class AddNewClinicActivity extends AppCompatActivity {
     @OnClick(R.id.cancel_button)
     public void cancel() {
         openDontSaveDialog();
+    }
+
+    @OnClick(R.id.opening_hour)
+    public void openOpeningHourTimePicker() {
+        pickedTimeView = openingHour;
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        DialogFragment openingHourPicker = new ClinicTimePickerDialog(this);
+        openingHourPicker.show(ft, OPENING_HOUR_PICKER);
+    }
+
+    @OnClick(R.id.closing_hour)
+    public void openClosingHourTimePicker() {
+        pickedTimeView = closingHour;
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        DialogFragment closingHourPicker = new ClinicTimePickerDialog(this);
+        closingHourPicker.show(ft, OPENING_HOUR_PICKER);
     }
 
     private boolean areAllFieldsFilled() {
@@ -189,4 +201,9 @@ public class AddNewClinicActivity extends AppCompatActivity {
         inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
+    @Override
+    public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+        String time = String.format("%02d:%02d", hour, minute);
+        pickedTimeView.setText(time);
+    }
 }

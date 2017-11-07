@@ -50,60 +50,44 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/opening_hour_textInput_layout"
-                style="@style/TextInputLayout"
-                android:layout_below="@id/clinic_name_textInput_layout"
+            <TextView
+                android:id="@+id/opening_hour"
+                style="@style/EditPetEdittext"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp">
+                android:layout_below="@id/clinic_name_textInput_layout"
+                android:drawableRight="@drawable/ic_edit"
+                android:text="open" />
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/opening_hour_edit_text"
-                    style="@style/EditPetEdittext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="00:00"
-                    android:inputType="time" />
-
-            </android.support.design.widget.TextInputLayout>
 
             <TextView
-                android:layout_centerInParent="true"
                 android:id="@+id/hour_separator"
-                android:layout_below="@id/clinic_name_textInput_layout"
-                android:layout_toRightOf="@id/opening_hour_textInput_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="-"/>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/closing_hour_textInput_layout"
-                style="@style/TextInputLayout"
                 android:layout_below="@id/clinic_name_textInput_layout"
-                android:layout_toRightOf="@id/hour_separator"
-                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_margin="10dp"
+                android:layout_toRightOf="@id/opening_hour"
+                android:text="-" />
+
+            <TextView
+                android:id="@+id/closing_hour"
+                style="@style/EditPetEdittext"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/closing_hour_edit_text"
-                    style="@style/EditPetEdittext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="00:00"
-                    android:inputType="time" />
-
-            </android.support.design.widget.TextInputLayout>
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/clinic_name_textInput_layout"
+                android:layout_marginBottom="15dp"
+                android:layout_toRightOf="@id/hour_separator"
+                android:drawableRight="@drawable/ic_edit"
+                android:text="close" />
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/street_textInput_layout"
                 style="@style/TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/opening_hour_textInput_layout">
+                android:layout_below="@id/closing_hour">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/street"

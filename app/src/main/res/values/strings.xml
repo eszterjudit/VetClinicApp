@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">VetClinic</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_start_page">StartPageActivity</string>
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_clinic_details">Clinic details</string>
@@ -21,9 +20,6 @@
     <string name="password_again">Password again</string>
     <string name="login">Login</string>
     <string name="signup">Sign up</string>
-    <string name="forgot_password">Forgot password</string>
-    <string name="show_password">Show</string>
-    <string name="hide_password">Hide</string>
     <string name="not_a_member">Not a member yet?</string>
     <string name="already_a_member">Already a member?</string>
     <string name="are_you_a_doctor">Are you a doctor?</string>
@@ -33,7 +29,6 @@
     <string name="empty_password">Password cannot be empty</string>
     <string name="passwords_do_not_match">Passwords do not match</string>
     <string name="fill_form_error">Please fill the form</string>
-    <string name="user_already_exists">User already exists</string>
 
     <!-- Profile -->
     <string name="firstName">First name</string>
@@ -88,13 +83,22 @@
 
     <string name="fields_not_filled_dialog_title">Can\'t save</string>
     <string name="fields_not_filled_dialog_description">Plase fill all fields.</string>
-    <string name="fields_not_filled_dialog_positive_button">Ok</string>
+    <string name="fields_not_filled_dialog_positive_button">OK</string>
     <string name="fields_not_filled_dialog_negative_button">Don\'t save</string>
 
-    <string name="email_cant_be_empty_dialog_title">Email cannot be empty</string>
-    <string name="email_cant_be_empty_dialog_description">Please add an email address.</string>
-    <string name="email_cant_be_empty_dialog_positive_button">Ok</string>
-    <string name="email_cant_be_empty_dialog_negative_button">Don\'t save</string>
+    <!-- Pet list -->
+
+    <string name="no_pets">You have no pets yet</string>
+    <string name="pet_years_old">%1$d! years old</string>
+    <string name="pet_kg">%1$d! kg</string>
+
+    <!-- Clinic list -->
+
+    <string name="no_clinics">You have no clinics yet</string>
+
+    <!-- Favorites -->
+
+    <string name="no_favorites">You have no favorites yet</string>
 
     <!-- Symptom checker -->
 

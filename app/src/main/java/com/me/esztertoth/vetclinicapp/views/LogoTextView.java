@@ -2,12 +2,12 @@ package com.me.esztertoth.vetclinicapp.views;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 import com.me.esztertoth.vetclinicapp.utils.FontCache;
 
-public class LogoTextView extends TextView {
+public class LogoTextView extends AppCompatTextView {
 
     public LogoTextView(Context context) {
         super(context);

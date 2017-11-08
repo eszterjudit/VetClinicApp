@@ -12,7 +12,6 @@ import com.me.esztertoth.vetclinicapp.fragments.LoginFragment;
 import com.me.esztertoth.vetclinicapp.fragments.MapFragment;
 import com.me.esztertoth.vetclinicapp.fragments.MyClinicsFragment;
 import com.me.esztertoth.vetclinicapp.fragments.MyPetsFragment;
-import com.me.esztertoth.vetclinicapp.fragments.ProfileContentFragment;
 import com.me.esztertoth.vetclinicapp.fragments.SignUpFragment;
 
 import javax.inject.Singleton;
@@ -33,7 +32,6 @@ public interface NetComponent {
     void inject(MapFragment mapFragment);
     void inject(MyClinicsFragment myClinicsFragment);
     void inject(MyPetsFragment myPetsFragment);
-    void inject(ProfileContentFragment profileContentFragment);
     void inject(SignUpFragment signUpFragment);
     void inject(AllVetsFragment allVetsFragment);
 

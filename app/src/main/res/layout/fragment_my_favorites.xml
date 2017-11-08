@@ -3,7 +3,6 @@
     android:id="@+id/favorites_list_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryLight"
     android:orientation="vertical"
     android:padding="5dp">
 
@@ -13,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center_horizontal"
-        android:text="You have no favorites yet"
+        android:text="@string/no_favorites"
         android:visibility="visible" />
 
     <android.support.v7.widget.RecyclerView

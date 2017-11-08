@@ -56,9 +56,7 @@ public class MyFavoritesFragment extends Fragment {
 
         favorites = getFavorites();
 
-        RecyclerViewClickListener favoritesClickListener = (view1, position) -> {
-            openClinicDetailsFragment(position);
-        };
+        RecyclerViewClickListener favoritesClickListener = (view1, position) -> openClinicDetailsFragment(position);
 
         favoritesAdapter = new FavoritesAdapter(favorites, favoritesClickListener);
         favoritesRecyclerView.setAdapter(favoritesAdapter);

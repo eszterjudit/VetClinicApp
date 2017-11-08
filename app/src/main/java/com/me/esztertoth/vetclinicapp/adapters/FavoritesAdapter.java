@@ -23,8 +23,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<ClinicViewHolder> {
     @Override
     public ClinicViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.clinic_list_item, parent, false);
-        ClinicViewHolder clinicViewHolder = new ClinicViewHolder(v, favoritesClickListener);
-        return clinicViewHolder;
+        return new ClinicViewHolder(v, favoritesClickListener);
     }
 
     @Override

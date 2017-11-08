@@ -78,13 +78,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
     private String token;
 
-    private static int MAP_ZOOM_LEVEL = 15;
-    private static int DESIRED_SNAPSHOT_SIZE = 800;
-    private static String CLINIC_NAME = "clinic";
-    private static String SNAPSHOT_NAME = "snapshot";
+    private static final int MAP_ZOOM_LEVEL = 15;
+    private static final int DESIRED_SNAPSHOT_SIZE = 800;
+    private static final String CLINIC_NAME = "clinic";
+    private static final String SNAPSHOT_NAME = "snapshot";
+    private static final String SPINNER_DEFAULT = "All pets";
 
     private Map<String, Clinic> markers;
-    private List<Clinic> clinics;
     private Clinic clinicToOpen;
 
     private ClinicApiInterface clinicApiInterface;
@@ -102,7 +102,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
     private void setQueryParameters() {
         queryCity = placeAutocompleteSearchInput.getText().toString() != null ? placeAutocompleteSearchInput.getText().toString() : "";
-        queryPetType = !typeSpinner.getSelectedItem().toString().equals("All pets") ? PetType.valueOf(typeSpinner.getSelectedItem().toString().toUpperCase()) : null;
+        queryPetType = !typeSpinner.getSelectedItem().toString().equals(SPINNER_DEFAULT) ? PetType.valueOf(typeSpinner.getSelectedItem().toString().toUpperCase()) : null;
         queryOnlyOpen = showOpenClinicsCheckbox.isChecked();
     }
 
@@ -126,7 +126,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         token = prefs.getSessionToken();
         clinicApiInterface = apiClient.createService(ClinicApiInterface.class, token);
 
-        clinics = new ArrayList<>();
         markers = new HashMap<>();
 
         initPlacesAutocomplete();
@@ -142,10 +141,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
     private void initTypeSpinner() {
         List<String> petTypeValues = new ArrayList<>();
-        petTypeValues.add("All pets");
+        petTypeValues.add(SPINNER_DEFAULT);
         Stream.of(PetType.values()).forEach(petType -> petTypeValues.add(petType.getValue()));
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getContext(), R.layout.spinner_item, petTypeValues);
-        adapter.add("All items");
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         typeSpinner.setAdapter(adapter);
     }
@@ -208,7 +206,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     void getAllClinics() {
         setQueryParameters();
         map.clear();
-        clinics.clear();
         subscription = clinicApiInterface.getAllClinics(token, queryCity, queryPetType, queryOnlyOpen)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -224,7 +221,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                     @Override
                     public final void onNext(List<Clinic> response) {
                         for(Clinic clinic : response) {
-                            clinics.add(clinic);
                             addClinicToMap(clinic);
                         }
 

@@ -1,5 +1,6 @@
 package com.me.esztertoth.vetclinicapp.adapters;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -24,11 +25,13 @@ public class PetViewHolder extends RecyclerView.ViewHolder {
 
     private long petId;
     private DeletePetCallback deletePetCallback;
+    private Context context;
 
-    public PetViewHolder(View itemView, DeletePetCallback deletePetCallback) {
+    public PetViewHolder(View itemView, DeletePetCallback deletePetCallback, Context context) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         this.deletePetCallback = deletePetCallback;
+        this.context = context;
     }
 
     public void setPetId(long petId) { this.petId = petId; }
@@ -42,11 +45,11 @@ public class PetViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setAge(int age) {
-        ageView.setText(age + " years old");
+        ageView.setText(String.format(context.getString(R.string.pet_years_old), age));
     }
 
     public void setWeight(double weight) {
-        weightView.setText(weight + " kg");
+        weightView.setText(String.format(context.getString(R.string.pet_kg), weight));
     }
 
     public void setType(String type) {

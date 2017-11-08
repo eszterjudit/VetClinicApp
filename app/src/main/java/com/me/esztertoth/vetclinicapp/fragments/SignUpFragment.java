@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.LoginSignUpCallback;
 import com.me.esztertoth.vetclinicapp.R;
-import com.me.esztertoth.vetclinicapp.model.User;
 import com.me.esztertoth.vetclinicapp.model.UserDTO;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.AuthenticationApiInterface;
@@ -45,8 +44,6 @@ public class SignUpFragment extends Fragment {
 
     @Inject ApiClient apiClient;
 
-    private String email;
-    private String password;
     private boolean isVet;
 
     private AuthenticationApiInterface authenticationApiInterface;
@@ -115,8 +112,8 @@ public class SignUpFragment extends Fragment {
     }
 
     private UserDTO createUserFromData() {
-        email = emailEditText.getText().toString();
-        password = passwordAgainEditText.getText().toString();
+        String email = emailEditText.getText().toString();
+        String password = passwordAgainEditText.getText().toString();
         isVet = isVetButton.isChecked();
 
         UserDTO user = new UserDTO();

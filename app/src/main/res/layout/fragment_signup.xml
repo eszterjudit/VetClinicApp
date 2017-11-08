@@ -16,7 +16,7 @@
             style="@style/EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_account"
+            android:drawableStart="@drawable/ic_account"
             android:hint="@string/email"
             android:inputType="textEmailAddress" />
 
@@ -34,7 +34,7 @@
             style="@style/EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_pwd"
+            android:drawableStart="@drawable/ic_pwd"
             android:hint="@string/password"
             android:inputType="textPassword" />
 
@@ -52,7 +52,7 @@
             style="@style/EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_pwd"
+            android:drawableStart="@drawable/ic_pwd"
             android:hint="@string/password_again"
             android:inputType="textPassword" />
 

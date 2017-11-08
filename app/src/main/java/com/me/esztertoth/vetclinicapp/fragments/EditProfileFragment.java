@@ -168,9 +168,7 @@ public class EditProfileFragment extends Fragment {
                 getString(R.string.dont_save_pet_dialog_description),
                 getString(R.string.dont_save_pet_dialog_positive_button),
                 getString(R.string.dont_save_pet_dialog_negative_button),
-                (dialogInterface, i) -> {
-                    dialogInterface.dismiss();
-                },
+                (dialogInterface, i) -> dialogInterface.dismiss(),
                 (dialogInterface, i) -> {
                     dialogInterface.dismiss();
                     closeFragment();
@@ -283,9 +281,6 @@ public class EditProfileFragment extends Fragment {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                } else {
-                }
             }
 
             @Override
@@ -299,11 +294,6 @@ public class EditProfileFragment extends Fragment {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-
-                } else {
-
-                }
             }
 
             @Override

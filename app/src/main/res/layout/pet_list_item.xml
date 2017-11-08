@@ -18,7 +18,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:src="@drawable/ic_cat" />
 
         <TextView
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@id/pet_icon"
+            android:layout_toEndOf="@id/pet_icon"
             android:text="Name"
             android:textSize="30sp" />
 
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/name"
-            android:layout_toRightOf="@id/pet_icon"
+            android:layout_toEndOf="@id/pet_icon"
             android:text="Age" />
 
         <TextView
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/age"
-            android:layout_toRightOf="@id/pet_icon"
+            android:layout_toEndOf="@id/pet_icon"
             android:text="weight" />
 
         <TextView
@@ -51,14 +51,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/weight"
-            android:layout_toRightOf="@id/pet_icon"
+            android:layout_toEndOf="@id/pet_icon"
             android:text="type" />
 
         <ImageButton
             android:id="@+id/delete_pet"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:background="@null"
             android:src="@drawable/ic_delete" />

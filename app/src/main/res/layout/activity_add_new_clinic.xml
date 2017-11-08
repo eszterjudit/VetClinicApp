@@ -56,7 +56,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/clinic_name_textInput_layout"
-                android:drawableRight="@drawable/ic_edit"
+                android:drawableEnd="@drawable/ic_edit"
                 android:text="open" />
 
 
@@ -67,7 +67,7 @@
                 android:layout_below="@id/clinic_name_textInput_layout"
                 android:layout_centerInParent="true"
                 android:layout_margin="10dp"
-                android:layout_toRightOf="@id/opening_hour"
+                android:layout_toEndOf="@id/opening_hour"
                 android:text="-" />
 
             <TextView
@@ -75,11 +75,11 @@
                 style="@style/EditPetEdittext"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_below="@id/clinic_name_textInput_layout"
                 android:layout_marginBottom="15dp"
-                android:layout_toRightOf="@id/hour_separator"
-                android:drawableRight="@drawable/ic_edit"
+                android:layout_toEndOf="@id/hour_separator"
+                android:drawableEnd="@drawable/ic_edit"
                 android:text="close" />
 
             <android.support.design.widget.TextInputLayout

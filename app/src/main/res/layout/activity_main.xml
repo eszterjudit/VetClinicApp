@@ -51,8 +51,6 @@
             style="@style/SignUpOrLoginContainer.Link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/login_or_signUp_question"
-            android:layout_toRightOf="@id/login_or_signUp_question"
             android:text="@string/signup"/>
 
         </LinearLayout>

@@ -3,7 +3,6 @@ package com.me.esztertoth.vetclinicapp.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +25,7 @@ import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
@@ -134,9 +134,7 @@ public class MyPetsFragment extends Fragment implements DeletePetCallback {
 
                     @Override
                     public final void onNext(List<Pet> response) {
-                        for(Pet pet : response) {
-                            pets.add(pet);
-                        }
+                        Stream.of(response).forEach(pet -> pets.addAll(pet));
                     }
                 });
     }
@@ -154,7 +152,6 @@ public class MyPetsFragment extends Fragment implements DeletePetCallback {
                         showView(noPetsMessage, true);
                         showView(petsListRecyclerView, false);
                     }
-                } else {
                 }
             }
 

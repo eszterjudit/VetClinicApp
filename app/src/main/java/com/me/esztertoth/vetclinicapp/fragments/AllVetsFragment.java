@@ -20,6 +20,7 @@ import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
@@ -40,7 +41,6 @@ public class AllVetsFragment extends Fragment {
     private VetApiInterface vetApiInterface;
 
     private String token;
-    private long userId;
 
     private Subscription subscription;
 
@@ -52,6 +52,12 @@ public class AllVetsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         satisfyDependencies();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        subscription.unsubscribe();
     }
 
     private void satisfyDependencies() {
@@ -69,7 +75,6 @@ public class AllVetsFragment extends Fragment {
         vets = new ArrayList<>();
 
         token = prefs.getSessionToken();
-        userId = prefs.getUserId();
 
         vetApiInterface = apiClient.createService(VetApiInterface.class, token);
 
@@ -106,9 +111,7 @@ public class AllVetsFragment extends Fragment {
 
                     @Override
                     public final void onNext(List<Vet> response) {
-                        for(Vet vet : response) {
-                            vets.add(vet);
-                        }
+                        Stream.of(response).forEach(vet -> vets.addAll(vet));
                     }
                 });
     }

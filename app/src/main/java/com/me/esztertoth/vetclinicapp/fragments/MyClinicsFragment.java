@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.me.esztertoth.vetclinicapp.AddNewClinicActivity;
-import com.me.esztertoth.vetclinicapp.AddNewPetActivity;
 import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.ClinicDetailsActivity;
 import com.me.esztertoth.vetclinicapp.R;
@@ -26,6 +25,7 @@ import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
@@ -78,9 +78,7 @@ public class MyClinicsFragment extends Fragment {
 
         clinics = new ArrayList<>();
 
-        RecyclerViewClickListener clinicClickListener = (view1, position) -> {
-            openClinicDetailsFragment(position);
-        };
+        RecyclerViewClickListener clinicClickListener = (view1, position) -> openClinicDetailsFragment(position);
 
         clinicsAdapter = new ClinicsAdapter(clinics, clinicClickListener);
         clinicsRecyclerView.setAdapter(clinicsAdapter);
@@ -142,9 +140,7 @@ public class MyClinicsFragment extends Fragment {
 
                     @Override
                     public final void onNext(List<Clinic> response) {
-                        for(Clinic clinic : response) {
-                            clinics.add(clinic);
-                        }
+                        Stream.of(response).forEach(clinic -> clinics.addAll(clinic));
                     }
                 });
     }

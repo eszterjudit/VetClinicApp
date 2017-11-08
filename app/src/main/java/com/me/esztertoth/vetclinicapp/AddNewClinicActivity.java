@@ -74,7 +74,12 @@ public class AddNewClinicActivity extends AppCompatActivity implements TimePicke
         token = prefs.getSessionToken();
         userId = prefs.getUserId();
         clinicApiInterface = apiClient.createService(ClinicApiInterface.class, token);
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        subscription.unsubscribe();
     }
 
     private void satisfyDependencies() {
@@ -164,9 +169,7 @@ public class AddNewClinicActivity extends AppCompatActivity implements TimePicke
                 getString(R.string.dont_save_pet_dialog_description),
                 getString(R.string.dont_save_pet_dialog_positive_button),
                 getString(R.string.dont_save_pet_dialog_negative_button),
-                (dialogInterface, i) -> {
-                    dialogInterface.dismiss();
-                },
+                (dialogInterface, i) -> dialogInterface.dismiss(),
                 (dialogInterface, i) -> {
                     dialogInterface.dismiss();
                     closeActivity();
@@ -179,9 +182,7 @@ public class AddNewClinicActivity extends AppCompatActivity implements TimePicke
                 getString(R.string.fields_not_filled_dialog_description),
                 getString(R.string.fields_not_filled_dialog_positive_button),
                 getString(R.string.fields_not_filled_dialog_negative_button),
-                (dialogInterface, i) -> {
-                    dialogInterface.dismiss();
-                },
+                (dialogInterface, i) -> dialogInterface.dismiss(),
                 (dialogInterface, i) -> {
                     dialogInterface.dismiss();
                     closeActivity();

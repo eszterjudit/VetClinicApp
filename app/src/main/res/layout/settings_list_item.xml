@@ -18,7 +18,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:src="@drawable/ic_cat" />
 
         <TextView
@@ -26,8 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@id/settings_item_image"
-            android:text="Title"
+            android:layout_toEndOf="@id/settings_item_image"
             android:textSize="30sp" />
 
         <TextView
@@ -35,8 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/settings_item_title"
-            android:layout_toRightOf="@id/settings_item_image"
-            android:text="Description" />
+            android:layout_toEndOf="@id/settings_item_image" />
 
     </RelativeLayout>
 

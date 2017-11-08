@@ -65,9 +65,7 @@ public class SettingsFragment extends Fragment implements PerimeterChangedCallba
 
         initSettingsItems();
 
-        RecyclerViewClickListener settingsClickListener = (view1, position) -> {
-            openSettingsDialogForPosition(position);
-        };
+        RecyclerViewClickListener settingsClickListener = (view1, position) -> openSettingsDialogForPosition(position);
 
         settingsListAdapter = new SettingsListAdapter(settingsItemList, settingsClickListener);
         settingsListRecyclerView.setAdapter(settingsListAdapter);
@@ -103,12 +101,8 @@ public class SettingsFragment extends Fragment implements PerimeterChangedCallba
                 getString(R.string.delete_all_favs_dialog_description),
                 getString(R.string.delete_all_favs_dialog_positive_button),
                 getString(R.string.delete_all_favs_dialog_negative_button),
-                (dialogInterface, i) -> {
-                    favoriteUtils.deleteAllFavorites();
-                },
-                (dialogInterface, i) -> {
-                    dialogInterface.dismiss();
-                });
+                (dialogInterface, i) -> favoriteUtils.deleteAllFavorites(),
+                (dialogInterface, i) -> dialogInterface.dismiss());
     }
 
     private void initSettingsItems() {

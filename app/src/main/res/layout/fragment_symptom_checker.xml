@@ -14,8 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:gravity="center_horizontal"
-        android:text="Question" />
+        android:gravity="center_horizontal" />
 
     <LinearLayout
         android:id="@+id/yes_no_buttons_container"
@@ -55,7 +54,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/mood_image"
         android:layout_centerHorizontal="true"
-        android:text="Answer"
         android:visibility="gone" />
 
 </RelativeLayout>

@@ -41,7 +41,7 @@ public class LocationProvider implements GoogleApiClient.ConnectionCallbacks, Go
         locationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10 * 1000)
-                .setFastestInterval(1 * 1000);
+                .setFastestInterval(1000);
     }
 
     public void connect() {

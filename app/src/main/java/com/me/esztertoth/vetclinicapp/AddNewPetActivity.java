@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -136,7 +135,6 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     closeFragment();
-                } else {
                 }
             }
 
@@ -165,9 +163,7 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
                 getString(R.string.dont_save_pet_dialog_description),
                 getString(R.string.dont_save_pet_dialog_positive_button),
                 getString(R.string.dont_save_pet_dialog_negative_button),
-                (dialogInterface, i) -> {
-                    dialogInterface.dismiss();
-                },
+                (dialogInterface, i) -> dialogInterface.dismiss(),
                 (dialogInterface, i) -> {
                     dialogInterface.dismiss();
                     closeFragment();
@@ -180,9 +176,7 @@ public class AddNewPetActivity extends AppCompatActivity implements DatePickerDi
                 getString(R.string.fields_not_filled_dialog_description),
                 getString(R.string.fields_not_filled_dialog_positive_button),
                 getString(R.string.fields_not_filled_dialog_negative_button),
-                (dialogInterface, i) -> {
-                    dialogInterface.dismiss();
-                },
+                (dialogInterface, i) -> dialogInterface.dismiss(),
                 (dialogInterface, i) -> {
                     dialogInterface.dismiss();
                     closeFragment();

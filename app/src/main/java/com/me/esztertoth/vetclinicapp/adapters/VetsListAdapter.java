@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.me.esztertoth.vetclinicapp.R;
-import com.me.esztertoth.vetclinicapp.model.PetType;
 import com.me.esztertoth.vetclinicapp.model.Vet;
 
 import java.util.List;
@@ -22,8 +21,7 @@ public class VetsListAdapter extends RecyclerView.Adapter<VetViewHolder> {
     @Override
     public VetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.vet_list_item, parent, false);
-        VetViewHolder vetViewHolder = new VetViewHolder(v);
-        return vetViewHolder;
+        return new VetViewHolder(v);
     }
 
     @Override

@@ -23,8 +23,7 @@ public class SettingsListAdapter extends RecyclerView.Adapter<SettingsViewHolder
     @Override
     public SettingsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.settings_list_item, parent, false);
-        SettingsViewHolder holder = new SettingsViewHolder(v, settingsClickListener);
-        return holder;
+        return new SettingsViewHolder(v, settingsClickListener);
     }
 
     @Override

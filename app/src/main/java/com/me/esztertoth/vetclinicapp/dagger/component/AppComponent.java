@@ -3,7 +3,6 @@ package com.me.esztertoth.vetclinicapp.dagger.component;
 import com.me.esztertoth.vetclinicapp.AddNewClinicActivity;
 import com.me.esztertoth.vetclinicapp.AddNewPetActivity;
 import com.me.esztertoth.vetclinicapp.ClinicDetailsActivity;
-import com.me.esztertoth.vetclinicapp.MainActivity;
 import com.me.esztertoth.vetclinicapp.ProfileActivity;
 import com.me.esztertoth.vetclinicapp.StartPageActivity;
 import com.me.esztertoth.vetclinicapp.dagger.module.AppModule;
@@ -18,7 +17,6 @@ import com.me.esztertoth.vetclinicapp.fragments.MyFavoritesFragment;
 import com.me.esztertoth.vetclinicapp.fragments.MyPetsFragment;
 import com.me.esztertoth.vetclinicapp.fragments.ProfileContentFragment;
 import com.me.esztertoth.vetclinicapp.fragments.SettingsFragment;
-import com.me.esztertoth.vetclinicapp.fragments.SignUpFragment;
 
 import javax.inject.Singleton;
 
@@ -30,7 +28,6 @@ public interface AppComponent {
     void inject(AddNewPetActivity addNewPetActivity);
     void inject(ProfileActivity profileActivity);
     void inject(ClinicDetailsActivity clinicDetailsActivity);
-    void inject(MainActivity mainActivity);
     void inject(StartPageActivity startPageActivity);
     void inject(AddNewClinicActivity addNewClinicActivity);
 
@@ -43,7 +40,6 @@ public interface AppComponent {
     void inject(MyPetsFragment myPetsFragment);
     void inject(ProfileContentFragment profileContentFragment);
     void inject(SettingsFragment settingsFragment);
-    void inject(SignUpFragment signUpFragment);
     void inject(AllVetsFragment allVetsFragment);
 
     void inject(MapPerimeterPickerDialog mapPerimeterPickerDialog);

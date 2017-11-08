@@ -33,7 +33,7 @@ public class VetClinicPreferences {
     public  void setSessionToken(String token) {
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putString(SESSION_TOKEN, token);
-        edit.commit();
+        edit.apply();
     }
 
     public long getUserId() {
@@ -43,7 +43,7 @@ public class VetClinicPreferences {
     public void setUserId(long id) {
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putLong(USER_ID, id);
-        edit.commit();
+        edit.apply();
     }
 
     public boolean getIsVet() {
@@ -53,7 +53,7 @@ public class VetClinicPreferences {
     public void setIsVet(boolean isVet) {
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putBoolean(IS_VET, isVet);
-        edit.commit();
+        edit.apply();
     }
 
     public int getPerimeter() {
@@ -63,7 +63,7 @@ public class VetClinicPreferences {
     public void setPerimeter(int perimeter) {
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putInt(PERIMETER, perimeter);
-        edit.commit();
+        edit.apply();
     }
 
     public void saveFavoriteClinics(List<Clinic> favorites) {
@@ -71,7 +71,7 @@ public class VetClinicPreferences {
         Gson gson = new Gson();
         String jsonFavorites = gson.toJson(favorites);
         edit.putString(FAVORITES, jsonFavorites);
-        edit.commit();
+        edit.apply();
     }
 
     public ArrayList<Clinic> getFavoriteClinics() {

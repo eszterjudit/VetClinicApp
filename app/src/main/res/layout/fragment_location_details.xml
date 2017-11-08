@@ -3,7 +3,6 @@
     android:id="@+id/clinic_details_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryLight"
     android:orientation="vertical"
     android:padding="20dp">
 
@@ -35,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/clinic_address_icon"
+            android:layout_toEndOf="@id/clinic_address_icon"
             android:text="No address available" />
 
     </RelativeLayout>
@@ -59,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/clinic_openinghours_icon"
+            android:layout_toEndOf="@id/clinic_openinghours_icon"
             android:text="No open hours available" />
 
     </RelativeLayout>
@@ -83,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/clinic_speciality_icon"
+            android:layout_toEndOf="@id/clinic_speciality_icon"
             android:text="No specialities available" />
 
     </RelativeLayout>

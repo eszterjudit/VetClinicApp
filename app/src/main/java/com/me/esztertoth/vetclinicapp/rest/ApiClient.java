@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
     private AuthenticationApiInterface authenticationApiInterface = null;
-    private String baseUrl = "http://192.168.1.8:8080/";
+    private String baseUrl = "https://vet-clinic.herokuapp.com/";
 
     @Inject
     public ApiClient() {

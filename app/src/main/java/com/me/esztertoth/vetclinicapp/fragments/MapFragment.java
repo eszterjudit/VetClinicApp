@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
+import butterknife.OnItemSelected;
+import butterknife.OnTextChanged;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -63,7 +67,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     @BindView(R.id.fab) FloatingActionButton fab;
     @BindView(R.id.pet_type_spinner) Spinner typeSpinner;
     @BindView(R.id.place_autocomplete_search_button) View searchButton;
-    @BindView(R.id.place_autocomplete_search_input) EditText PlaceAutocompleteSearchInput;
+    @BindView(R.id.place_autocomplete_search_input) EditText placeAutocompleteSearchInput;
+    @BindView(R.id.only_show_open_clinics) AppCompatCheckBox showOpenClinicsCheckbox;
 
     @Inject ApiClient apiClient;
     @Inject VetClinicPreferences prefs;
@@ -89,11 +94,26 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     private Marker currentLocationMarker;
     private LocationProvider locationProvider;
 
+    private Map<String, String> queryMap;
+    private String queryCity;
+    private PetType queryPetType;
+    private boolean queryOnlyOpen;
+
+    private void setQueryParameters() {
+        queryCity = placeAutocompleteSearchInput.getText().toString();
+        queryPetType = (PetType) typeSpinner.getItemAtPosition(typeSpinner.getSelectedItemPosition());
+        queryOnlyOpen = showOpenClinicsCheckbox.isChecked();
+        queryMap.put("city", queryCity);
+        queryMap.put("petType", queryPetType.toString());
+        queryMap.put("onlyOpen", String.valueOf(queryOnlyOpen));
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         satisfyDependencies();
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -108,6 +128,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         token = prefs.getSessionToken();
         clinicApiInterface = apiClient.createService(ClinicApiInterface.class, token);
 
+        queryMap = new HashMap<>();
         clinics = new ArrayList<>();
         markers = new HashMap<>();
 
@@ -135,8 +156,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 .build();
         placeAutocompleteFragment.setFilter(typeFilter);
         placeAutocompleteFragment.setHint(getString(R.string.map_autocomplete_city_hint));
-        PlaceAutocompleteSearchInput.setTextSize(20);
-        PlaceAutocompleteSearchInput.setTextColor(getActivity().getColor(R.color.colorPrimary));
+        placeAutocompleteSearchInput.setTextSize(20);
+        placeAutocompleteSearchInput.setTextColor(getActivity().getColor(R.color.colorPrimary));
         searchButton.setVisibility(View.GONE);
         placeAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
@@ -180,8 +201,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         getAllClinics();
     }
 
-    private void getAllClinics() {
-        subscription = clinicApiInterface.getAllClinics(token)
+    @OnItemSelected(R.id.pet_type_spinner)
+    @OnTextChanged(R.id.place_autocomplete_search_input)
+    @OnCheckedChanged(R.id.only_show_open_clinics)
+    void getAllClinics() {
+        setQueryParameters();
+        map.clear();
+        clinics.clear();
+        subscription = clinicApiInterface.getAllClinics(token, queryMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Clinic>>() {

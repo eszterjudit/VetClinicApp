@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
@@ -100,7 +101,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
     private void setQueryParameters() {
         queryCity = placeAutocompleteSearchInput.getText().toString() != null ? placeAutocompleteSearchInput.getText().toString() : "";
-        queryPetType = (PetType) typeSpinner.getItemAtPosition(typeSpinner.getSelectedItemPosition());
+        queryPetType = !typeSpinner.getSelectedItem().toString().equals("All pets") ? PetType.valueOf(typeSpinner.getSelectedItem().toString().toUpperCase()) : null;
         queryOnlyOpen = showOpenClinicsCheckbox.isChecked();
     }
 
@@ -139,7 +140,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     }
 
     private void initTypeSpinner() {
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getContext(), R.layout.spinner_item, PetType.values());
+        List<String> petTypeValues = new ArrayList<>();
+        petTypeValues.add("All pets");
+        Stream.of(PetType.values()).forEach(petType -> petTypeValues.add(petType.getValue()));
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getContext(), R.layout.spinner_item, petTypeValues);
+        adapter.add("All items");
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         typeSpinner.setAdapter(adapter);
     }

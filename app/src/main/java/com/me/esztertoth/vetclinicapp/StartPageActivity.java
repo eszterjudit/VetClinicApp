@@ -62,18 +62,22 @@ public class StartPageActivity extends AppCompatActivity implements NavigationVi
             RequestLocationPermission();
         }
 
-        openMapFragment();
+        openStartPageContent();
     }
 
     private void satisfyDependencies() {
         ((App) getApplication()).getAppComponent().inject(this);
     }
 
-    private void openMapFragment() {
+    private void openStartPageContent() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        MapFragment mapFragment = new MapFragment();
-        ft.replace(R.id.content_start_page, mapFragment);
-        ft.addToBackStack(mapFragment.getTag());
+        Fragment fragmentToOpen;
+        if(prefs.getIsVet()) {
+            fragmentToOpen = new MyClinicsFragment();
+        } else {
+            fragmentToOpen = new MyPetsFragment();
+        }
+        ft.replace(R.id.content_start_page, fragmentToOpen);
         ft.commit();
     }
 

@@ -45,7 +45,7 @@ public class PetsListAdapter extends RecyclerView.Adapter<PetViewHolder> {
         holder.setPetId(petsList.get(position).getId());
         holder.setPetIcon(getPetIconByType(petsList.get(position).getType()));
         holder.setName(petsList.get(position).getName());
-        holder.setType(petsList.get(position).getType().toString());
+        holder.setType(petsList.get(position).getType().getValue());
         holder.setAge(calculateBirthDate(petsList.get(position)));
         holder.setWeight(petsList.get(position).getWeight());
     }

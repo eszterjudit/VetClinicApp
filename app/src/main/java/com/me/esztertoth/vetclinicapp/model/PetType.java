@@ -1,23 +1,15 @@
 package com.me.esztertoth.vetclinicapp.model;
 
 public enum PetType {
-    CAT, DOG, REPTILE, BIRD, RODENT;
+    CAT("Cat"), DOG("Dog"), REPTILE("Reptile"), BIRD("Bird"), RODENT("Rodent");
 
-    @Override
-    public String toString() {
-        switch (this) {
-            case CAT:
-                return "Cat";
-            case DOG:
-                return "Dog";
-            case REPTILE:
-                return "Reptile";
-            case BIRD:
-                return "Bird";
-            case RODENT:
-                return "Rodent";
-            default:
-                throw new IllegalArgumentException();
-        }
+    private String value;
+
+    PetType(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

@@ -94,18 +94,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     private Marker currentLocationMarker;
     private LocationProvider locationProvider;
 
-    private Map<String, String> queryMap;
     private String queryCity;
     private PetType queryPetType;
     private boolean queryOnlyOpen;
 
     private void setQueryParameters() {
-        queryCity = placeAutocompleteSearchInput.getText().toString();
+        queryCity = placeAutocompleteSearchInput.getText().toString() != null ? placeAutocompleteSearchInput.getText().toString() : "";
         queryPetType = (PetType) typeSpinner.getItemAtPosition(typeSpinner.getSelectedItemPosition());
         queryOnlyOpen = showOpenClinicsCheckbox.isChecked();
-        queryMap.put("city", queryCity);
-        queryMap.put("petType", queryPetType.toString());
-        queryMap.put("onlyOpen", String.valueOf(queryOnlyOpen));
     }
 
     @Override
@@ -128,7 +124,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         token = prefs.getSessionToken();
         clinicApiInterface = apiClient.createService(ClinicApiInterface.class, token);
 
-        queryMap = new HashMap<>();
         clinics = new ArrayList<>();
         markers = new HashMap<>();
 
@@ -208,7 +203,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         setQueryParameters();
         map.clear();
         clinics.clear();
-        subscription = clinicApiInterface.getAllClinics(token, queryMap)
+        subscription = clinicApiInterface.getAllClinics(token, queryCity, queryPetType, queryOnlyOpen)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Clinic>>() {

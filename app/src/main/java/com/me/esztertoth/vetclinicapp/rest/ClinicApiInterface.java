@@ -1,5 +1,7 @@
 package com.me.esztertoth.vetclinicapp.rest;
 
+import android.support.annotation.Nullable;
+
 import com.me.esztertoth.vetclinicapp.model.Clinic;
 import com.me.esztertoth.vetclinicapp.model.PetType;
 import com.me.esztertoth.vetclinicapp.model.Vet;
@@ -21,7 +23,7 @@ import rx.Observable;
 public interface ClinicApiInterface {
 
     @GET("/clinic")
-    Observable<List<Clinic>> getAllClinics(@Header("x-auth-token") String token, @QueryMap Map<String, String> options);
+    Observable<List<Clinic>> getAllClinics(@Header("x-auth-token") String token, @Query("city") String city, @Query("petType") PetType petType, @Query("onlyOpen") boolean onlyOpen);
 
     @GET("clinic/{clinicId}/vets")
     Observable<List<Vet>> getClinicAllVets(@Header("x-auth-token") String token, @Path("clinicId") Long clinicId);

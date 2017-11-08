@@ -142,7 +142,7 @@ public class ClinicDetailsContentFragment extends Fragment {
             for (PetType petType : vet.getSpeciality()) {
                 if(!specialities.contains(petType)) {
                     specialities.add(petType);
-                    builder.append(petType + "\n");
+                    builder.append(petType.getValue() + "\n");
                 }
             }
         }

@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.SphericalUtil;
 import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.ClinicDetailsActivity;
 import com.me.esztertoth.vetclinicapp.R;
@@ -233,8 +234,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
     private void addClinicToMap(Clinic clinic) {
         LatLng locationOfClinic = LocationConverter.getLocationFromAddress(clinic.getAddress().toString(), getContext());
-        Marker marker = map.addMarker(new MarkerOptions().position(locationOfClinic).title(clinic.getName()).snippet(clinic.getAddress().toString()));
-        markers.put(marker.getId(), clinic);
+        if(isClinicInSetPerimeter(locationOfClinic)) {
+            Marker marker = map.addMarker(new MarkerOptions().position(locationOfClinic).title(clinic.getName()).snippet(clinic.getAddress().toString()));
+            markers.put(marker.getId(), clinic);
+        }
+    }
+
+    private boolean isClinicInSetPerimeter(LatLng locationOfClinic) {
+        int setPerimeter = prefs.getPerimeter();
+        LatLng currentLocation = new LatLng(latitude, longitude);
+        return SphericalUtil.computeDistanceBetween(currentLocation, locationOfClinic) < setPerimeter;
     }
 
     private void updateMapWithCurrentLocation() {

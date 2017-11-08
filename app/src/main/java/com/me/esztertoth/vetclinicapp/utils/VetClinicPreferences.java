@@ -57,7 +57,7 @@ public class VetClinicPreferences {
     }
 
     public int getPerimeter() {
-        return sharedPreferences.getInt(PERIMETER, 5000);
+        return sharedPreferences.getInt(PERIMETER, 10000);
     }
 
     public void setPerimeter(int perimeter) {

@@ -89,8 +89,8 @@
     <!-- Pet list -->
 
     <string name="no_pets">You have no pets yet</string>
-    <string name="pet_years_old">%1$d! years old</string>
-    <string name="pet_kg">%1$d! kg</string>
+    <string name="pet_years_old">%1$d years old</string>
+    <string name="pet_kg">%.2f kg</string>
 
     <!-- Clinic list -->
 

@@ -20,13 +20,13 @@ import com.me.esztertoth.vetclinicapp.model.UserDTO;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.AuthenticationApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.FormValidator;
-import com.me.esztertoth.vetclinicapp.utils.LoginAndSignUpTextWatcher;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnFocusChange;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -67,7 +67,7 @@ public class SignUpFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
         ButterKnife.bind(this, view);
         authenticationApiInterface = apiClient.registerVet();
-        initUI();
+        setDefaultFontForPasswordField();
         return view;
     }
 
@@ -123,13 +123,6 @@ public class SignUpFragment extends Fragment {
         return user;
     }
 
-    private void initUI() {
-        setDefaultFontForPasswordField();
-        emailEditText.addTextChangedListener(new LoginAndSignUpTextWatcher(emailEditText, emailInputLayout, getActivity()));
-        passwordEditText.addTextChangedListener(new LoginAndSignUpTextWatcher(passwordEditText, passwordInputLayout, getActivity()));
-        passwordAgainEditText.addTextChangedListener(new LoginAndSignUpTextWatcher(passwordAgainEditText, passwordAgainInputLayout, getActivity()));
-    }
-
     private void setDefaultFontForPasswordField() {
         passwordEditText.setTypeface(Typeface.DEFAULT);
         passwordAgainEditText.setTypeface(Typeface.DEFAULT);
@@ -175,6 +168,33 @@ public class SignUpFragment extends Fragment {
                 showErrorInToast("No connection. Tr again later.");
             }
         });
+    }
+
+    @OnFocusChange(R.id.password_again)
+    void validateIfPasswordsMatch() {
+        if(!passwordAgainEditText.hasFocus()) {
+            if (!FormValidator.checkIfSecondPasswordMatches(passwordAgainEditText.getText().toString(), passwordEditText.getText().toString())) {
+                showError(getResources().getString(R.string.passwords_do_not_match), passwordAgainInputLayout);
+            } else {
+                passwordAgainInputLayout.setErrorEnabled(false);
+            }
+        }
+    }
+
+    @OnFocusChange(R.id.email)
+    void validateEmail() {
+        if(!emailEditText.hasFocus()) {
+            if (!FormValidator.validateEmail(emailEditText.getText().toString())) {
+                showError(getResources().getString(R.string.invalid_email), emailInputLayout);
+            } else {
+                emailInputLayout.setErrorEnabled(false);
+            }
+        }
+    }
+
+    private void showError(String errorText, TextInputLayout inputLayout) {
+        inputLayout.setEnabled(true);
+        inputLayout.setError(errorText);
     }
 
 }

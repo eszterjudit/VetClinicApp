@@ -19,7 +19,7 @@ import com.me.esztertoth.vetclinicapp.R;
 import com.me.esztertoth.vetclinicapp.StartPageActivity;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.AuthenticationApiInterface;
-import com.me.esztertoth.vetclinicapp.utils.LoginAndSignUpTextWatcher;
+import com.me.esztertoth.vetclinicapp.utils.FormValidator;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.util.Map;
@@ -29,6 +29,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnFocusChange;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,7 +56,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, view);
-        initUI();
+        setDefaultFontForPasswordField();
         return view;
     }
 
@@ -65,6 +66,10 @@ public class LoginFragment extends Fragment {
         String password = passwordEditText.getText().toString();
         if(!email.isEmpty() && !password.isEmpty()) {
             doLogin(email, password);
+        } else if(password.isEmpty()){
+            showError(getString(R.string.fields_cannot_be_empty), emailInputLayout);
+        } else if(email.isEmpty()) {
+            showError(getString(R.string.fields_cannot_be_empty), passwordInputLayout);
         }
     }
 
@@ -101,15 +106,25 @@ public class LoginFragment extends Fragment {
         startActivity(i);
     }
 
-    private void initUI() {
-        setDefaultFontForPasswordField();
-        emailEditText.addTextChangedListener(new LoginAndSignUpTextWatcher(emailEditText, emailInputLayout, getActivity()));
-        passwordEditText.addTextChangedListener(new LoginAndSignUpTextWatcher(passwordEditText, passwordInputLayout, getActivity()));
-    }
-
     private void setDefaultFontForPasswordField() {
         passwordEditText.setTypeface(Typeface.DEFAULT);
         passwordEditText.setTransformationMethod(new PasswordTransformationMethod());
+    }
+
+    @OnFocusChange(R.id.email)
+    void validateEmail() {
+        if (!emailEditText.hasFocus()) {
+            if (!FormValidator.validateEmail(emailEditText.getText().toString())) {
+                showError(getResources().getString(R.string.invalid_email), emailInputLayout);
+            } else {
+                emailInputLayout.setErrorEnabled(false);
+            }
+        }
+    }
+
+    private void showError(String errorText, TextInputLayout inputLayout) {
+        inputLayout.setEnabled(true);
+        inputLayout.setError(errorText);
     }
 
 }

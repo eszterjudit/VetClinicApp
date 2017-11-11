@@ -27,6 +27,7 @@
     <string name="no">No</string>
     <string name="invalid_email">This is not a valid email</string>
     <string name="empty_password">Password cannot be empty</string>
+    <string name="fields_cannot_be_empty">Fields cannot be empty</string>
     <string name="passwords_do_not_match">Passwords do not match</string>
     <string name="fill_form_error">Please fill the form</string>
 

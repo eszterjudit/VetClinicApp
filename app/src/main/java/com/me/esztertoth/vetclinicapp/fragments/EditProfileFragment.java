@@ -23,7 +23,6 @@ import com.me.esztertoth.vetclinicapp.rest.ApiClient;
 import com.me.esztertoth.vetclinicapp.rest.PetOwnerApiInterface;
 import com.me.esztertoth.vetclinicapp.rest.VetApiInterface;
 import com.me.esztertoth.vetclinicapp.utils.DialogUtils;
-import com.me.esztertoth.vetclinicapp.utils.LoginAndSignUpTextWatcher;
 import com.me.esztertoth.vetclinicapp.utils.VetClinicPreferences;
 
 import java.util.List;
@@ -111,8 +110,6 @@ public class EditProfileFragment extends Fragment {
             petOwner = (PetOwner) getArguments().getSerializable(USER);
             petOwnerApiInterface = apiClient.createService(PetOwnerApiInterface.class, token);
         }
-
-        emailEditText.addTextChangedListener(new LoginAndSignUpTextWatcher(emailEditText, emailInputLayout, getContext()));
 
         hideFloatingActionButton();
         prefillForm();

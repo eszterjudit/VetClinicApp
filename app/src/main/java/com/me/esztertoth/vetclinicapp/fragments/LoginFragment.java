@@ -65,6 +65,7 @@ public class LoginFragment extends Fragment {
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         if(!email.isEmpty() && !password.isEmpty()) {
+            loginErrorMessage.setVisibility(View.GONE);
             doLogin(email, password);
         } else if(password.isEmpty()){
             showError(getString(R.string.fields_cannot_be_empty), emailInputLayout);

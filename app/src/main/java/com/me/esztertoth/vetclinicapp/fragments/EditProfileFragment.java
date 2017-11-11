@@ -151,12 +151,11 @@ public class EditProfileFragment extends Fragment {
 
     @OnClick(R.id.save_profile_button)
     public void saveProfile() {
-            if(isVet) {
-                saveVetData();
-            } else {
-                savePetOwnerData();
-            }
-            closeFragment();
+        if(isVet) {
+            saveVetData();
+        } else {
+            savePetOwnerData();
+        }
     }
 
     private void showCloseWarningDialog() {
@@ -278,6 +277,7 @@ public class EditProfileFragment extends Fragment {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                closeFragment();
             }
 
             @Override
@@ -291,6 +291,7 @@ public class EditProfileFragment extends Fragment {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                closeFragment();
             }
 
             @Override

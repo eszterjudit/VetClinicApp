@@ -3,7 +3,9 @@ package com.me.esztertoth.vetclinicapp.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Pet {
+import java.io.Serializable;
+
+public class Pet implements Serializable {
 
     @SerializedName("id")
     @Expose

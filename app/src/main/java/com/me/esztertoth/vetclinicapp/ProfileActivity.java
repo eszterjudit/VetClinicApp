@@ -153,6 +153,7 @@ public class ProfileActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putSerializable(USER, user);
         editProfileFragment.setArguments(bundle);
+        ft.addToBackStack(editProfileFragment.getTag());
         ft.replace(R.id.profile_container, editProfileFragment);
         ft.commit();
     }
@@ -166,4 +167,13 @@ public class ProfileActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(prefs.getIsVet()) {
+            getVetDetails();
+        } else {
+            getPetOwnerDetails();
+        }
+    }
 }

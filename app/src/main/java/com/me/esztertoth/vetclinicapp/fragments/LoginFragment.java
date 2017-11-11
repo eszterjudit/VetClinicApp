@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.me.esztertoth.vetclinicapp.App;
@@ -42,6 +44,7 @@ public class LoginFragment extends Fragment {
     @BindView(R.id.email_textInput_layout) TextInputLayout emailInputLayout;
     @BindView(R.id.password_textInput_layout) TextInputLayout passwordInputLayout;
     @BindView(R.id.login_error_message) TextView loginErrorMessage;
+    @BindView(R.id.progressbar) ProgressBar progressBar;
 
     @Inject ApiClient apiClient;
     @Inject VetClinicPreferences prefs;
@@ -80,6 +83,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void doLogin(String email, String password) {
+        showProgress(true);
         AuthenticationApiInterface authenticationApiInterface = apiClient.createService(AuthenticationApiInterface.class, email, password);
         Call<Map<String, Object>> call = authenticationApiInterface.getToken();
         call.enqueue(new Callback<Map<String, Object>>() {
@@ -88,15 +92,27 @@ public class LoginFragment extends Fragment {
                 if (response.isSuccessful()) {
                     openStartPageActivity(response);
                 } else {
+                    showProgress(false);
                     loginErrorMessage.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                showProgress(false);
                 loginErrorMessage.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    private void showProgress(boolean show) {
+        if(show) {
+            progressBar.setVisibility(View.VISIBLE);
+            loginButton.setVisibility(View.GONE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            loginButton.setVisibility(View.VISIBLE);
+        }
     }
 
     private void openStartPageActivity(Response<Map<String, Object>> response) {

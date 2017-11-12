@@ -31,7 +31,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import rx.Subscription;
 
 public class AddNewClinicActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
 
@@ -51,8 +50,6 @@ public class AddNewClinicActivity extends AppCompatActivity implements TimePicke
     private static final String OPENING_HOUR_PICKER = "timePicker";
 
     private ClinicApiInterface clinicApiInterface;
-
-    private Subscription subscription;
 
     private String token;
     private Long userId;
@@ -74,12 +71,6 @@ public class AddNewClinicActivity extends AppCompatActivity implements TimePicke
         token = prefs.getSessionToken();
         userId = prefs.getUserId();
         clinicApiInterface = apiClient.createService(ClinicApiInterface.class, token);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        subscription.unsubscribe();
     }
 
     private void satisfyDependencies() {

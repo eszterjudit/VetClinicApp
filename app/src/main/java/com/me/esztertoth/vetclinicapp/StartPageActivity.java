@@ -115,8 +115,8 @@ public class StartPageActivity extends AppCompatActivity implements NavigationVi
 
         switch (id) {
             case R.id.nav_profile:
-                Intent i = new Intent(this, ProfileActivity.class);
-                startActivity(i);
+                Intent profleIntent = new Intent(this, ProfileActivity.class);
+                startActivity(profleIntent);
                 break;
             case R.id.nav_pets_list:
                 fragmentToOpen = new MyPetsFragment();
@@ -136,6 +136,9 @@ public class StartPageActivity extends AppCompatActivity implements NavigationVi
             case R.id.nav_symptom_checker:
                 fragmentToOpen = new SymptomCheckerFragment();
                 break;
+            case R.id.nav_logout:
+                Intent loginIntent = new Intent(this, MainActivity.class);
+                startActivity(loginIntent);
             default:
                 break;
         }

@@ -53,6 +53,7 @@
     <string name="settings">Settings</string>
     <string name="map">Map</string>
     <string name="symptom_checker">Symptom checker</string>
+    <string name="logout">Log out</string>
 
     <!-- Map -->
     <string name="map_autocomplete_city_hint">City</string>

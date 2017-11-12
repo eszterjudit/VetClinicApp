@@ -66,11 +66,9 @@ public class AddOrEditPetActivity extends AppCompatActivity implements DatePicke
     private Pet pet;
 
     private static final String BIRTHDAY_DIALOG_NAME = "birtdayPickerDialog";
-    private static final String BIRTHDAY_DATE_FORMAT = "MM/dd/yyyy";
     private static final String FORMAT = "yyyy-MM-dd";
 
     private DateTime birthday;
-    private String birthDate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -140,25 +138,22 @@ public class AddOrEditPetActivity extends AppCompatActivity implements DatePicke
     public void onDateSet(DatePicker view, int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
-        SimpleDateFormat dtfOut = new SimpleDateFormat(BIRTHDAY_DATE_FORMAT);
         SimpleDateFormat formatd = new SimpleDateFormat(FORMAT);
         Date date = calendar.getTime();
-        petAgeTextView.setText(dtfOut.format(date));
-        birthDate = formatd.format(date);
+        petAgeTextView.setText(formatd.format(date));
     }
 
     private String parsePetBirthDay() {
         DateTimeFormatter format = DateTimeFormat.forPattern(FORMAT);
         birthday = format.parseDateTime(pet.getDateOfBirth());
-        DateTimeFormatter dtfOut = DateTimeFormat.forPattern(BIRTHDAY_DATE_FORMAT);
 
-        return dtfOut.print(birthday);
+        return format.print(birthday);
     }
 
     private Pet createNewPet() {
         Pet newPet = new Pet();
         newPet.setName(petNameEditText.getText().toString());
-        newPet.setDateOfBirth(birthDate);
+        newPet.setDateOfBirth(petAgeTextView.getText().toString());
         newPet.setWeight(Double.valueOf(petWeightEditText.getText().toString()));
         newPet.setType((PetType) typeSpinnerView.getItemAtPosition(typeSpinnerView.getSelectedItemPosition()));
 

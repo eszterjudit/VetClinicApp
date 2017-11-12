@@ -170,7 +170,7 @@ public class MyPetsFragment extends Fragment implements PetListAction {
     }
 
     @OnClick(R.id.addNewPetButton)
-    public void openAddNewPetFragment() {
+    public void openAddOrEditPetFragment() {
         Intent i = new Intent(getActivity(), AddOrEditPetActivity.class);
         startActivity(i);
     }

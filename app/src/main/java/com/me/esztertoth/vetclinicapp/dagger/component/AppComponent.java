@@ -1,7 +1,7 @@
 package com.me.esztertoth.vetclinicapp.dagger.component;
 
 import com.me.esztertoth.vetclinicapp.AddNewClinicActivity;
-import com.me.esztertoth.vetclinicapp.AddNewPetActivity;
+import com.me.esztertoth.vetclinicapp.AddOrEditPetActivity;
 import com.me.esztertoth.vetclinicapp.ClinicDetailsActivity;
 import com.me.esztertoth.vetclinicapp.ProfileActivity;
 import com.me.esztertoth.vetclinicapp.StartPageActivity;
@@ -25,7 +25,7 @@ import dagger.Component;
 @Singleton
 @Component(modules = {AppModule.class})
 public interface AppComponent {
-    void inject(AddNewPetActivity addNewPetActivity);
+    void inject(AddOrEditPetActivity addNewPetActivity);
     void inject(ProfileActivity profileActivity);
     void inject(ClinicDetailsActivity clinicDetailsActivity);
     void inject(StartPageActivity startPageActivity);

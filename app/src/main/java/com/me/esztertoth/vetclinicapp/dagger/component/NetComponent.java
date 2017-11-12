@@ -1,7 +1,7 @@
 package com.me.esztertoth.vetclinicapp.dagger.component;
 
 import com.me.esztertoth.vetclinicapp.AddNewClinicActivity;
-import com.me.esztertoth.vetclinicapp.AddNewPetActivity;
+import com.me.esztertoth.vetclinicapp.AddOrEditPetActivity;
 import com.me.esztertoth.vetclinicapp.ProfileActivity;
 import com.me.esztertoth.vetclinicapp.dagger.module.AppModule;
 import com.me.esztertoth.vetclinicapp.dagger.module.NetModule;
@@ -23,7 +23,7 @@ import dagger.Component;
 @Component(modules = {AppModule.class, NetModule.class})
 public interface NetComponent {
 
-    void inject(AddNewPetActivity addNewPetActivity);
+    void inject(AddOrEditPetActivity addNewPetActivity);
     void inject(ProfileActivity profileActivity);
     void inject(AddNewClinicActivity addNewClinicActivity);
 

@@ -12,10 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.me.esztertoth.vetclinicapp.AddNewPetActivity;
+import com.me.esztertoth.vetclinicapp.AddOrEditPetActivity;
 import com.me.esztertoth.vetclinicapp.App;
 import com.me.esztertoth.vetclinicapp.R;
-import com.me.esztertoth.vetclinicapp.adapters.DeletePetCallback;
+import com.me.esztertoth.vetclinicapp.adapters.PetListAction;
 import com.me.esztertoth.vetclinicapp.adapters.PetsListAdapter;
 import com.me.esztertoth.vetclinicapp.model.Pet;
 import com.me.esztertoth.vetclinicapp.rest.ApiClient;
@@ -40,7 +40,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MyPetsFragment extends Fragment implements DeletePetCallback {
+public class MyPetsFragment extends Fragment implements PetListAction {
 
     @BindView(R.id.pets_list_recyclerview) RecyclerView petsListRecyclerView;
     @BindView(R.id.no_pets_message) TextView noPetsMessage;
@@ -161,9 +161,17 @@ public class MyPetsFragment extends Fragment implements DeletePetCallback {
         });
     }
 
+    @Override
+    public void editPet(long petId) {
+        Pet petToEdit = pets.stream().filter(pet -> pet.getId() == petId).findFirst().get();
+        Intent i = new Intent(getActivity(), AddOrEditPetActivity.class);
+        i.putExtra("pet", petToEdit);
+        startActivity(i);
+    }
+
     @OnClick(R.id.addNewPetButton)
     public void openAddNewPetFragment() {
-        Intent i = new Intent(getActivity(), AddNewPetActivity.class);
+        Intent i = new Intent(getActivity(), AddOrEditPetActivity.class);
         startActivity(i);
     }
 }

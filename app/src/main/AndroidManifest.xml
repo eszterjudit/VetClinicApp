@@ -39,7 +39,7 @@
             android:parentActivityName=".StartPageActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".AddNewPetActivity"
+            android:name=".AddOrEditPetActivity"
             android:label="@string/title_add_new_pet"
             android:parentActivityName=".StartPageActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>

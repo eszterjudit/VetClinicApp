@@ -23,20 +23,20 @@ public class PetsListAdapter extends RecyclerView.Adapter<PetViewHolder> {
     private List<Pet> petsList;
     private Context context;
 
-    private DeletePetCallback deletePetCallback;
+    private PetListAction petListAction;
 
     private static final String FORMAT = "yyyy-MM-dd";
 
-    public PetsListAdapter(Context context, List<Pet> petsList, DeletePetCallback deletePetCallback) {
+    public PetsListAdapter(Context context, List<Pet> petsList, PetListAction deletePetCallback) {
         this.context = context;
         this.petsList = petsList;
-        this.deletePetCallback = deletePetCallback;
+        this.petListAction = deletePetCallback;
     }
 
     @Override
     public PetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.pet_list_item, parent, false);
-        return new PetViewHolder(v, deletePetCallback, context);
+        return new PetViewHolder(v, petListAction, context);
     }
 
     @Override

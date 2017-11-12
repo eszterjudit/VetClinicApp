@@ -54,14 +54,28 @@
             android:layout_toEndOf="@id/pet_icon"
             android:text="type" />
 
-        <ImageButton
-            android:id="@+id/delete_pet"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="@null"
-            android:src="@drawable/ic_delete" />
+            android:layout_centerVertical="true">
+
+            <ImageButton
+                android:id="@+id/edit_pet"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="20dp"
+                android:background="@null"
+                android:src="@drawable/ic_edit" />
+
+            <ImageButton
+                android:id="@+id/delete_pet"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@null"
+                android:src="@drawable/ic_delete" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

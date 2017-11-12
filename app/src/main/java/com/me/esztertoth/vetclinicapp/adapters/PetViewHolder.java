@@ -24,13 +24,13 @@ public class PetViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.weight) TextView weightView;
 
     private long petId;
-    private DeletePetCallback deletePetCallback;
+    private PetListAction petListAction;
     private Context context;
 
-    public PetViewHolder(View itemView, DeletePetCallback deletePetCallback, Context context) {
+    public PetViewHolder(View itemView, PetListAction deletePetCallback, Context context) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        this.deletePetCallback = deletePetCallback;
+        this.petListAction = deletePetCallback;
         this.context = context;
     }
 
@@ -58,7 +58,12 @@ public class PetViewHolder extends RecyclerView.ViewHolder {
 
     @OnClick(R.id.delete_pet)
     void deletePet() {
-        deletePetCallback.deletePet(petId);
+        petListAction.deletePet(petId);
+    }
+
+    @OnClick(R.id.edit_pet)
+    void editPet() {
+        petListAction.editPet(petId);
     }
 
 }

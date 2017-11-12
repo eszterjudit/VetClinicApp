@@ -3,7 +3,7 @@
     <string name="title_activity_start_page">StartPageActivity</string>
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_clinic_details">Clinic details</string>
-    <string name="title_add_new_pet">Add new pet</string>
+    <string name="title_add_new_pet">Add or edit pet</string>
     <string name="title_add_new_clinic">Add new clinic</string>
 
     <string name="all_vets_fragment">All vets</string>

@@ -19,9 +19,6 @@ public interface VetApiInterface {
     @GET("/vet/{vetId}")
     Observable<Vet> getVet(@Header("x-auth-token") String token, @Path("vetId") Long vetId);
 
-    @GET("/vet/")
-    Observable<List<Vet>> getAllVets(@Header("x-auth-token") String token);
-
     @PUT("/vet/{vetId}")
     Call<ResponseBody> updateVet(@Header("x-auth-token") String token, @Path("vetId") Long vetId, @Body Vet vet);
 

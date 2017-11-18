@@ -5,7 +5,6 @@ import com.me.esztertoth.vetclinicapp.AddOrEditPetActivity;
 import com.me.esztertoth.vetclinicapp.ProfileActivity;
 import com.me.esztertoth.vetclinicapp.dagger.module.AppModule;
 import com.me.esztertoth.vetclinicapp.dagger.module.NetModule;
-import com.me.esztertoth.vetclinicapp.fragments.AllVetsFragment;
 import com.me.esztertoth.vetclinicapp.fragments.ClinicDetailsContentFragment;
 import com.me.esztertoth.vetclinicapp.fragments.EditProfileFragment;
 import com.me.esztertoth.vetclinicapp.fragments.LoginFragment;
@@ -34,7 +33,6 @@ public interface NetComponent {
     void inject(MyClinicsFragment myClinicsFragment);
     void inject(MyPetsFragment myPetsFragment);
     void inject(SignUpFragment signUpFragment);
-    void inject(AllVetsFragment allVetsFragment);
     void inject(ProfileContentFragment profileContentFragment);
 
 }

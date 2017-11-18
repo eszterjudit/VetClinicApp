@@ -7,7 +7,6 @@ import com.me.esztertoth.vetclinicapp.ProfileActivity;
 import com.me.esztertoth.vetclinicapp.StartPageActivity;
 import com.me.esztertoth.vetclinicapp.dagger.module.AppModule;
 import com.me.esztertoth.vetclinicapp.dialog.MapPerimeterPickerDialog;
-import com.me.esztertoth.vetclinicapp.fragments.AllVetsFragment;
 import com.me.esztertoth.vetclinicapp.fragments.ClinicDetailsContentFragment;
 import com.me.esztertoth.vetclinicapp.fragments.EditProfileFragment;
 import com.me.esztertoth.vetclinicapp.fragments.LoginFragment;
@@ -40,7 +39,6 @@ public interface AppComponent {
     void inject(MyPetsFragment myPetsFragment);
     void inject(ProfileContentFragment profileContentFragment);
     void inject(SettingsFragment settingsFragment);
-    void inject(AllVetsFragment allVetsFragment);
 
     void inject(MapPerimeterPickerDialog mapPerimeterPickerDialog);
 }

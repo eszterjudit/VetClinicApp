@@ -6,7 +6,6 @@
     <string name="title_add_new_pet">Add or edit pet</string>
     <string name="title_add_new_clinic">Add new clinic</string>
 
-    <string name="all_vets_fragment">All vets</string>
     <string name="map_fragment">Map</string>
     <string name="my_clinics_fragment">My clinics</string>
     <string name="my_favorites_fragment">My favorite clinics</string>

@@ -65,6 +65,12 @@ import rx.schedulers.Schedulers;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, LocationCallback, GoogleMap.OnInfoWindowClickListener, GoogleMap.CancelableCallback, GoogleMap.SnapshotReadyCallback {
 
+    private static final int MAP_ZOOM_LEVEL = 15;
+    private static final int DESIRED_SNAPSHOT_SIZE = 800;
+    private static final String CLINIC_NAME = "clinic";
+    private static final String SNAPSHOT_NAME = "snapshot";
+    private static final String SPINNER_DEFAULT = "All pets";
+
     @BindView(R.id.mapView) MapView mapView;
     @BindView(R.id.fab) FloatingActionButton fab;
     @BindView(R.id.pet_type_spinner) Spinner typeSpinner;
@@ -77,13 +83,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     @Inject BitmapUtils bitmapUtils;
 
     private String token;
-
-    private static final int MAP_ZOOM_LEVEL = 15;
-    private static final int DESIRED_SNAPSHOT_SIZE = 800;
-    private static final String CLINIC_NAME = "clinic";
-    private static final String SNAPSHOT_NAME = "snapshot";
-    private static final String SPINNER_DEFAULT = "All pets";
-
     private Map<String, Clinic> markers;
     private Clinic clinicToOpen;
 
@@ -112,13 +111,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         satisfyDependencies();
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         ButterKnife.bind(this, view);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.map_fragment));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.map_fragment));
 
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -197,15 +195,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         map.getUiSettings().setZoomControlsEnabled(false);
         map.setOnInfoWindowClickListener(this);
         updateMapWithCurrentLocation();
-        getAllClinics();
+        setupClinics();
     }
 
     @OnItemSelected(R.id.pet_type_spinner)
     @OnTextChanged(R.id.place_autocomplete_search_input)
     @OnCheckedChanged(R.id.only_show_open_clinics)
-    void getAllClinics() {
+    void setupClinics() {
         setQueryParameters();
         map.clear();
+        showLocationOnMap();
+        fetchClinics();
+    }
+
+    private void fetchClinics() {
         subscription = clinicApiInterface.getAllClinics(token, queryCity, queryPetType, queryOnlyOpen)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -220,7 +223,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
                     @Override
                     public final void onNext(List<Clinic> response) {
-                        for(Clinic clinic : response) {
+                        for (Clinic clinic : response) {
                             addClinicToMap(clinic);
                         }
 
@@ -228,12 +231,24 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 });
     }
 
+    private void showLocationOnMap() {
+        if (!queryCity.isEmpty()) {
+            zoomToSelectedCity();
+        } else {
+            updateMapWithCurrentLocation();
+        }
+    }
+
     private void addClinicToMap(Clinic clinic) {
         LatLng locationOfClinic = LocationConverter.getLocationFromAddress(clinic.getAddress().toString(), getContext());
-        if(isClinicInSetPerimeter(locationOfClinic)) {
-            Marker marker = map.addMarker(new MarkerOptions().position(locationOfClinic).title(clinic.getName()).snippet(clinic.getAddress().toString()));
-            markers.put(marker.getId(), clinic);
+        if (isClinicInSetPerimeter(locationOfClinic) || !queryCity.isEmpty()) {
+            addMarker(clinic, locationOfClinic);
         }
+    }
+
+    private void addMarker(Clinic clinic, LatLng locationOfClinic) {
+        Marker marker = map.addMarker(new MarkerOptions().position(locationOfClinic).title(clinic.getName()).snippet(clinic.getAddress().toString()));
+        markers.put(marker.getId(), clinic);
     }
 
     private boolean isClinicInSetPerimeter(LatLng locationOfClinic) {
@@ -243,8 +258,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     }
 
     private void updateMapWithCurrentLocation() {
-        currentLocationMarker = map.addMarker(new MarkerOptions().flat(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)).position(new LatLng(latitude,longitude)));
+        currentLocationMarker = map.addMarker(new MarkerOptions().flat(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)).position(new LatLng(latitude, longitude)));
         zoomToCurrentLocation();
+    }
+
+    private void zoomToSelectedCity() {
+        LatLng locationOfCity = LocationConverter.getLocationFromAddress(queryCity, getContext());
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(locationOfCity, MAP_ZOOM_LEVEL));
+    }
+
+    private void removePreviousLocation() {
+        if (currentLocationMarker != null)
+            currentLocationMarker.remove();
     }
 
     @Override
@@ -252,17 +277,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         removePreviousLocation();
-        updateMapWithCurrentLocation();
-    }
-
-    private void removePreviousLocation() {
-        if(currentLocationMarker != null)
-            currentLocationMarker.remove();
+        if (queryCity.isEmpty()) {
+            updateMapWithCurrentLocation();
+        }
     }
 
     @OnClick(R.id.fab)
     public void zoomToCurrentLocation() {
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), MAP_ZOOM_LEVEL));
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), MAP_ZOOM_LEVEL));
     }
 
     @Override
